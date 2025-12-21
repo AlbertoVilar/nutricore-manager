@@ -11,4 +11,5 @@ public interface PatientEntityConverter {
     Patient toEntity(PatientRequest request);
 
     PatientResponse toResponse(Patient entity);
+
 }
