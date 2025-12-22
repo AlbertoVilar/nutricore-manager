@@ -3,15 +3,15 @@ package com.nutricore.manager.domain.services;
 import com.nutricore.manager.api.dto.PatientRequest;
 import com.nutricore.manager.api.dto.PatientResponse;
 import com.nutricore.manager.api.mappers.PatientEntityConverter;
-import com.nutricore.manager.domain.entities.Patient;
+import com.nutricore.manager.domain.exceptions.BusinessException;
+import com.nutricore.manager.domain.exceptions.DatabaseException;
+import com.nutricore.manager.domain.exceptions.ResourceNotFoundException;
 import com.nutricore.manager.infrastructure.db.repositories.PatientRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PatientService {
@@ -24,53 +24,48 @@ public class PatientService {
         this.entityConverter = entityConverter;
     }
 
-    // POST
+    @Transactional
     public PatientResponse createPatient(PatientRequest request) {
+        patientRepository.findByEmail(request.email())
+                .ifPresent(p -> {
+                    throw new BusinessException("Já existe um paciente cadastrado com o e-mail: " + request.email());
+                });
 
-        if (request == null) {
-            throw new NullPointerException("A entidade não pode ser nula");
-        }
-        if (patientRepository.findByEmail(request.email()).isPresent()) {
-            throw new IllegalArgumentException("Já existe um usuário com este e-mail " + request.email());
-        }
         var entity = entityConverter.toEntity(request);
-            entity = patientRepository.save(entity);
-
-            return entityConverter.toResponse(entity);
+        return entityConverter.toResponse(patientRepository.save(entity));
     }
-    // PUT
-    public PatientResponse updatePatient(Long id, PatientRequest request) {
-        if (id == null || request == null) {
-            throw new NullPointerException("A entidade não pode ser nula");
-        }
 
-        var entity = patientRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado com " + id));
+    @Transactional
+    public PatientResponse updatePatient(Long id, PatientRequest request) {
+        var entity = patientRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com ID: " + id));
 
         entityConverter.toUpdate(request, entity);
-
-        return entityConverter.toResponse( patientRepository.save(entity));
+        return entityConverter.toResponse(patientRepository.save(entity));
     }
 
-    // GET
-    // Assinatura para listar todos
+    @Transactional(readOnly = true)
     public Page<PatientResponse> findAllPatients(Pageable pageable) {
-        Page<Patient> pages = patientRepository.findAll(pageable);
-        return  pages.map(entityConverter::toResponse);
+        return patientRepository.findAll(pageable)
+                .map(entityConverter::toResponse);
     }
 
-    // Assinatura para buscar por ID
+    @Transactional(readOnly = true)
     public PatientResponse findPatientById(Long id) {
-        var entity = patientRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado"));
-        return entityConverter.toResponse(entity);
+        return patientRepository.findById(id)
+                .map(entityConverter::toResponse)
+                .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com ID: " + id));
     }
 
-    //DELETE
+    @Transactional
     public void deletePatient(Long id) {
-        var entity = patientRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado com ID: " + id));
+        var entity = patientRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com ID: " + id));
 
-        patientRepository.delete(entity);
+        try {
+            patientRepository.delete(entity);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Não é possível excluir o paciente pois existem registros vinculados a ele.");
+        }
     }
 }
