@@ -5,6 +5,8 @@ import com.nutricore.manager.api.dto.PatientResponse;
 import com.nutricore.manager.domain.entities.Patient;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface PatientEntityConverter {
 
@@ -12,4 +14,6 @@ public interface PatientEntityConverter {
 
     PatientResponse toResponse(Patient entity);
 
+    // Para o Get All
+    List<PatientResponse> toResponseList(List<Patient> patients);
 }

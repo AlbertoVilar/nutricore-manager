@@ -5,7 +5,11 @@ import com.nutricore.manager.api.dto.PatientResponse;
 import com.nutricore.manager.api.mappers.PatientEntityConverter;
 import com.nutricore.manager.domain.entities.Patient;
 import com.nutricore.manager.infrastructure.db.repositories.PatientRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PatientService {
@@ -34,4 +38,14 @@ public class PatientService {
     }
 
     // GET
+    // Assinatura para listar todos
+    public Page<PatientResponse> findAllPatients(Pageable pageable) {
+        Page<Patient> pages = patientRepository.findAll(pageable);
+        return  pages.map(entityConverter::toResponse);
+    }
+
+    // Assinatura para buscar por ID
+    public PatientResponse findPatientById(Long id) {
+        return null;
+    }
 }

@@ -1,0 +1,15 @@
+INSERT INTO patients (name, email, phone, birth_date, gender, occupation, life_style, status, created_at, updated_at) VALUES
+('Ana Oliveira', 'ana.oliveira@email.com', '11911112222', '1990-01-15', 'FEMALE', 'Engenheira', 'LIGHTLY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Bruno Santos', 'bruno.santos@email.com', '11922223333', '1985-03-22', 'MALE', 'Professor', 'SEDENTARY', 'ACTIVE', NOW(), NOW()),
+('Carla Mendes', 'carla.mendes@email.com', '11933334444', '1992-07-10', 'FEMALE', 'Arquiteta', 'MODERATELY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Daniel Rocha', 'daniel.rocha@email.com', '11944445555', '1988-11-30', 'MALE', 'Designer', 'VERY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Elena Costa', 'elena.costa@email.com', '11955556666', '1995-05-05', 'FEMALE', 'Médica', 'LIGHTLY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Fabio Lima', 'fabio.lima@email.com', '11966667777', '1982-09-18', 'MALE', 'Contador', 'SEDENTARY', 'ACTIVE', NOW(), NOW()),
+('Gisele Alves', 'gisele.alves@email.com', '11977778888', '1993-12-12', 'FEMALE', 'Advogada', 'LIGHTLY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Hugo Ferreira', 'hugo.ferreira@email.com', '11988889999', '1979-02-25', 'MALE', 'Motorista', 'MODERATELY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Iara Souza', 'iara.souza@email.com', '11999990000', '1991-04-08', 'FEMALE', 'Psicóloga', 'LIGHTLY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Jonas Batista', 'jonas.batista@email.com', '11912345678', '1987-06-20', 'MALE', 'Vendedor', 'VERY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Karen Hills', 'karen.hills@email.com', '11987654321', '1994-08-14', 'FEMALE', 'Analista', 'SEDENTARY', 'ACTIVE', NOW(), NOW()),
+('Leonardo Cruz', 'leonardo.cruz@email.com', '11954321678', '1984-10-02', 'MALE', 'Cozinheiro', 'MODERATELY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Marina Silva', 'marina.silva@email.com', '11967854321', '1996-01-30', 'FEMALE', 'Estudante', 'LIGHTLY_ACTIVE', 'ACTIVE', NOW(), NOW()),
+('Nilson Gomes', 'nilson.gomes@email.com', '11943218765', '1975-05-15', 'MALE', 'Aposentado', 'LIGHTLY_ACTIVE', 'ACTIVE', NOW(), NOW());
