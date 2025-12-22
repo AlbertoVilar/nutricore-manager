@@ -38,6 +38,19 @@ public class PatientService {
 
             return entityConverter.toResponse(entity);
     }
+    // PUT
+    public PatientResponse updatePatient(Long id, PatientRequest request) {
+        if (id == null || request == null) {
+            throw new NullPointerException("A entidade não pode ser nula");
+        }
+
+        var entity = patientRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado com " + id));
+
+        entityConverter.toUpdate(request, entity);
+
+        return entityConverter.toResponse( patientRepository.save(entity));
+    }
 
     // GET
     // Assinatura para listar todos
@@ -51,5 +64,13 @@ public class PatientService {
         var entity = patientRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado"));
         return entityConverter.toResponse(entity);
+    }
+
+    //DELETE
+    public void deletePatient(Long id) {
+        var entity = patientRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado com ID: " + id));
+
+        patientRepository.delete(entity);
     }
 }
