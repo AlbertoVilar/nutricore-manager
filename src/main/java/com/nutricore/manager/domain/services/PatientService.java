@@ -7,7 +7,9 @@ import com.nutricore.manager.domain.entities.Patient;
 import com.nutricore.manager.infrastructure.db.repositories.PatientRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -46,6 +48,8 @@ public class PatientService {
 
     // Assinatura para buscar por ID
     public PatientResponse findPatientById(Long id) {
-        return null;
+        var entity = patientRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado"));
+        return entityConverter.toResponse(entity);
     }
 }
