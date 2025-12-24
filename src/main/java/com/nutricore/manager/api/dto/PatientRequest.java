@@ -1,5 +1,8 @@
 package com.nutricore.manager.api.dto;
 
+import com.nutricore.manager.domain.enums.patient.Gender;
+import com.nutricore.manager.domain.enums.patient.LifeStyle;
+import com.nutricore.manager.domain.enums.patient.PatientStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 

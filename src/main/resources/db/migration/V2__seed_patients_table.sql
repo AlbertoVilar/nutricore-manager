@@ -1,4 +1,4 @@
-INSERT INTO patients (name, email, phone, birth_date, gender, occupation, life_style, status, created_at, updated_at) VALUES
+INSERT INTO tb_patients (name, email, phone, birth_date, gender, occupation, life_style, status, created_at, updated_at) VALUES
 ('Ana Oliveira', 'ana.oliveira@email.com', '11911112222', '1990-01-15', 'FEMALE', 'Engenheira', 'LIGHTLY_ACTIVE', 'ACTIVE', NOW(), NOW()),
 ('Bruno Santos', 'bruno.santos@email.com', '11922223333', '1985-03-22', 'MALE', 'Professor', 'SEDENTARY', 'ACTIVE', NOW(), NOW()),
 ('Carla Mendes', 'carla.mendes@email.com', '11933334444', '1992-07-10', 'FEMALE', 'Arquiteta', 'MODERATELY_ACTIVE', 'ACTIVE', NOW(), NOW()),
