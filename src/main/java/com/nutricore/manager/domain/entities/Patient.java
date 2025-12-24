@@ -1,8 +1,9 @@
 package com.nutricore.manager.domain.entities;
 
-import com.nutricore.manager.domain.enums.Gender;
-import com.nutricore.manager.domain.enums.LifeStyle;
-import com.nutricore.manager.domain.enums.PatientStatus;
+import com.nutricore.manager.domain.enums.patient.Gender;
+import com.nutricore.manager.domain.enums.patient.LifeStyle;
+import com.nutricore.manager.domain.enums.patient.PatientStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,6 +12,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,13 +22,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "patients")
-@EntityListeners(AuditingEntityListener.class) // Necessário para ativar as anotações de auditoria nesta classe
+@Table(name = "tb_patients") // Padronizando o prefixo tb_ como na anamnese
+@EntityListeners(AuditingEntityListener.class)
+@Schema(description = "Entidade que representa o paciente no sistema")
 public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Alterado para Long (Wrapper) para melhor suporte JPA
+    private Long id;
 
     @Column(nullable = false, length = 100)
     private String name;
@@ -53,6 +58,10 @@ public class Patient {
     @Column(nullable = false, length = 20)
     private PatientStatus status;
 
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter(AccessLevel.NONE)
+    private Set<ClinicalAnamnesis> anamnesisRecords = new HashSet<>();
+
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -61,11 +70,14 @@ public class Patient {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Helper method to ensure new patients start as active
-    @PrePersist
-    public void ensureActiveStatus() {
-        if (this.status == null) {
-            this.status = PatientStatus.ACTIVE;
-        }
+    // Métodos de Negócio (Isso sim pertence ao Domínio!)
+    public int calculateAge() {
+        return (birthDate == null) ? 0 : java.time.Period.between(birthDate, LocalDate.now()).getYears();
+    }
+
+    public void addAnamnesis(ClinicalAnamnesis anamnesis) {
+        if (anamnesis == null) return;
+        this.anamnesisRecords.add(anamnesis);
+        anamnesis.setPatient(this);
     }
 }

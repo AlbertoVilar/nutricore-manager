@@ -1,4 +1,4 @@
-package com.nutricore.manager.domain.enums;
+package com.nutricore.manager.domain.enums.patient;
 
 import lombok.Getter;
 
