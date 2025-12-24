@@ -2,7 +2,14 @@ package com.nutricore.manager.api.controllers;
 
 import com.nutricore.manager.api.dto.PatientRequest;
 import com.nutricore.manager.api.dto.PatientResponse;
+import com.nutricore.manager.domain.exceptions.error.StandardError;
 import com.nutricore.manager.domain.services.PatientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Pacientes", description = "Gerenciamento do cadastro de pacientes")
 @RestController
 @RequestMapping("/patients")
 public class PatientController {
@@ -22,6 +30,14 @@ public class PatientController {
     }
 
     // POST
+    @Operation(summary = "Cria um novo paciente", description = "Cadastra um novo paciente no sistema com validação de dados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Paciente criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Violação de regra de negócio ou erro de sintaxe",
+                    content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "422", description = "Erro de validação nos campos (Bean Validation)",
+                    content = @Content(schema = @Schema(implementation = StandardError.class)))
+    })
     @PostMapping
     public ResponseEntity<PatientResponse> createPatient(@RequestBody @Valid PatientRequest request) {
         PatientResponse patientResponse = patientService.createPatient(request);
@@ -29,21 +45,29 @@ public class PatientController {
     }
 
     // PUT
+        @Operation(summary = "Atualiza um paciente", description = "Atualiza os dados de um paciente existente com validação de dados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Paciente atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Violação de regra de negócio ou erro de sintaxe",
+                    content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "422", description = "Erro de validação nos campos (Bean Validation)",
+                    content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "404", description = "Paciente não encontrado",
+                    content = @Content(schema = @Schema(implementation = StandardError.class)))
+    })
     @PutMapping("/{id}")
     public ResponseEntity<PatientResponse> updatePatient(@PathVariable Long id, @RequestBody @Valid PatientRequest request) {
         PatientResponse patientResponse = patientService.updatePatient(id, request);
         return ResponseEntity.ok(patientResponse);
     }
 
-    // GET /patients
-    @GetMapping
-    public ResponseEntity<Page<PatientResponse>> getAll(
-            @PageableDefault(size = 12) Pageable pageable) {
-        Page<PatientResponse> patients = patientService.findAllPatients(pageable);
-        return ResponseEntity.ok(patients);
-    }
-
     // GET /patients/{id}
+    @Operation(summary = "Busca um paciente por ID", description = "Retorna os detalhes de um paciente específico.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Paciente encontrado"),
+            @ApiResponse(responseCode = "404", description = "Paciente não encontrado",
+                    content = @Content(schema = @Schema(implementation = StandardError.class)))
+    })
     @GetMapping("/{id}")
     public ResponseEntity<PatientResponse> getById(@PathVariable Long id) {
         PatientResponse patientResponse = patientService.findPatientById(id);
@@ -51,6 +75,14 @@ public class PatientController {
     }
 
     // DELETE /patients/{id}
+    @Operation(summary = "Remove um paciente", description = "Exclui permanentemente um paciente do sistema.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Paciente removido com sucesso (Sem conteúdo)"),
+            @ApiResponse(responseCode = "404", description = "Paciente não encontrado",
+                    content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "400", description = "Erro de integridade (ex: paciente possui vínculos)",
+                    content = @Content(schema = @Schema(implementation = StandardError.class)))
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         patientService.deletePatient(id);
