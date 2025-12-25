@@ -21,7 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/anamnesis")
+@RequestMapping("/anamnesis")
 @RequiredArgsConstructor
 @Tag(name = "Clinical Anamnesis", description = "Endpoints para gestão de anamneses clínicas")
 public class ClinicalAnamnesisController {
@@ -44,6 +44,22 @@ public class ClinicalAnamnesisController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    // PUT /anamnesis/{id}
+    @Operation(summary = "Atualiza uma anamnese existente", description = "Altera os dados de um registro de anamnese.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Anamnese atualizada com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Dados da requisição inválidos.",
+                    content = @Content(schema = @Schema(implementation = StandardError.class))),
+            @ApiResponse(responseCode = "404", description = "Anamnese não encontrada.",
+                    content = @Content(schema = @Schema(implementation = StandardError.class)))
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<ClinicalAnamnesisResponse> update(@PathVariable Long id,
+                                                            @RequestBody @Valid ClinicalAnamnesisRequest request) {
+        var response = service.updateAnamnesis(id, request);
+        return ResponseEntity.ok(response);
+    }
+
     // GET /ClinicalAnamnesis/{id}
     @GetMapping("/patient/{patientId}")
     @Operation(summary = "Listar histórico de anamneses do paciente",
@@ -59,5 +75,18 @@ public class ClinicalAnamnesisController {
             @PageableDefault(size = 12) Pageable pageable) {
         Page<ClinicalAnamnesisResponse> anamnesisResponses = service.getHistoryByPatientId(patientId, pageable);
         return ResponseEntity.ok(anamnesisResponses);
+    }
+
+    // DELETE /anamnesis/{id}
+    @Operation(summary = "Remove uma anamnese", description = "Exclui permanentemente um registro de anamnese do sistema.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Anamnese removida com sucesso (Sem conteúdo)."),
+            @ApiResponse(responseCode = "404", description = "Anamnese não encontrada.",
+                    content = @Content(schema = @Schema(implementation = StandardError.class)))
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.deleteAnamnesis(id);
+        return ResponseEntity.noContent().build();
     }
 }
