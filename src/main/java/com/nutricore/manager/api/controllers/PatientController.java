@@ -74,6 +74,18 @@ public class PatientController {
         return ResponseEntity.ok(patientResponse);
     }
 
+    // GET /patients
+    @Operation(summary = "Lista todos os pacientes", description = "Retorna uma lista paginada de todos os pacientes cadastrados.")
+    @ApiResponse(responseCode = "200", description = "Lista recuperada com sucesso")
+    @GetMapping
+    public ResponseEntity<Page<PatientResponse>> getAll(
+            @org.springdoc.core.annotations.ParameterObject // Melhora a visualização no Swagger
+            @PageableDefault(size = 12) Pageable pageable) {
+
+        Page<PatientResponse> patients = patientService.findAllPatients(pageable);
+        return ResponseEntity.ok(patients);
+    }
+
     // DELETE /patients/{id}
     @Operation(summary = "Remove um paciente", description = "Exclui permanentemente um paciente do sistema.")
     @ApiResponses(value = {

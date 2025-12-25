@@ -8,6 +8,8 @@ import com.nutricore.manager.domain.exceptions.BusinessException;
 import com.nutricore.manager.domain.exceptions.ResourceNotFoundException;
 import com.nutricore.manager.infrastructure.db.repositories.ClinicalAnamnesisRepository;
 import com.nutricore.manager.infrastructure.db.repositories.PatientRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +43,8 @@ public class ClinicalAnamnesisService {
     }
 
     // Método para obter a história clínica de um paciente
-    public List<ClinicalAnamnesisResponse> getHistoryByPatientId(Long patientId) {
+    public Page<ClinicalAnamnesisResponse> getHistoryByPatientId(Long patientId,
+                                                                 Pageable pageable) {
 
         if (patientId == null) {
             throw new BusinessException("O ID do paciente é obrigatório" + patientId);
@@ -51,9 +54,9 @@ public class ClinicalAnamnesisService {
             throw new ResourceNotFoundException("Paciente não encontrado com ID: " + patientId);
         }
 
-        List<ClinicalAnamnesis> clinicalAnamneses = anamnesisRepository
-                .findByPatientIdOrderByDateDesc(patientId);
+        Page<ClinicalAnamnesis> clinicalAnamneses = anamnesisRepository
+                .findByPatientIdOrderByDateDesc(patientId, pageable);
 
-        return anamnesisMapper.toResponseList(clinicalAnamneses);
+        return  clinicalAnamneses.map(anamnesisMapper::toResponse);
     }
 }
