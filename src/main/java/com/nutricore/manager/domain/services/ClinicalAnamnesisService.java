@@ -3,6 +3,8 @@ package com.nutricore.manager.domain.services;
 import com.nutricore.manager.api.dto.ClinicalAnamnesisRequest;
 import com.nutricore.manager.api.dto.ClinicalAnamnesisResponse;
 import com.nutricore.manager.api.mappers.ClinicalAnamnesisMapper;
+import com.nutricore.manager.domain.enums.anamneses.BowelFunction;
+import com.nutricore.manager.domain.enums.anamneses.SleepQuality;
 import com.nutricore.manager.domain.exceptions.BusinessException;
 import com.nutricore.manager.domain.exceptions.ResourceNotFoundException;
 import com.nutricore.manager.infrastructure.db.repositories.ClinicalAnamnesisRepository;
@@ -11,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 public class ClinicalAnamnesisService {
@@ -55,16 +59,21 @@ public class ClinicalAnamnesisService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ClinicalAnamnesisResponse> getHistoryByPatientId(Long patientId, Pageable pageable) {
-        if (patientId == null) {
-            throw new BusinessException("O ID do paciente é obrigatório");
-        }
+    public Page<ClinicalAnamnesisResponse> getHistory(
+            Long patientId,
+            LocalDate start,
+            LocalDate end,
+            SleepQuality sleep,
+            BowelFunction bowel,
+            Pageable pageable) {
 
+        // Garante que o paciente existe antes de buscar
         if (!patientRepository.existsById(patientId)) {
             throw new ResourceNotFoundException("Paciente não encontrado com ID: " + patientId);
         }
 
-        return anamnesisRepository.findByPatientIdOrderByDateDesc(patientId, pageable)
+        return anamnesisRepository.findByPatientIdWithFilters(
+                        patientId, start, end, sleep, bowel, pageable)
                 .map(anamnesisMapper::toResponse);
     }
 

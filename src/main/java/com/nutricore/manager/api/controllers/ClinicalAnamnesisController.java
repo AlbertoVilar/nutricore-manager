@@ -2,6 +2,8 @@ package com.nutricore.manager.api.controllers;
 
 import com.nutricore.manager.api.dto.ClinicalAnamnesisRequest;
 import com.nutricore.manager.api.dto.ClinicalAnamnesisResponse;
+import com.nutricore.manager.domain.enums.anamneses.BowelFunction;
+import com.nutricore.manager.domain.enums.anamneses.SleepQuality;
 import com.nutricore.manager.domain.exceptions.error.StandardError;
 import com.nutricore.manager.domain.services.ClinicalAnamnesisService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,10 +17,14 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/anamnesis")
@@ -62,19 +68,16 @@ public class ClinicalAnamnesisController {
 
     // GET /ClinicalAnamnesis/{id}
     @GetMapping("/patient/{patientId}")
-    @Operation(summary = "Listar histórico de anamneses do paciente",
-            description = "Retorna uma página de registros de anamnese para um paciente específico.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Histórico recuperado com sucesso."),
-            @ApiResponse(responseCode = "404", description = "Paciente não encontrado.",
-                    content = @Content(schema = @Schema(implementation = StandardError.class)))
-    })
     public ResponseEntity<Page<ClinicalAnamnesisResponse>> getHistory(
             @PathVariable Long patientId,
-            @ParameterObject // Fundamental para o Swagger
-            @PageableDefault(size = 12) Pageable pageable) {
-        Page<ClinicalAnamnesisResponse> anamnesisResponses = service.getHistoryByPatientId(patientId, pageable);
-        return ResponseEntity.ok(anamnesisResponses);
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(required = false) SleepQuality sleepQuality,
+            @RequestParam(required = false) BowelFunction bowelFunction,
+            @PageableDefault(size = 12, sort = "date", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        var response = service.getHistory(patientId, startDate, endDate, sleepQuality, bowelFunction, pageable);
+        return ResponseEntity.ok(response);
     }
 
     // DELETE /anamnesis/{id}
