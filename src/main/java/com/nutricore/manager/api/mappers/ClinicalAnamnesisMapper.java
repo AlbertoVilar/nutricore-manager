@@ -2,9 +2,13 @@ package com.nutricore.manager.api.mappers;
 
 import com.nutricore.manager.api.dto.ClinicalAnamnesisRequest;
 import com.nutricore.manager.api.dto.ClinicalAnamnesisResponse;
+import com.nutricore.manager.api.dto.PatientResponse;
 import com.nutricore.manager.domain.entities.ClinicalAnamnesis;
+import com.nutricore.manager.domain.entities.Patient;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ClinicalAnamnesisMapper {
@@ -15,4 +19,6 @@ public interface ClinicalAnamnesisMapper {
     ClinicalAnamnesis toEntity(ClinicalAnamnesisRequest request);
 
     ClinicalAnamnesisResponse toResponse(ClinicalAnamnesis entity);
+
+    List<ClinicalAnamnesisResponse> toResponseList(List<ClinicalAnamnesis> anamneses);
 }
