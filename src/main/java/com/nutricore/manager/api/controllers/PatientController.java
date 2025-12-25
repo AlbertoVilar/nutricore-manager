@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -79,7 +80,7 @@ public class PatientController {
     @ApiResponse(responseCode = "200", description = "Lista recuperada com sucesso")
     @GetMapping
     public ResponseEntity<Page<PatientResponse>> getAll(
-            @org.springdoc.core.annotations.ParameterObject // Melhora a visualização no Swagger
+            @ParameterObject // Melhora a visualização no Swagger
             @PageableDefault(size = 12) Pageable pageable) {
 
         Page<PatientResponse> patients = patientService.findAllPatients(pageable);

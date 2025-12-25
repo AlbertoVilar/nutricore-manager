@@ -12,11 +12,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/anamnesis")
@@ -44,15 +46,18 @@ public class ClinicalAnamnesisController {
 
     // GET /ClinicalAnamnesis/{id}
     @GetMapping("/patient/{patientId}")
-    @Operation(summary = "Busca a história clínica de um paciente por ID", description = "Retorna a história clínica de um paciente específico.")
+    @Operation(summary = "Listar histórico de anamneses do paciente",
+            description = "Retorna uma página de registros de anamnese para um paciente específico.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Histórico clínico encontrado."),
-            @ApiResponse(responseCode = "404", description = "Histórico não encontrado.",
+            @ApiResponse(responseCode = "200", description = "Histórico recuperado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Paciente não encontrado.",
                     content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
-    public ResponseEntity<List<ClinicalAnamnesisResponse>> getHistory(
-                                                @PathVariable Long patientId) {
-        List<ClinicalAnamnesisResponse> anamnesisResponses = service.getHistoryByPatientId(patientId);
+    public ResponseEntity<Page<ClinicalAnamnesisResponse>> getHistory(
+            @PathVariable Long patientId,
+            @ParameterObject // Fundamental para o Swagger
+            @PageableDefault(size = 12) Pageable pageable) {
+        Page<ClinicalAnamnesisResponse> anamnesisResponses = service.getHistoryByPatientId(patientId, pageable);
         return ResponseEntity.ok(anamnesisResponses);
     }
 }
