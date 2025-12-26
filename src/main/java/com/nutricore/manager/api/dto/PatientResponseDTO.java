@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Schema(description = "Objeto de resposta com os dados detalhados do paciente")
-public record PatientResponse(
+public record PatientResponseDTO(
 
         @Schema(description = "Identificador único do paciente", example = "1")
         Long id,

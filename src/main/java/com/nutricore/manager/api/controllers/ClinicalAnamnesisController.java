@@ -1,7 +1,7 @@
 package com.nutricore.manager.api.controllers;
 
-import com.nutricore.manager.api.dto.ClinicalAnamnesisRequest;
-import com.nutricore.manager.api.dto.ClinicalAnamnesisResponse;
+import com.nutricore.manager.api.dto.ClinicalAnamnesisRequestDTO;
+import com.nutricore.manager.api.dto.ClinicalAnamnesisResponseDTO;
 import com.nutricore.manager.domain.enums.anamneses.BowelFunction;
 import com.nutricore.manager.domain.enums.anamneses.SleepQuality;
 import com.nutricore.manager.domain.exceptions.error.StandardError;
@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -43,8 +42,8 @@ public class ClinicalAnamnesisController {
             @ApiResponse(responseCode = "404", description = "Paciente não encontrado.",
                     content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
-    public ResponseEntity<ClinicalAnamnesisResponse> create(
-            @RequestBody @Valid ClinicalAnamnesisRequest request) {
+    public ResponseEntity<ClinicalAnamnesisResponseDTO> create(
+            @RequestBody @Valid ClinicalAnamnesisRequestDTO request) {
 
         var response = service.createAnamnesis(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -60,15 +59,15 @@ public class ClinicalAnamnesisController {
                     content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
     @PutMapping("/{id}")
-    public ResponseEntity<ClinicalAnamnesisResponse> update(@PathVariable Long id,
-                                                            @RequestBody @Valid ClinicalAnamnesisRequest request) {
+    public ResponseEntity<ClinicalAnamnesisResponseDTO> update(@PathVariable Long id,
+                                                               @RequestBody @Valid ClinicalAnamnesisRequestDTO request) {
         var response = service.updateAnamnesis(id, request);
         return ResponseEntity.ok(response);
     }
 
     // GET /ClinicalAnamnesis/{id}
     @GetMapping("/patient/{patientId}")
-    public ResponseEntity<Page<ClinicalAnamnesisResponse>> getHistory(
+    public ResponseEntity<Page<ClinicalAnamnesisResponseDTO>> getHistory(
             @PathVariable Long patientId,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,

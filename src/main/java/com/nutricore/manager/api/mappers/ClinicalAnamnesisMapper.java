@@ -1,10 +1,8 @@
 package com.nutricore.manager.api.mappers;
 
-import com.nutricore.manager.api.dto.ClinicalAnamnesisRequest;
-import com.nutricore.manager.api.dto.ClinicalAnamnesisResponse;
-import com.nutricore.manager.api.dto.PatientResponse;
+import com.nutricore.manager.api.dto.ClinicalAnamnesisRequestDTO;
+import com.nutricore.manager.api.dto.ClinicalAnamnesisResponseDTO;
 import com.nutricore.manager.domain.entities.ClinicalAnamnesis;
-import com.nutricore.manager.domain.entities.Patient;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -17,13 +15,13 @@ public interface ClinicalAnamnesisMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "patient", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    ClinicalAnamnesis toEntity(ClinicalAnamnesisRequest request);
+    ClinicalAnamnesis toEntity(ClinicalAnamnesisRequestDTO request);
 
-    ClinicalAnamnesisResponse toResponse(ClinicalAnamnesis entity);
+    ClinicalAnamnesisResponseDTO toResponse(ClinicalAnamnesis entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "patient", ignore = true) // Não permitimos mudar o paciente no update
-    void updateEntityFromRequest(ClinicalAnamnesisRequest request, @MappingTarget ClinicalAnamnesis entity);
+    void updateEntityFromRequest(ClinicalAnamnesisRequestDTO request, @MappingTarget ClinicalAnamnesis entity);
 
-    List<ClinicalAnamnesisResponse> toResponseList(List<ClinicalAnamnesis> anamneses);
+    List<ClinicalAnamnesisResponseDTO> toResponseList(List<ClinicalAnamnesis> anamneses);
 }

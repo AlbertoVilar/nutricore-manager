@@ -1,7 +1,7 @@
 package com.nutricore.manager.api.mappers;
 
-import com.nutricore.manager.api.dto.PatientRequest;
-import com.nutricore.manager.api.dto.PatientResponse;
+import com.nutricore.manager.api.dto.PatientRequestDTO;
+import com.nutricore.manager.api.dto.PatientResponseDTO;
 import com.nutricore.manager.domain.entities.Patient;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -13,13 +13,13 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PatientEntityConverter {
 
-    Patient toEntity(PatientRequest request);
+    Patient toEntity(PatientRequestDTO request);
 
-    PatientResponse toResponse(Patient entity);
+    PatientResponseDTO toResponse(Patient entity);
     // Get All
-    List<PatientResponse> toResponseList(List<Patient> patients);
+    List<PatientResponseDTO> toResponseList(List<Patient> patients);
     
     // Update
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void toUpdate(PatientRequest request, @MappingTarget Patient entity);
+    void toUpdate(PatientRequestDTO request, @MappingTarget Patient entity);
 }

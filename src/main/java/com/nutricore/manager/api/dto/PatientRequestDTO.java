@@ -8,7 +8,7 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-public record PatientRequest(
+public record PatientRequestDTO(
 
         @Schema(description = "Nome completo do usuário", example = "Alberto Vilar")
         @NotBlank(message = "O nome é obrigatório")

@@ -1,7 +1,7 @@
 package com.nutricore.manager.api.controllers;
 
-import com.nutricore.manager.api.dto.PatientRequest;
-import com.nutricore.manager.api.dto.PatientResponse;
+import com.nutricore.manager.api.dto.PatientRequestDTO;
+import com.nutricore.manager.api.dto.PatientResponseDTO;
 import com.nutricore.manager.domain.exceptions.error.StandardError;
 import com.nutricore.manager.domain.services.PatientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,9 +40,9 @@ public class PatientController {
                     content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
     @PostMapping
-    public ResponseEntity<PatientResponse> createPatient(@RequestBody @Valid PatientRequest request) {
-        PatientResponse patientResponse = patientService.createPatient(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(patientResponse);
+    public ResponseEntity<PatientResponseDTO> createPatient(@RequestBody @Valid PatientRequestDTO request) {
+        PatientResponseDTO patientResponseDTO = patientService.createPatient(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(patientResponseDTO);
     }
 
     // PUT
@@ -57,9 +57,9 @@ public class PatientController {
                     content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
     @PutMapping("/{id}")
-    public ResponseEntity<PatientResponse> updatePatient(@PathVariable Long id, @RequestBody @Valid PatientRequest request) {
-        PatientResponse patientResponse = patientService.updatePatient(id, request);
-        return ResponseEntity.ok(patientResponse);
+    public ResponseEntity<PatientResponseDTO> updatePatient(@PathVariable Long id, @RequestBody @Valid PatientRequestDTO request) {
+        PatientResponseDTO patientResponseDTO = patientService.updatePatient(id, request);
+        return ResponseEntity.ok(patientResponseDTO);
     }
 
     // GET /patients/{id}
@@ -70,20 +70,20 @@ public class PatientController {
                     content = @Content(schema = @Schema(implementation = StandardError.class)))
     })
     @GetMapping("/{id}")
-    public ResponseEntity<PatientResponse> getById(@PathVariable Long id) {
-        PatientResponse patientResponse = patientService.findPatientById(id);
-        return ResponseEntity.ok(patientResponse);
+    public ResponseEntity<PatientResponseDTO> getById(@PathVariable Long id) {
+        PatientResponseDTO patientResponseDTO = patientService.findPatientById(id);
+        return ResponseEntity.ok(patientResponseDTO);
     }
 
     // GET /patients
     @Operation(summary = "Lista todos os pacientes", description = "Retorna uma lista paginada de todos os pacientes cadastrados.")
     @ApiResponse(responseCode = "200", description = "Lista recuperada com sucesso")
     @GetMapping
-    public ResponseEntity<Page<PatientResponse>> getAll(
+    public ResponseEntity<Page<PatientResponseDTO>> getAll(
             @ParameterObject // Melhora a visualização no Swagger
             @PageableDefault(size = 12) Pageable pageable) {
 
-        Page<PatientResponse> patients = patientService.findAllPatients(pageable);
+        Page<PatientResponseDTO> patients = patientService.findAllPatients(pageable);
         return ResponseEntity.ok(patients);
     }
 

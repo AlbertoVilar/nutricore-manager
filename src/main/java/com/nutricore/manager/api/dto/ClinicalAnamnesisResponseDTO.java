@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public record ClinicalAnamnesisResponse(
+public record ClinicalAnamnesisResponseDTO(
         @Schema(example = "1")
         Long id,
 

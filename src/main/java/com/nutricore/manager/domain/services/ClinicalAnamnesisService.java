@@ -1,7 +1,7 @@
 package com.nutricore.manager.domain.services;
 
-import com.nutricore.manager.api.dto.ClinicalAnamnesisRequest;
-import com.nutricore.manager.api.dto.ClinicalAnamnesisResponse;
+import com.nutricore.manager.api.dto.ClinicalAnamnesisRequestDTO;
+import com.nutricore.manager.api.dto.ClinicalAnamnesisResponseDTO;
 import com.nutricore.manager.api.mappers.ClinicalAnamnesisMapper;
 import com.nutricore.manager.domain.enums.anamneses.BowelFunction;
 import com.nutricore.manager.domain.enums.anamneses.SleepQuality;
@@ -32,7 +32,7 @@ public class ClinicalAnamnesisService {
     }
 
     @Transactional
-    public ClinicalAnamnesisResponse createAnamnesis(ClinicalAnamnesisRequest request) {
+    public ClinicalAnamnesisResponseDTO createAnamnesis(ClinicalAnamnesisRequestDTO request) {
         var patient = patientRepository.findById(request.patientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com ID: "
                         + request.patientId()));
@@ -45,7 +45,7 @@ public class ClinicalAnamnesisService {
     }
 
     @Transactional
-    public ClinicalAnamnesisResponse updateAnamnesis(Long id, ClinicalAnamnesisRequest request) {
+    public ClinicalAnamnesisResponseDTO updateAnamnesis(Long id, ClinicalAnamnesisRequestDTO request) {
         if (id == null) {
             throw new BusinessException("O ID da anamnese é obrigatório");
         }
@@ -59,7 +59,7 @@ public class ClinicalAnamnesisService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ClinicalAnamnesisResponse> getHistory(
+    public Page<ClinicalAnamnesisResponseDTO> getHistory(
             Long patientId,
             LocalDate start,
             LocalDate end,

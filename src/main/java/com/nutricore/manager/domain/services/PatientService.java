@@ -1,7 +1,7 @@
 package com.nutricore.manager.domain.services;
 
-import com.nutricore.manager.api.dto.PatientRequest;
-import com.nutricore.manager.api.dto.PatientResponse;
+import com.nutricore.manager.api.dto.PatientRequestDTO;
+import com.nutricore.manager.api.dto.PatientResponseDTO;
 import com.nutricore.manager.api.mappers.PatientEntityConverter;
 import com.nutricore.manager.domain.exceptions.BusinessException;
 import com.nutricore.manager.domain.exceptions.DatabaseException;
@@ -25,7 +25,7 @@ public class PatientService {
     }
 
     @Transactional
-    public PatientResponse createPatient(PatientRequest request) {
+    public PatientResponseDTO createPatient(PatientRequestDTO request) {
         patientRepository.findByEmail(request.email())
                 .ifPresent(p -> {
                     throw new BusinessException("Já existe um paciente cadastrado com o e-mail: " + request.email());
@@ -36,7 +36,7 @@ public class PatientService {
     }
 
     @Transactional
-    public PatientResponse updatePatient(Long id, PatientRequest request) {
+    public PatientResponseDTO updatePatient(Long id, PatientRequestDTO request) {
         var entity = patientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com ID: " + id));
 
@@ -45,13 +45,13 @@ public class PatientService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PatientResponse> findAllPatients(Pageable pageable) {
+    public Page<PatientResponseDTO> findAllPatients(Pageable pageable) {
         return patientRepository.findAll(pageable)
                 .map(entityConverter::toResponse);
     }
 
     @Transactional(readOnly = true)
-    public PatientResponse findPatientById(Long id) {
+    public PatientResponseDTO findPatientById(Long id) {
         return patientRepository.findById(id)
                 .map(entityConverter::toResponse)
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com ID: " + id));

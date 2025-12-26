@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
-public record ClinicalAnamnesisRequest(
+public record ClinicalAnamnesisRequestDTO(
 
         @Schema(description = "ID do paciente associado", example = "1")
         @NotNull(message = "O ID do paciente é obrigatório")

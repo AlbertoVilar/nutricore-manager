@@ -1,0 +1,50 @@
+CREATE TABLE tb_anthropometric_assessments (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    patient_id BIGINT NOT NULL,
+    assessment_date DATE NOT NULL,
+
+    -- Antropometria Básica
+    weight NUMERIC(10,2) NOT NULL,
+    height NUMERIC(10,2) NOT NULL,
+    bmi NUMERIC(10,2),
+
+    -- Composição Corporal
+    body_fat_percentage NUMERIC(10,2),
+    fat_mass_kg NUMERIC(10,2),
+    lean_mass_kg NUMERIC(10,2),
+    lean_mass_percentage NUMERIC(10,2),
+    muscle_mass_kg NUMERIC(10,2),
+    total_body_water NUMERIC(10,2),
+    visceral_fat NUMERIC(10,2),
+    basal_metabolic_rate NUMERIC(10,2),
+
+    -- Perímetros
+    waist NUMERIC(10,2),
+    hip NUMERIC(10,2),
+    waist_hip_ratio NUMERIC(10,2),
+    neck NUMERIC(10,2),
+    chest NUMERIC(10,2),
+    abdomen NUMERIC(10,2),
+
+    -- Membros
+    right_arm NUMERIC(10,2),
+    left_arm NUMERIC(10,2),
+    right_thigh NUMERIC(10,2),
+    left_thigh NUMERIC(10,2),
+    right_calf NUMERIC(10,2),
+    left_calf NUMERIC(10,2),
+
+    -- Dobras Cutâneas
+    triceps_fold NUMERIC(10,2),
+    subscapular_fold NUMERIC(10,2),
+    suprailiac_fold NUMERIC(10,2),
+    abdominal_fold NUMERIC(10,2),
+
+    observations TEXT,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+
+    CONSTRAINT fk_assessment_patient
+        FOREIGN KEY (patient_id)
+        REFERENCES tb_patients(id)
+);
