@@ -36,6 +36,19 @@ public class AnthropometricController {
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
 
+        @Operation(summary = "Atualiza uma avaliação", description = "Atualiza dados brutos e força o recálculo de índices. Campos nulos no request serão ignorados (mantém o valor atual).")
+        @ApiResponses({
+                        @ApiResponse(responseCode = "200", description = "Avaliação atualizada com sucesso"),
+                        @ApiResponse(responseCode = "400", description = "Erro de validação ou troca de paciente indevida"),
+                        @ApiResponse(responseCode = "404", description = "Avaliação não encontrada")
+        })
+        @PutMapping("/assessments/{id}")
+        public ResponseEntity<AnthropometricResponseDTO> update(
+                        @PathVariable Long id,
+                        @RequestBody @Valid AnthropometricRequestDTO request) {
+                return ResponseEntity.ok(service.update(id, request));
+        }
+
         @Operation(summary = "Busca histórico por paciente", description = "Retorna uma página de avaliações de um paciente específico, ordenadas da mais recente para a mais antiga.")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "200", description = "Listagem recuperada com sucesso"),
@@ -47,5 +60,16 @@ public class AnthropometricController {
                         @ParameterObject Pageable pageable) {
 
                 return ResponseEntity.ok(service.findAllByPatientId(patientId, pageable));
+        }
+
+        @Operation(summary = "Remove uma avaliação", description = "Exclui permanentemente um registro de avaliação antropométrica.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "204", description = "Avaliação removida com sucesso"),
+                        @ApiResponse(responseCode = "404", description = "Avaliação não encontrada")
+        })
+        @DeleteMapping("/assessments/{id}")
+        public ResponseEntity<Void> delete(@PathVariable Long id) {
+                service.delete(id);
+                return ResponseEntity.noContent().build();
         }
 }

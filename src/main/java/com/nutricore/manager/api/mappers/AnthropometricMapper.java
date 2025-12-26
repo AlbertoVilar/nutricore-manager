@@ -6,11 +6,16 @@ import com.nutricore.manager.domain.entities.AnthropometricAssessment;
 import com.nutricore.manager.domain.utils.NutriCalculators;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
 import java.math.BigDecimal;
 
-@Mapper(componentModel = "spring", imports = {NutriCalculators.class})
+@Mapper(
+        componentModel = "spring",
+        imports = {NutriCalculators.class},
+        nullValuePropertyMappingStrategy = org.mapstruct.NullValuePropertyMappingStrategy.IGNORE
+)
 public interface AnthropometricMapper {
 
     // 1. Request -> Entidade
@@ -44,4 +49,16 @@ public interface AnthropometricMapper {
         var risk = NutriCalculators.classifyWaistHip(waistHipRatio);
         return risk != null ? risk.name() : null;
     }
+
+    // UPDATE
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "patient", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "bmi", ignore = true)
+    @Mapping(target = "fatMassKg", ignore = true)
+    @Mapping(target = "leanMassKg", ignore = true)
+    @Mapping(target = "leanMassPercentage", ignore = true)
+    @Mapping(target = "waistHipRatio", ignore = true)
+    void updateEntityFromDto(AnthropometricRequestDTO request, @MappingTarget AnthropometricAssessment assessment);
 }
