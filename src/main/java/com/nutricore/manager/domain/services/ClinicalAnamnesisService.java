@@ -46,9 +46,6 @@ public class ClinicalAnamnesisService {
 
     @Transactional
     public ClinicalAnamnesisResponseDTO updateAnamnesis(Long id, ClinicalAnamnesisRequestDTO request) {
-        if (id == null) {
-            throw new BusinessException("O ID da anamnese é obrigatório");
-        }
 
         var anamnesis = anamnesisRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Anamnese não encontrada com ID: " + id));

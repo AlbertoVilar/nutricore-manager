@@ -26,69 +26,64 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/anamnesis")
+@RequestMapping("/v1/anamnesis")
 @RequiredArgsConstructor
 @Tag(name = "Clinical Anamnesis", description = "Endpoints para gestão de anamneses clínicas")
 public class ClinicalAnamnesisController {
 
-    private final ClinicalAnamnesisService service;
+        private final ClinicalAnamnesisService service;
 
-    @PostMapping
-    @Operation(summary = "Registrar nova anamnese", description = "Cria um registro de anamnese vinculado a um paciente")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Anamnese criada com sucesso."),
-            @ApiResponse(responseCode = "400", description = "Dados da requisição inválidos.",
-                    content = @Content(schema = @Schema(implementation = StandardError.class))),
-            @ApiResponse(responseCode = "404", description = "Paciente não encontrado.",
-                    content = @Content(schema = @Schema(implementation = StandardError.class)))
-    })
-    public ResponseEntity<ClinicalAnamnesisResponseDTO> create(
-            @RequestBody @Valid ClinicalAnamnesisRequestDTO request) {
+        @PostMapping
+        @Operation(summary = "Registrar nova anamnese", description = "Cria um registro de anamnese vinculado a um paciente")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "201", description = "Anamnese criada com sucesso."),
+                        @ApiResponse(responseCode = "400", description = "Dados da requisição inválidos.", content = @Content(schema = @Schema(implementation = StandardError.class))),
+                        @ApiResponse(responseCode = "404", description = "Paciente não encontrado.", content = @Content(schema = @Schema(implementation = StandardError.class)))
+        })
+        public ResponseEntity<ClinicalAnamnesisResponseDTO> create(
+                        @RequestBody @Valid ClinicalAnamnesisRequestDTO request) {
 
-        var response = service.createAnamnesis(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+                var response = service.createAnamnesis(request);
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }
 
-    // PUT /anamnesis/{id}
-    @Operation(summary = "Atualiza uma anamnese existente", description = "Altera os dados de um registro de anamnese.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Anamnese atualizada com sucesso."),
-            @ApiResponse(responseCode = "400", description = "Dados da requisição inválidos.",
-                    content = @Content(schema = @Schema(implementation = StandardError.class))),
-            @ApiResponse(responseCode = "404", description = "Anamnese não encontrada.",
-                    content = @Content(schema = @Schema(implementation = StandardError.class)))
-    })
-    @PutMapping("/{id}")
-    public ResponseEntity<ClinicalAnamnesisResponseDTO> update(@PathVariable Long id,
-                                                               @RequestBody @Valid ClinicalAnamnesisRequestDTO request) {
-        var response = service.updateAnamnesis(id, request);
-        return ResponseEntity.ok(response);
-    }
+        // PUT /anamnesis/{id}
+        @Operation(summary = "Atualiza uma anamnese existente", description = "Altera os dados de um registro de anamnese.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Anamnese atualizada com sucesso."),
+                        @ApiResponse(responseCode = "400", description = "Dados da requisição inválidos.", content = @Content(schema = @Schema(implementation = StandardError.class))),
+                        @ApiResponse(responseCode = "404", description = "Anamnese não encontrada.", content = @Content(schema = @Schema(implementation = StandardError.class)))
+        })
+        @PutMapping("/{id}")
+        public ResponseEntity<ClinicalAnamnesisResponseDTO> update(@PathVariable Long id,
+                        @RequestBody @Valid ClinicalAnamnesisRequestDTO request) {
+                var response = service.updateAnamnesis(id, request);
+                return ResponseEntity.ok(response);
+        }
 
-    // GET /ClinicalAnamnesis/{id}
-    @GetMapping("/patient/{patientId}")
-    public ResponseEntity<Page<ClinicalAnamnesisResponseDTO>> getHistory(
-            @PathVariable Long patientId,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(required = false) SleepQuality sleepQuality,
-            @RequestParam(required = false) BowelFunction bowelFunction,
-            @PageableDefault(size = 12, sort = "date", direction = Sort.Direction.DESC) Pageable pageable) {
+        // GET /ClinicalAnamnesis/{id}
+        @GetMapping("/patient/{patientId}")
+        public ResponseEntity<Page<ClinicalAnamnesisResponseDTO>> getHistory(
+                        @PathVariable Long patientId,
+                        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                        @RequestParam(required = false) SleepQuality sleepQuality,
+                        @RequestParam(required = false) BowelFunction bowelFunction,
+                        @PageableDefault(size = 12, sort = "date", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        var response = service.getHistory(patientId, startDate, endDate, sleepQuality, bowelFunction, pageable);
-        return ResponseEntity.ok(response);
-    }
+                var response = service.getHistory(patientId, startDate, endDate, sleepQuality, bowelFunction, pageable);
+                return ResponseEntity.ok(response);
+        }
 
-    // DELETE /anamnesis/{id}
-    @Operation(summary = "Remove uma anamnese", description = "Exclui permanentemente um registro de anamnese do sistema.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Anamnese removida com sucesso (Sem conteúdo)."),
-            @ApiResponse(responseCode = "404", description = "Anamnese não encontrada.",
-                    content = @Content(schema = @Schema(implementation = StandardError.class)))
-    })
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.deleteAnamnesis(id);
-        return ResponseEntity.noContent().build();
-    }
+        // DELETE /anamnesis/{id}
+        @Operation(summary = "Remove uma anamnese", description = "Exclui permanentemente um registro de anamnese do sistema.")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "204", description = "Anamnese removida com sucesso (Sem conteúdo)."),
+                        @ApiResponse(responseCode = "404", description = "Anamnese não encontrada.", content = @Content(schema = @Schema(implementation = StandardError.class)))
+        })
+        @DeleteMapping("/{id}")
+        public ResponseEntity<Void> delete(@PathVariable Long id) {
+                service.deleteAnamnesis(id);
+                return ResponseEntity.noContent().build();
+        }
 }
