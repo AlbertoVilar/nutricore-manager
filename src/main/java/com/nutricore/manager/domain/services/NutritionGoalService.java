@@ -53,21 +53,25 @@ public class NutritionGoalService {
         return nutritionGoalMapper.toResponse(nutritionGoal);
     }
 
+    @Transactional(readOnly = true)
     public NutritionGoalResponseDTO findById(Long id) {
-        // TODO: Find goal by ID or throw exception
-        // TODO: Return response DTO
-        return null;
+        return nutritionGoalRepository.findById(id)
+                .map(nutritionGoalMapper::toResponse)
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado com ID: " + id));
     }
 
     public Page<NutritionGoalResponseDTO> findAllByPatient(Long patientId, Pageable pageable) {
         // TODO: Validate patient existence (optional, depends on requirement)
         // TODO: Find all goals by patient ID
         // TODO: Map page content to response DTOs
-        return null;
+        return null; // Keeping as stub per instructions
     }
 
+    @Transactional
     public void delete(Long id) {
-        // TODO: Find goal by ID or throw exception
-        // TODO: Delete goal (or soft delete)
+        if (!nutritionGoalRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Recurso não encontrado com ID: " + id);
+        }
+        nutritionGoalRepository.deleteById(id);
     }
 }
