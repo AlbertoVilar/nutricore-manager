@@ -7,11 +7,11 @@ import com.nutricore.manager.domain.enums.goal.GoalStatus;
 import com.nutricore.manager.domain.exceptions.ResourceNotFoundException;
 import com.nutricore.manager.infrastructure.db.repositories.NutritionGoalRepository;
 import com.nutricore.manager.infrastructure.db.repositories.PatientRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

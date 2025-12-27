@@ -55,4 +55,31 @@ public class NutritionGoalController {
         NutritionGoalResponseDTO response = service.update(id, request);
         return ResponseEntity.ok(response);
     }
+
+    // =========================
+    // FIND BY ID
+    // =========================
+    @Operation(summary = "Busca objetivo nutricional por ID", description = "Retorna os detalhes de um objetivo nutricional específico.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Objetivo nutricional encontrado"),
+            @ApiResponse(responseCode = "404", description = "Objetivo nutricional não encontrado")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<NutritionGoalResponseDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    // =========================
+    // DELETE
+    // =========================
+    @Operation(summary = "Remove um objetivo nutricional", description = "Exclui permanentemente um objetivo nutricional do sistema.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Objetivo nutricional removido com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Objetivo nutricional não encontrado")
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
