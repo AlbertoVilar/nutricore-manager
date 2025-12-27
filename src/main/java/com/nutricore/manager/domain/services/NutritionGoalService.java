@@ -39,13 +39,18 @@ public class NutritionGoalService {
         return nutritionGoalMapper.toResponse(entity);
     }
 
+    @Transactional
     public NutritionGoalResponseDTO update(Long id, NutritionGoalRequestDTO request) {
         // TODO: Find existing goal by ID or throw exception
+        var nutritionGoal = nutritionGoalRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Recurso não encontrado com ID: " + id));
         // TODO: Update entity using mapper
+        nutritionGoalMapper.updateEntityFromDto(request, nutritionGoal);
         // TODO: Validate status transitions if needed
         // TODO: Save updated entity
+        nutritionGoal = nutritionGoalRepository.save(nutritionGoal);
         // TODO: Return response DTO
-        return null;
+        return nutritionGoalMapper.toResponse(nutritionGoal);
     }
 
     public NutritionGoalResponseDTO findById(Long id) {
