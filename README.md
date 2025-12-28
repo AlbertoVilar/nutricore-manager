@@ -8,131 +8,188 @@ Abaixo está o diagrama de classes que representa a estrutura core do sistema:
 
 ```mermaid
 classDiagram
-    direction LR
-
-    %% =========================
-    %% AGGREGATE: PATIENT
-    %% =========================
+    %% =====================
+    %% AGGREGADO RAIZ
+    %% =====================
     class Patient {
-        +UUID id
-        +String name
-        +LocalDate birthDate
-        +Sex sex
-        +String email
+        -Long id
+        -String name
+        -String email
+        -String phone
+        -LocalDate birthDate
+        -Gender gender
+        -LifeStyle lifeStyle
+        -PatientStatus status
+        +calculateAge() int
     }
 
-    %% =========================
-    %% AGGREGATE: CLINICAL ANAMNESIS
-    %% =========================
+    %% =====================
+    %% HISTÓRICO CLÍNICO
+    %% =====================
     class ClinicalAnamnesis {
-        +UUID id
-        +Boolean diabetes
-        +Boolean hypertension
-        +Boolean dyslipidemia
-        +String observations
+        -Long id
+        -LocalDate date
+        -SleepQuality sleepQuality
+        -BowelFunction bowelFunction
+        -Double waterIntakeGoal
+        -String clinicalHistory
+        -String familyHistory
+        +isRecent() boolean
     }
 
-    %% =========================
-    %% AGGREGATE: ANTHROPOMETRIC ASSESSMENT
-    %% =========================
+    %% =====================
+    %% AVALIAÇÃO ANTROPOMÉTRICA
+    %% =====================
     class AnthropometricAssessment {
-        +UUID id
-        +BigDecimal weight
-        +BigDecimal height
-        +BigDecimal waist
-        +BigDecimal hip
-        +BigDecimal bmi
-        +BigDecimal rcq
-        +BigDecimal fatMass
-        +BigDecimal leanMass
-        +BigDecimal bmr
-        +BigDecimal tdee
-        +ActivityLevel activityLevel
-        +LocalDate assessmentDate
+        -Long id
+        -LocalDate assessmentDate
+        -BigDecimal weight
+        -BigDecimal height
+        -BigDecimal bmi
+        -BigDecimal bodyFatPercentage
+        -BigDecimal fatMassKg
+        -BigDecimal leanMassKg
+        -BigDecimal leanMassPercentage
+        -BigDecimal basalMetabolicRate
+        -BigDecimal totalEnergyExpenditure
+        -ActivityLevel activityLevel
+        -BigDecimal waist
+        -BigDecimal hip
+        -BigDecimal waistHipRatio
+        +performCalculations()
     }
 
-    %% =========================
-    %% AGGREGATE: NUTRITION GOAL
-    %% =========================
+    %% =====================
+    %% OBJETIVO NUTRICIONAL
+    %% =====================
     class NutritionGoal {
-        +UUID id
-        +GoalType goalType
-        +BigDecimal targetCalories
-        +BigDecimal proteinGrams
-        +BigDecimal carbsGrams
-        +BigDecimal fatGrams
-        +Boolean active
-        +LocalDate createdAt
+        -Long id
+        -GoalType goalType
+        -GoalStatus status
+        -BigDecimal targetWeight
+        -BigDecimal targetBodyFatPercentage
+        -BigDecimal targetLeanMass
+        -BigDecimal targetCalories
+        -LocalDate startDate
+        -LocalDate expectedEndDate
+        +activate()
+        +complete()
+        +cancel()
+        +isOverdue() boolean
+        +getOverdueDays() long
     }
 
-    %% =========================
+    %% =====================
+    %% PROFISSIONAL
+    %% =====================
+    class Nutritionist {
+        -Long id
+        -String name
+        -String email
+        -String crn
+        -String specialty
+    }
+
+    %% =====================
+    %% SERVIÇOS
+    %% =====================
+    class NutritionGoalService {
+        +create()
+        +update()
+        +findById()
+        +delete()
+        -calculateEnergyPlan()
+    }
+
+    class AnthropometricService {
+        +create()
+        +update()
+        +findAllByPatientId()
+        +delete()
+    }
+
+    %% =====================
+    %% UTILITÁRIOS
+    %% =====================
+    class EnergyCalculator {
+        +calculateBmr()
+        +calculateTdee()
+    }
+
+    %% =====================
     %% ENUMS
-    %% =========================
-    class ActivityLevel {
-        <<enum>>
-        SEDENTARY
-        LIGHT
-        MODERATE
-        HIGH
-        VERY_HIGH
+    %% =====================
+    class Gender {
+        <<enumeration>>
+        MALE
+        FEMALE
     }
 
     class GoalType {
-        <<enum>>
+        <<enumeration>>
         WEIGHT_LOSS
-        WEIGHT_GAIN
         MAINTENANCE
+        HYPERTROPHY
     }
 
-    %% =========================
-    %% DOMAIN SERVICES
-    %% =========================
-    class AnthropometricService {
-        <<service>>
-        +calculateBMI()
-        +calculateRCQ()
-        +calculateBMR()
-        +calculateTDEE()
+    class GoalStatus {
+        <<enumeration>>
+        PLANNED
+        ACTIVE
+        COMPLETED
+        CANCELLED
     }
 
-    class NutritionGoalService {
-        <<service>>
-        +createGoal()
-        +recalculateGoal()
-        +deactivatePreviousGoal()
+    class ActivityLevel {
+        <<enumeration>>
+        SEDENTARY
+        MODERATELY_ACTIVE
+        VERY_ACTIVE
     }
 
-    %% =========================
-    %% STRATEGY PATTERN
-    %% =========================
-    class CaloricStrategy {
-        <<interface>>
-        +calculateCalories(tdee)
+    class SleepQuality {
+        <<enumeration>>
     }
 
-    class WeightLossStrategy {
-        +calculateCalories(tdee)
+    class BowelFunction {
+        <<enumeration>>
     }
 
-    class WeightGainStrategy {
-        +calculateCalories(tdee)
+    class LifeStyle {
+        <<enumeration>>
     }
 
-    class MaintenanceStrategy {
-        +calculateCalories(tdee)
+    class PatientStatus {
+        <<enumeration>>
     }
 
-    %% =========================
-    %% RELATIONSHIPS
-    %% =========================
-    Patient "1" --> "1" ClinicalAnamnesis
-    Patient "1" --> "*" AnthropometricAssessment
-    Patient "1" --> "*" NutritionGoal
+    %% =====================
+    %% RELACIONAMENTOS
+    %% =====================
+    Patient "1" o-- "*" ClinicalAnamnesis : possui
+    Patient "1" o-- "*" AnthropometricAssessment : possui
+    Patient "1" o-- "*" NutritionGoal : possui
+    Nutritionist "1" o-- "*" Patient : atende
 
-    NutritionGoalService --> AnthropometricAssessment
-    NutritionGoalService --> CaloricStrategy
+    Patient --> Gender : tem
+    Patient --> LifeStyle : tem
+    Patient --> PatientStatus : tem
+    
+    ClinicalAnamnesis --> SleepQuality : registra
+    ClinicalAnamnesis --> BowelFunction : registra
+    
+    AnthropometricAssessment --> ActivityLevel : tem
+    
+    NutritionGoal --> GoalType : tem
+    NutritionGoal --> GoalStatus : tem
 
-    CaloricStrategy <|.. WeightLossStrategy
-    CaloricStrategy <|.. WeightGainStrategy
-    CaloricStrategy <|.. MaintenanceStrategy
+    %% Serviços e suas dependências
+    NutritionGoalService ..> Patient : usa
+    NutritionGoalService ..> AnthropometricAssessment : usa
+    NutritionGoalService ..> NutritionGoal : gerencia
+    NutritionGoalService ..> EnergyCalculator : usa
+
+    AnthropometricService ..> Patient : usa
+    AnthropometricService ..> AnthropometricAssessment : gerencia
+    AnthropometricService ..> EnergyCalculator : usa
 ```
