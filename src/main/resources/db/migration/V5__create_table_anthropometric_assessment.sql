@@ -16,7 +16,11 @@ CREATE TABLE tb_anthropometric_assessments (
     muscle_mass_kg NUMERIC(10,2),
     total_body_water NUMERIC(10,2),
     visceral_fat NUMERIC(10,2),
+
+    -- Energia (Metabolismo)
     basal_metabolic_rate NUMERIC(10,2),
+    total_energy_expenditure NUMERIC(10,2),
+    activity_level VARCHAR(30),
 
     -- Perímetros
     waist NUMERIC(10,2),

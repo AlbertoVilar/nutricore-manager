@@ -1,5 +1,6 @@
 package com.nutricore.manager.domain.entities;
 
+import com.nutricore.manager.domain.enums.goal.ActivityLevel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
@@ -68,8 +69,19 @@ public class AnthropometricAssessment {
     @Column(precision = 10, scale = 2)
     private BigDecimal visceralFat;
 
+    // =======================
+    // ENERGIA (METABOLISMO)
+    // =======================
+
     @Column(precision = 10, scale = 2)
-    private BigDecimal basalMetabolicRate;
+    private BigDecimal basalMetabolicRate; // BMR
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal totalEnergyExpenditure; // TDEE
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 30)
+    private ActivityLevel activityLevel;
 
     // --- Perímetros ---
     @Column(precision = 10, scale = 2)

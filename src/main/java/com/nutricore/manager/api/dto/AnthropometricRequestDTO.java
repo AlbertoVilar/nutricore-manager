@@ -1,58 +1,55 @@
 package com.nutricore.manager.api.dto;
 
+import com.nutricore.manager.domain.enums.goal.ActivityLevel;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.PastOrPresent;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record AnthropometricRequestDTO(
 
-        @NotNull(message = "O ID do paciente é obrigatório")
-        Long patientId,
+                @NotNull(message = "O ID do paciente é obrigatório") Long patientId,
 
-        @NotNull(message = "A data da avaliação é obrigatória")
-        @PastOrPresent(message = "A data não pode ser no futuro")
-        LocalDate assessmentDate,
+                @NotNull(message = "A data da avaliação é obrigatória") @PastOrPresent(message = "A data não pode ser no futuro") LocalDate assessmentDate,
 
-        // --- Antropometria Básica (Aqui o zero não faz sentido) ---
-        @NotNull(message = "O peso é obrigatório")
-        @Positive(message = "O peso deve ser maior que zero")
-        Double weight,
+                // --- Antropometria Básica ---
+                @NotNull(message = "O peso é obrigatório") @Positive(message = "O peso deve ser maior que zero") BigDecimal weight,
 
-        @NotNull(message = "A altura é obrigatória")
-        @Positive(message = "A altura deve ser maior que zero")
-        Double height,
+                @NotNull(message = "A altura é obrigatória") @Positive(message = "A altura deve ser maior que zero") BigDecimal height,
 
-        // --- Composição corporal (Podem ser zero ou nulos) ---
-        @PositiveOrZero Double bodyFatPercentage,
-        @PositiveOrZero Double muscleMassKg,
-        @PositiveOrZero Double totalBodyWater,
-        @PositiveOrZero Double visceralFat,
-        @PositiveOrZero Double basalMetabolicRate,
+                ActivityLevel activityLevel, // Nível de atividade física
 
-        // --- Perímetros (Podem ser zero se não medidos) ---
-        @PositiveOrZero Double waist,
-        @PositiveOrZero Double hip,
-        @PositiveOrZero Double neck,
-        @PositiveOrZero Double abdomen,
-        @PositiveOrZero Double chest,
+                // --- Composição corporal (Podem ser zero ou nulos) ---
+                @PositiveOrZero BigDecimal bodyFatPercentage,
+                @PositiveOrZero BigDecimal muscleMassKg,
+                @PositiveOrZero BigDecimal totalBodyWater,
+                @PositiveOrZero BigDecimal visceralFat,
+                @PositiveOrZero BigDecimal basalMetabolicRate,
 
-        // --- Membros ---
-        @PositiveOrZero Double rightArm,
-        @PositiveOrZero Double leftArm,
-        @PositiveOrZero Double rightThigh,
-        @PositiveOrZero Double leftThigh,
-        @PositiveOrZero Double rightCalf,
-        @PositiveOrZero Double leftCalf,
+                // --- Perímetros (Podem ser zero se não medidos) ---
+                @PositiveOrZero BigDecimal waist,
+                @PositiveOrZero BigDecimal hip,
+                @PositiveOrZero BigDecimal neck,
+                @PositiveOrZero BigDecimal abdomen,
+                @PositiveOrZero BigDecimal chest,
 
-        // --- Dobras cutâneas ---
-        @PositiveOrZero Double tricepsFold,
-        @PositiveOrZero Double subscapularFold,
-        @PositiveOrZero Double suprailiacFold,
-        @PositiveOrZero Double abdominalFold,
+                // --- Membros ---
+                @PositiveOrZero BigDecimal rightArm,
+                @PositiveOrZero BigDecimal leftArm,
+                @PositiveOrZero BigDecimal rightThigh,
+                @PositiveOrZero BigDecimal leftThigh,
+                @PositiveOrZero BigDecimal rightCalf,
+                @PositiveOrZero BigDecimal leftCalf,
 
-        String observations
+                // --- Dobras cutâneas ---
+                @PositiveOrZero BigDecimal tricepsFold,
+                @PositiveOrZero BigDecimal subscapularFold,
+                @PositiveOrZero BigDecimal suprailiacFold,
+                @PositiveOrZero BigDecimal abdominalFold,
+
+                String observations
 
 ) {
 }

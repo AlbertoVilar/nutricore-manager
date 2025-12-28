@@ -4,12 +4,11 @@ import com.nutricore.manager.api.dto.AnthropometricRequestDTO;
 import com.nutricore.manager.api.dto.AnthropometricResponseDTO;
 import com.nutricore.manager.api.mappers.AnthropometricMapper;
 import com.nutricore.manager.domain.entities.AnthropometricAssessment;
-import com.nutricore.manager.domain.entities.Patient;
 import com.nutricore.manager.domain.exceptions.BusinessException;
 import com.nutricore.manager.domain.exceptions.ResourceNotFoundException;
+import com.nutricore.manager.domain.utils.EnergyCalculator;
 import com.nutricore.manager.infrastructure.db.repositories.AnthropometricAssessmentRepository;
 import com.nutricore.manager.infrastructure.db.repositories.PatientRepository;
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,47 +32,104 @@ public class AnthropometricService {
 
     @Transactional
     public AnthropometricResponseDTO create(AnthropometricRequestDTO request) {
-        // 1. Validar se o paciente existe
-        Patient patient = patientRepository.findById(request.patientId())
-                .orElseThrow(
-                        () -> new ResourceNotFoundException("Paciente não encontrado com ID: " + request.patientId()));
 
-        // 2. Converter DTO para Entidade
-        AnthropometricAssessment assessment = mapper.toEntity(request);
+        var patient = patientRepository.findById(request.patientId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Paciente não encontrado com ID: " + request.patientId()
+                ));
 
-        // 3. Vincular o paciente encontrado à avaliação
+        var assessment = mapper.toEntity(request);
         assessment.setPatient(patient);
 
-        // 4. Salvar (O @PrePersist da entidade executará os cálculos de IMC, RCQ, etc.)
-        AnthropometricAssessment savedAssessment = assessmentRepository.save(assessment);
+        // ============================
+        // CÁLCULO ENERGÉTICO (ORQUESTRAÇÃO)
+        // ============================
 
-        // 5. Converter a entidade salva (já com cálculos) para o ResponseDTO
-        return mapper.toResponse(savedAssessment);
-    }
+        if (assessment.getBasalMetabolicRate() == null) {
 
-    @Transactional
-    public AnthropometricResponseDTO update(Long id, @Valid AnthropometricRequestDTO request) {
+            var weight = assessment.getWeight();
+            var height = assessment.getHeight();
+            var age = patient.calculateAge();
+            var gender = patient.getGender();
 
-        // 1. Busca a avaliação existente
-        AnthropometricAssessment assessment = assessmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Avaliação não encontrada com ID: " + id));
-
-        // 2. Opcional: Validar se o paciente informado no DTO é o mesmo da avaliação
-        // (segurança)
-        if (!assessment.getPatient().getId().equals(request.patientId())) {
-            throw new BusinessException("Não é permitido alterar o paciente de uma avaliação existente.");
+            if (weight != null && height != null && gender != null && age > 0) {
+                var bmr = EnergyCalculator.calculateBmr(
+                        weight,
+                        height,
+                        age,
+                        gender
+                );
+                assessment.setBasalMetabolicRate(bmr);
+            }
         }
 
-        // 3. Atualiza os dados da entidade usando o Mapper
+        if (assessment.getTotalEnergyExpenditure() == null
+                && assessment.getBasalMetabolicRate() != null
+                && assessment.getActivityLevel() != null) {
+
+            var tdee = EnergyCalculator.calculateTdee(
+                    assessment.getBasalMetabolicRate(),
+                    assessment.getActivityLevel()
+            );
+            assessment.setTotalEnergyExpenditure(tdee);
+        }
+
+        assessment = assessmentRepository.save(assessment);
+
+        return mapper.toResponse(assessment);
+    }
+
+
+    @Transactional
+    public AnthropometricResponseDTO update(Long id, AnthropometricRequestDTO request) {
+
+        var assessment = assessmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Avaliação antropométrica não encontrada com ID: " + id
+                ));
+
         mapper.updateEntityFromDto(request, assessment);
 
-        // 4. Salva (O @PreUpdate da entidade disparará os cálculos de BigDecimal do
-        // NutriCalculators)
-        AnthropometricAssessment updatedAssessment = assessmentRepository.save(assessment);
+        // ============================
+        // CÁLCULO ENERGÉTICO (ORQUESTRAÇÃO)
+        // ============================
 
-        // 5. Retorna o DTO de resposta mapeado
-        return mapper.toResponse(updatedAssessment);
+        var patient = assessment.getPatient();
+
+        if (assessment.getBasalMetabolicRate() == null) {
+
+            var weight = assessment.getWeight();
+            var height = assessment.getHeight();
+            var age = patient.calculateAge();
+            var gender = patient.getGender();
+
+            if (weight != null && height != null && gender != null && age > 0) {
+                var bmr = EnergyCalculator.calculateBmr(
+                        weight,
+                        height,
+                        age,
+                        gender
+                );
+                assessment.setBasalMetabolicRate(bmr);
+            }
+        }
+
+        if (assessment.getTotalEnergyExpenditure() == null
+                && assessment.getBasalMetabolicRate() != null
+                && assessment.getActivityLevel() != null) {
+
+            var tdee = EnergyCalculator.calculateTdee(
+                    assessment.getBasalMetabolicRate(),
+                    assessment.getActivityLevel()
+            );
+            assessment.setTotalEnergyExpenditure(tdee);
+        }
+
+        assessment = assessmentRepository.save(assessment);
+
+        return mapper.toResponse(assessment);
     }
+
 
     @Transactional(readOnly = true)
     public Page<AnthropometricResponseDTO> findAllByPatientId(Long patientId, Pageable pageable) {
