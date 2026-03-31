@@ -28,6 +28,7 @@ public interface AnthropometricMapper {
     @Mapping(target = "leanMassKg", ignore = true)
     @Mapping(target = "leanMassPercentage", ignore = true)
     @Mapping(target = "waistHipRatio", ignore = true)
+    @Mapping(target = "totalEnergyExpenditure", ignore = true)
     AnthropometricAssessment toEntity(AnthropometricRequestDTO request);
 
     // 2. Entidade -> Response
@@ -60,5 +61,6 @@ public interface AnthropometricMapper {
     @Mapping(target = "leanMassKg", ignore = true)
     @Mapping(target = "leanMassPercentage", ignore = true)
     @Mapping(target = "waistHipRatio", ignore = true)
+    @Mapping(target = "totalEnergyExpenditure", ignore = true)
     void updateEntityFromDto(AnthropometricRequestDTO request, @MappingTarget AnthropometricAssessment assessment);
 }

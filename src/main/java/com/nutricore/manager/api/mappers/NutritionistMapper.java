@@ -10,6 +10,9 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface NutritionistMapper {
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Nutritionist toEntity(NutritionistRequestDTO dto);
 
     NutritionistResponseDTO toResponse(Nutritionist entity);

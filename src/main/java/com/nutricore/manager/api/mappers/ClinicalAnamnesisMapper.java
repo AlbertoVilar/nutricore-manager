@@ -21,6 +21,7 @@ public interface ClinicalAnamnesisMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "patient", ignore = true) // Não permitimos mudar o paciente no update
+    @Mapping(target = "createdAt", ignore = true)
     void updateEntityFromRequest(ClinicalAnamnesisRequestDTO request, @MappingTarget ClinicalAnamnesis entity);
 
     List<ClinicalAnamnesisResponseDTO> toResponseList(List<ClinicalAnamnesis> anamneses);

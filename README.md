@@ -1,137 +1,53 @@
 # NutriCore Manager
 
-Sistema de gestão nutricional focado em acompanhamento antropométrico e metas nutricionais personalizadas.
+Sistema de gestao nutricional em evolucao para uma plataforma com:
 
-## Modelo de Domínio
+- area publica/comercial para autoridade profissional, conteudo, planos e captacao
+- area privada/de gestao para pacientes, anamneses, avaliacoes, metas e planejamento alimentar
 
-Abaixo está o diagrama de classes que representa a estrutura core do sistema:
+## Base estavel atual
 
-```mermaid
-classDiagram
-    direction LR
+- O backend Spring Boot permanece na raiz do repositorio.
+- O contexto base da API e `/api`.
+- Os controllers estaveis usam `/v1/...`, formando rotas finais no padrao `/api/v1/...`.
+- A base estavel atual cobre:
+  - nutritionists
+  - patients
+  - clinical anamnesis
+  - anthropometric assessments
+  - nutrition goals (create, update, findById, delete)
 
-    %% =========================
-    %% AGGREGATE ROOT
-    %% =========================
-    class Patient {
-        +UUID id
-        +String name
-        +LocalDate birthDate
-        +Sex sex
-        +String email
-    }
+## Fora da base estavel
 
-    %% =========================
-    %% CLINICAL DATA
-    %% =========================
-    class ClinicalAnamnesis {
-        +UUID id
-        +Boolean diabetes
-        +Boolean hypertension
-        +Boolean dyslipidemia
-        +String observations
-    }
+- `MealPlan` continua em WIP na branch `feature/meal-planning-structure`.
+- A listagem de `NutritionGoal` por paciente segue pendente e nao faz parte da base estavel.
+- Seguranca, autenticacao e autorizacao entram depois do saneamento da base.
 
-    class AnthropometricAssessment {
-        +UUID id
-        +BigDecimal weight
-        +BigDecimal height
-        +BigDecimal waist
-        +BigDecimal hip
-        +BigDecimal bmi
-        +BigDecimal rcq
-        +BigDecimal fatMass
-        +BigDecimal leanMass
-        +BigDecimal bmr
-        +BigDecimal tdee
-        +ActivityLevel activityLevel
-        +LocalDate assessmentDate
-    }
+## Referencias locais
 
-    %% =========================
-    %% NUTRITION GOAL
-    %% =========================
-    class NutritionGoal {
-        +UUID id
-        +GoalType goalType
-        +BigDecimal targetCalories
-        +BigDecimal proteinGrams
-        +BigDecimal carbsGrams
-        +BigDecimal fatGrams
-        +Boolean active
-        +LocalDate createdAt
-    }
+- `nutricore-landing/` e `DOCUMENTACAO_TECNICA.md` sao referencias locais e nao compoem a base backend versionada.
+- O frontend React + TypeScript deve entrar futuramente em pasta propria, por exemplo `frontend/`, com suporte a rotas publicas e protegidas.
 
-    %% =========================
-    %% MEAL PLANNING (FUTURE)
-    %% =========================
-    class MealPlan {
-        +UUID id
-        +BigDecimal totalCalories
-        +Boolean active
-        +LocalDate createdAt
-    }
+## Como rodar
 
-    class Meal {
-        +UUID id
-        +MealType type
-        +BigDecimal totalCalories
-    }
+### Testes
 
-    class MealItem {
-        +UUID id
-        +BigDecimal quantity
-        +BigDecimal calories
-    }
-
-    class Food {
-        +UUID id
-        +String name
-        +BigDecimal caloriesPer100g
-        +BigDecimal proteinPer100g
-        +BigDecimal carbsPer100g
-        +BigDecimal fatPer100g
-    }
-
-    %% =========================
-    %% ENUMS
-    %% =========================
-    class ActivityLevel {
-        <<enum>>
-        SEDENTARY
-        LIGHT
-        MODERATE
-        HIGH
-        VERY_HIGH
-    }
-
-    class GoalType {
-        <<enum>>
-        WEIGHT_LOSS
-        WEIGHT_GAIN
-        MAINTENANCE
-    }
-
-    class MealType {
-        <<enum>>
-        BREAKFAST
-        LUNCH
-        SNACK
-        DINNER
-        SUPPER
-    }
-
-    %% =========================
-    %% RELATIONSHIPS
-    %% =========================
-    Patient "1" --> "1" ClinicalAnamnesis
-    Patient "1" --> "*" AnthropometricAssessment
-    Patient "1" --> "*" NutritionGoal
-    Patient "1" --> "*" MealPlan
-
-    NutritionGoal "1" --> "1" MealPlan
-
-    MealPlan "1" --> "*" Meal
-    Meal "1" --> "*" MealItem
-    MealItem "*" --> "1" Food
+```powershell
+.\mvnw.cmd test
 ```
+
+### Aplicacao
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+## Ambiente atual
+
+- Java 21
+- Spring Boot 3.3.4
+- PostgreSQL para dev/prod
+- H2 em memoria para testes
+- Flyway para migrations
+- MapStruct e Lombok
+- Swagger/OpenAPI

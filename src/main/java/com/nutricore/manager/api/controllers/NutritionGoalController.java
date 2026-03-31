@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/nutrition-goals")
+@RequestMapping("/v1/nutrition-goals")
 @RequiredArgsConstructor
 @Tag(name = "Nutrition Goals", description = "Endpoints para gestão de objetivos nutricionais dos pacientes")
 public class NutritionGoalController {

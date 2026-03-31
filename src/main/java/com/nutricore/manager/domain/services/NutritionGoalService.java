@@ -60,11 +60,10 @@ public class NutritionGoalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado com ID: " + id));
     }
 
+    @Transactional(readOnly = true)
     public Page<NutritionGoalResponseDTO> findAllByPatient(Long patientId, Pageable pageable) {
-        // TODO: Validate patient existence (optional, depends on requirement)
-        // TODO: Find all goals by patient ID
-        // TODO: Map page content to response DTOs
-        return null; // Keeping as stub per instructions
+        throw new UnsupportedOperationException(
+                "A listagem de objetivos nutricionais por paciente ainda nao faz parte da base estavel.");
     }
 
     @Transactional
