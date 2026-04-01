@@ -180,6 +180,12 @@ Armazenamento:
 - em `test`, vai para `target/test-editorial-media`
 - em `dev`, vai para `storage/editorial-media` por padrao
 
+Conteudo visual reaproveitado:
+
+- as imagens locais de `C:\Dev\landpage-nutri\public\img` foram copiadas para `frontend/public/images/`
+- os arquivos passaram a ser usados como materiais publicos de treino e inspiracao na rotina editorial
+- a sessao `Rotina da Nutri - Dando exemplo` usa esse acervo como base visual no MVP
+
 ### Videos
 
 Para o MVP nao foi implementado upload de video.
