@@ -63,12 +63,12 @@ export function EditorialContentTable({
               <div className="editorial-row-thumb">
                 {row.imageUrl ? <img alt={row.title} src={resolveAssetUrl(row.imageUrl)} /> : <span>{row.title.slice(0, 2)}</span>}
               </div>
-              <div>
+              <div className="editorial-row-content">
                 <div className="editorial-row-title">
                   <h3>{row.title}</h3>
                   {row.featured ? <span className="editorial-featured-pill">Destaque</span> : null}
                 </div>
-                <p>{row.summary}</p>
+                <p className="editorial-row-summary">{row.summary}</p>
                 <div className="editorial-row-meta">
                   <span>Slug: /{row.slug}</span>
                   {row.category ? <span>Categoria: {row.category}</span> : null}
@@ -79,7 +79,9 @@ export function EditorialContentTable({
             </div>
 
             <div className="editorial-row-side">
-              <EditorialStatusBadge status={row.status} />
+              <div className="editorial-row-status">
+                <EditorialStatusBadge status={row.status} />
+              </div>
               <div className="editorial-row-actions">
                 <Link className="button button-secondary" to={`${editHrefBase}/${row.id}/editar`}>
                   Editar
