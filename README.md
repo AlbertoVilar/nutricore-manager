@@ -62,6 +62,54 @@ Direcao adotada:
 - formularios e tabelas editoriais componentizados
 - integracao via client HTTP proprio
 
+## Arquitetura de navegacao
+
+### Camadas do produto
+
+- area institucional:
+  - `/`
+  - `/sobre`
+- area de conteudo:
+  - `/conteudos`
+  - `/receitas`
+- area comercial:
+  - `/planos`
+  - `/contato`
+- area editorial privada:
+  - `/editor/acesso`
+  - `/editor/**`
+
+### Regras de separacao
+
+- o site publico nao expõe links de CMS no header, na home ou no footer principal
+- a tela `/editor/acesso` fica fora do shell publico
+- a area editorial oferece caminho de retorno para o site publico
+- a home organiza institucional, conversao e conteudo em blocos distintos
+
+### Regra para `Rotina da Nutri`
+
+`Rotina da Nutri` nao virou modulo novo.
+
+Decisao adotada:
+
+- continua dentro de `Post`
+- funciona como colecao editorial
+- a regra atual usa posts com categoria `Treino`
+- na home aparece como destaque visual unico
+- em `/conteudos` aparece como secao propria dentro da biblioteca
+
+### Hierarquia atual da home
+
+1. hero institucional com CTA principal
+2. como funciona
+3. abordagem da nutricionista
+4. planos de atendimento
+5. destaque `Rotina da Nutri`
+6. biblioteca de conteudo
+7. receitas
+8. relatos
+9. CTA final de contato
+
 ## Modelo editorial implementado
 
 ### Tipos de conteudo
@@ -293,6 +341,31 @@ Token local de demonstracao no perfil `test`:
 nutricore-dev-editor
 ```
 
+## Como validar a navegacao visualmente
+
+Com backend e frontend rodando:
+
+1. abra `http://localhost:5173/`
+2. valide a ordem da home:
+   - institucional
+   - planos
+   - rotina
+   - conteudo
+   - receitas
+   - relatos
+   - contato
+3. abra `http://localhost:5173/conteudos`
+4. confirme a separacao entre:
+   - artigos
+   - `Rotina da Nutri`
+   - posts e bastidores
+5. abra `http://localhost:5173/receitas`
+6. abra `http://localhost:5173/planos`
+7. abra `http://localhost:5173/contato`
+8. confirme que o CMS nao aparece no menu publico nem no footer principal
+9. abra `http://localhost:5173/editor/acesso`
+10. confirme que o acesso editorial usa shell proprio, separado do site publico
+
 ## Validacao realizada nesta etapa
 
 - `.\mvnw.cmd test`
@@ -304,6 +377,7 @@ nutricore-dev-editor
   - `GET /api/v1/admin/posts` com token -> `200`
   - `GET http://127.0.0.1:5173/conteudos` -> `200`
   - `GET http://127.0.0.1:5173/editor/acesso` -> `200`
+- validacao visual da separacao publico/editorial e da nova hierarquia da home
 
 ## O que ficou fora desta etapa
 

@@ -74,7 +74,7 @@ export function PostEditorForm({
             type="text"
             value={form.slug}
           />
-          <small className="form-hint">Se vazio, o backend gera e garante unicidade.</small>
+          <small className="form-hint">Se ficar vazio, o sistema gera automaticamente um slug unico.</small>
         </div>
 
         <div className="form-field editorial-form-grid-span-2">
@@ -88,7 +88,7 @@ export function PostEditorForm({
         </div>
 
         <EditorialImageField
-          hint="Upload simples para a capa do post. O backend devolve a URL publica do arquivo."
+          hint="Envie a capa do post e use a URL publica retornada no conteudo."
           label="Imagem de capa"
           onChange={(value) => updateField('coverImageUrl', value)}
           token={token}
@@ -104,7 +104,7 @@ export function PostEditorForm({
             type="url"
             value={form.videoUrl}
           />
-          <small className="form-hint">MVP usa links externos para YouTube ou Vimeo, sem upload pesado.</small>
+          <small className="form-hint">Use links externos de video, como YouTube ou Vimeo.</small>
         </div>
 
         <TextListField

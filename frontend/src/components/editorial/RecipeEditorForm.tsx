@@ -82,7 +82,7 @@ export function RecipeEditorForm({
         </div>
 
         <EditorialImageField
-          hint="Imagem principal da receita no MVP."
+          hint="Imagem principal da receita exibida no site publico."
           label="Imagem"
           onChange={(value) => updateField('imageUrl', value)}
           token={token}

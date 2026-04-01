@@ -44,7 +44,7 @@ export function EditorialSessionProvider({ children }: EditorialSessionProviderP
     const trimmedToken = nextToken.trim();
 
     if (!trimmedToken) {
-      throw new Error('Informe o token editorial provisorio.');
+      throw new Error('Informe o acesso editorial deste ambiente.');
     }
 
     try {
