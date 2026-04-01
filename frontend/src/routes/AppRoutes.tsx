@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { PublicLayout } from '../layouts/PublicLayout';
 import { EditorialLayout } from '../layouts/EditorialLayout';
+import { AccessPage } from '../pages/AccessPage';
 import { AboutPage } from '../pages/AboutPage';
 import { ArticleDetailPage } from '../pages/ArticleDetailPage';
 import { ContactPage } from '../pages/ContactPage';
@@ -28,6 +29,7 @@ export function AppRoutes() {
 
       <Route element={<PublicLayout />}>
         <Route index element={<HomePage />} />
+        <Route path="/acessos" element={<AccessPage />} />
         <Route path="/sobre" element={<AboutPage />} />
         <Route path="/conteudos" element={<ContentPage />} />
         <Route path="/conteudos/posts/:slug" element={<PostDetailPage />} />

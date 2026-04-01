@@ -33,9 +33,14 @@ export function Header() {
           ))}
         </nav>
 
-        <Link className="button button-primary header-cta" to="/contato">
-          Agendar avaliacao
-        </Link>
+        <div className="header-actions">
+          <Link className="button button-secondary" to="/acessos">
+            Acessos
+          </Link>
+          <Link className="button button-primary header-cta" to="/contato">
+            Agendar avaliacao
+          </Link>
+        </div>
       </div>
     </header>
   );
