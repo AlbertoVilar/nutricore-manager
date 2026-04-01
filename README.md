@@ -62,6 +62,31 @@ Direcao adotada:
 - formularios e tabelas editoriais componentizados
 - integracao via client HTTP proprio
 
+## CI e fluxo de entrega
+
+O repositorio agora possui uma pipeline minima no GitHub Actions em `.github/workflows/ci.yml`.
+
+Ela roda automaticamente em:
+
+- `push` para `main`
+- `push` para `develop`
+- `push` para `codex/**`
+- `pull_request` para `main`
+- `pull_request` para `develop`
+
+Checks atuais:
+
+- `Backend tests`: executa `./mvnw -B test`
+- `Frontend build`: executa `npm ci` e `npm run build` em `frontend/`
+
+Fluxo recomendado:
+
+1. trabalhar em branch dedicada
+2. validar localmente backend e frontend
+3. subir a branch
+4. abrir PR para `develop`
+5. usar a pipeline como gate minimo antes de merge
+
 ## Arquitetura de navegacao
 
 ### Camadas do produto
