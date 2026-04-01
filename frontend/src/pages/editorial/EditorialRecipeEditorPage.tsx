@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { RecipeEditorForm } from '../../components/editorial/RecipeEditorForm';
 import { ErrorState } from '../../components/ErrorState';
 import { LoadingState } from '../../components/LoadingState';
-import { useEditorialSession } from '../../hooks/useEditorialSession';
 import { createAdminRecipe, getAdminRecipeById, updateAdminRecipe } from '../../services/editorialRecipeService';
 import type { AdminRecipeInput } from '../../types/editorial';
 
@@ -25,7 +24,6 @@ const emptyRecipe: AdminRecipeInput = {
 export function EditorialRecipeEditorPage() {
   const { id } = useParams();
   const isEditMode = Boolean(id);
-  const { token } = useEditorialSession();
   const navigate = useNavigate();
   const location = useLocation();
   const [initialValue, setInitialValue] = useState<AdminRecipeInput>(emptyRecipe);
@@ -47,7 +45,7 @@ export function EditorialRecipeEditorPage() {
       setLoadError(null);
 
       try {
-        const response = await getAdminRecipeById(token, Number(id));
+        const response = await getAdminRecipeById(Number(id));
         setInitialValue({
           title: response.title,
           slug: response.slug,
@@ -70,7 +68,7 @@ export function EditorialRecipeEditorPage() {
     }
 
     void loadRecipe();
-  }, [id, isEditMode, token]);
+  }, [id, isEditMode]);
 
   async function handleSubmit(payload: AdminRecipeInput) {
     setIsSubmitting(true);
@@ -79,8 +77,8 @@ export function EditorialRecipeEditorPage() {
 
     try {
       const response = isEditMode && id
-        ? await updateAdminRecipe(token, Number(id), payload)
-        : await createAdminRecipe(token, payload);
+        ? await updateAdminRecipe(Number(id), payload)
+        : await createAdminRecipe(payload);
 
       if (!isEditMode) {
         navigate(`/editor/recipes/${response.id}/editar`, {
@@ -122,7 +120,6 @@ export function EditorialRecipeEditorPage() {
           onSubmit={handleSubmit}
           submitError={submitError}
           submitSuccess={submitSuccess}
-          token={token}
         />
       ) : null}
     </section>

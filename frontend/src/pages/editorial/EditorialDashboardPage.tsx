@@ -19,7 +19,7 @@ interface EditorialSummary {
 }
 
 export function EditorialDashboardPage() {
-  const { token } = useEditorialSession();
+  const { user } = useEditorialSession();
   const [items, setItems] = useState<EditorialSummary[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,9 +31,9 @@ export function EditorialDashboardPage() {
 
       try {
         const [posts, articles, recipes] = await Promise.all([
-          getAdminPosts(token),
-          getAdminArticles(token),
-          getAdminRecipes(token),
+          getAdminPosts(),
+          getAdminArticles(),
+          getAdminRecipes(),
         ]);
 
         setItems([
@@ -49,7 +49,7 @@ export function EditorialDashboardPage() {
     }
 
     void loadDashboard();
-  }, [token]);
+  }, []);
 
   if (isLoading) {
     return <LoadingState message="Carregando indicadores editoriais..." />;
@@ -69,6 +69,7 @@ export function EditorialDashboardPage() {
             O CMS organiza tudo em torno de rascunho, publicacao e arquivamento. O publico so enxerga o que esta em{' '}
             <strong>PUBLISHED</strong>.
           </p>
+          {user ? <p className="form-hint">Sessao ativa: {user.fullName} ({user.role})</p> : null}
           <div className="cta-actions">
             <Link className="button button-primary" to="/editor/posts/novo">
               Novo post

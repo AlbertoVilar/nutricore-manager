@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { PostEditorForm } from '../../components/editorial/PostEditorForm';
 import { ErrorState } from '../../components/ErrorState';
 import { LoadingState } from '../../components/LoadingState';
-import { useEditorialSession } from '../../hooks/useEditorialSession';
 import { createAdminPost, getAdminPostById, updateAdminPost } from '../../services/editorialPostService';
 import type { AdminPostInput } from '../../types/editorial';
 
@@ -25,7 +24,6 @@ const emptyPost: AdminPostInput = {
 export function EditorialPostEditorPage() {
   const { id } = useParams();
   const isEditMode = Boolean(id);
-  const { token } = useEditorialSession();
   const navigate = useNavigate();
   const location = useLocation();
   const [initialValue, setInitialValue] = useState<AdminPostInput>(emptyPost);
@@ -47,7 +45,7 @@ export function EditorialPostEditorPage() {
       setLoadError(null);
 
       try {
-        const response = await getAdminPostById(token, Number(id));
+        const response = await getAdminPostById(Number(id));
         setInitialValue({
           title: response.title,
           slug: response.slug,
@@ -70,7 +68,7 @@ export function EditorialPostEditorPage() {
     }
 
     void loadPost();
-  }, [id, isEditMode, token]);
+  }, [id, isEditMode]);
 
   async function handleSubmit(payload: AdminPostInput) {
     setIsSubmitting(true);
@@ -79,8 +77,8 @@ export function EditorialPostEditorPage() {
 
     try {
       const response = isEditMode && id
-        ? await updateAdminPost(token, Number(id), payload)
-        : await createAdminPost(token, payload);
+        ? await updateAdminPost(Number(id), payload)
+        : await createAdminPost(payload);
 
       if (!isEditMode) {
         navigate(`/editor/posts/${response.id}/editar`, {
@@ -122,7 +120,6 @@ export function EditorialPostEditorPage() {
           onSubmit={handleSubmit}
           submitError={submitError}
           submitSuccess={submitSuccess}
-          token={token}
         />
       ) : null}
     </section>

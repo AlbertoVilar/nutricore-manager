@@ -7,7 +7,6 @@ import {
 } from '../../components/editorial/EditorialStatusFilter';
 import { ErrorState } from '../../components/ErrorState';
 import { LoadingState } from '../../components/LoadingState';
-import { useEditorialSession } from '../../hooks/useEditorialSession';
 import {
   archiveAdminRecipe,
   deleteAdminRecipe,
@@ -18,7 +17,6 @@ import {
 import type { AdminRecipe } from '../../types/editorial';
 
 export function EditorialRecipesPage() {
-  const { token } = useEditorialSession();
   const [recipes, setRecipes] = useState<AdminRecipe[]>([]);
   const [filter, setFilter] = useState<EditorialStatusFilterValue>('ALL');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -29,13 +27,13 @@ export function EditorialRecipesPage() {
     setErrorMessage(null);
 
     try {
-      setRecipes(await getAdminRecipes(token, filter));
+      setRecipes(await getAdminRecipes(filter));
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar as receitas.');
     } finally {
       setIsLoading(false);
     }
-  }, [filter, token]);
+  }, [filter]);
 
   useEffect(() => {
     void loadRecipes();
@@ -79,16 +77,16 @@ export function EditorialRecipesPage() {
           emptyTitle="Nenhuma receita encontrada para o filtro atual."
           entityLabel="receita"
           onArchive={(id) => {
-            void executeAction(() => archiveAdminRecipe(token, id), 'Arquivar esta receita?');
+            void executeAction(() => archiveAdminRecipe(id), 'Arquivar esta receita?');
           }}
           onDelete={(id) => {
-            void executeAction(() => deleteAdminRecipe(token, id), 'Excluir esta receita permanentemente?');
+            void executeAction(() => deleteAdminRecipe(id), 'Excluir esta receita permanentemente?');
           }}
           onDraft={(id) => {
-            void executeAction(() => draftAdminRecipe(token, id), 'Mover esta receita de volta para rascunho?');
+            void executeAction(() => draftAdminRecipe(id), 'Mover esta receita de volta para rascunho?');
           }}
           onPublish={(id) => {
-            void executeAction(() => publishAdminRecipe(token, id));
+            void executeAction(() => publishAdminRecipe(id));
           }}
           rows={recipes.map((recipe) => ({
             id: recipe.id,

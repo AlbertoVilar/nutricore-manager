@@ -7,7 +7,6 @@ import {
 } from '../../components/editorial/EditorialStatusFilter';
 import { ErrorState } from '../../components/ErrorState';
 import { LoadingState } from '../../components/LoadingState';
-import { useEditorialSession } from '../../hooks/useEditorialSession';
 import {
   archiveAdminArticle,
   deleteAdminArticle,
@@ -18,7 +17,6 @@ import {
 import type { AdminArticle } from '../../types/editorial';
 
 export function EditorialArticlesPage() {
-  const { token } = useEditorialSession();
   const [articles, setArticles] = useState<AdminArticle[]>([]);
   const [filter, setFilter] = useState<EditorialStatusFilterValue>('ALL');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -29,13 +27,13 @@ export function EditorialArticlesPage() {
     setErrorMessage(null);
 
     try {
-      setArticles(await getAdminArticles(token, filter));
+      setArticles(await getAdminArticles(filter));
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar os artigos.');
     } finally {
       setIsLoading(false);
     }
-  }, [filter, token]);
+  }, [filter]);
 
   useEffect(() => {
     void loadArticles();
@@ -79,16 +77,16 @@ export function EditorialArticlesPage() {
           emptyTitle="Nenhum artigo encontrado para o filtro atual."
           entityLabel="artigo"
           onArchive={(id) => {
-            void executeAction(() => archiveAdminArticle(token, id), 'Arquivar este artigo?');
+            void executeAction(() => archiveAdminArticle(id), 'Arquivar este artigo?');
           }}
           onDelete={(id) => {
-            void executeAction(() => deleteAdminArticle(token, id), 'Excluir este artigo permanentemente?');
+            void executeAction(() => deleteAdminArticle(id), 'Excluir este artigo permanentemente?');
           }}
           onDraft={(id) => {
-            void executeAction(() => draftAdminArticle(token, id), 'Mover este artigo de volta para rascunho?');
+            void executeAction(() => draftAdminArticle(id), 'Mover este artigo de volta para rascunho?');
           }}
           onPublish={(id) => {
-            void executeAction(() => publishAdminArticle(token, id));
+            void executeAction(() => publishAdminArticle(id));
           }}
           rows={articles.map((article) => ({
             id: article.id,

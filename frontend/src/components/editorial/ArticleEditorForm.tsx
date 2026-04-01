@@ -6,7 +6,6 @@ import { TextListField } from './TextListField';
 
 interface ArticleEditorFormProps {
   initialValue: AdminArticleInput;
-  token: string;
   isSubmitting: boolean;
   submitError: string | null;
   submitSuccess: string | null;
@@ -15,7 +14,6 @@ interface ArticleEditorFormProps {
 
 export function ArticleEditorForm({
   initialValue,
-  token,
   isSubmitting,
   submitError,
   submitSuccess,
@@ -101,7 +99,6 @@ export function ArticleEditorForm({
           hint="A imagem de capa aparece nas listagens publicas e no detalhe do artigo."
           label="Imagem de capa"
           onChange={(value) => updateField('coverImageUrl', value)}
-          token={token}
           value={form.coverImageUrl}
         />
 

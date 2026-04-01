@@ -11,7 +11,7 @@ const editorialNavigation = [
 
 export function EditorialLayout() {
   const location = useLocation();
-  const { signOut } = useEditorialSession();
+  const { signOut, user } = useEditorialSession();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -28,6 +28,14 @@ export function EditorialLayout() {
               <span>Area privada da nutricionista</span>
             </div>
           </div>
+
+          {user ? (
+            <div className="editorial-user-card">
+              <strong>{user.fullName}</strong>
+              <span>{user.email}</span>
+              <small>{user.role}</small>
+            </div>
+          ) : null}
 
           <nav aria-label="Navegacao editorial" className="editorial-nav">
             {editorialNavigation.map((item) => (
@@ -48,8 +56,8 @@ export function EditorialLayout() {
               <Link className="button button-secondary" to="/">
                 Ver site publico
               </Link>
-              <button className="button button-tertiary" onClick={signOut} type="button">
-                Encerrar acesso
+              <button className="button button-tertiary" onClick={() => signOut()} type="button">
+                Sair da sessao
               </button>
             </div>
           </div>

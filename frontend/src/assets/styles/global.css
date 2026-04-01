@@ -905,6 +905,25 @@ select {
   font-size: 0.92rem;
 }
 
+.editorial-user-card {
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.editorial-user-card strong {
+  font-size: 1rem;
+}
+
+.editorial-user-card span,
+.editorial-user-card small {
+  overflow-wrap: anywhere;
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .editorial-nav {
   display: grid;
   gap: 10px;

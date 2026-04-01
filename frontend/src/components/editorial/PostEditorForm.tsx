@@ -6,7 +6,6 @@ import { TextListField } from './TextListField';
 
 interface PostEditorFormProps {
   initialValue: AdminPostInput;
-  token: string;
   isSubmitting: boolean;
   submitError: string | null;
   submitSuccess: string | null;
@@ -15,7 +14,6 @@ interface PostEditorFormProps {
 
 export function PostEditorForm({
   initialValue,
-  token,
   isSubmitting,
   submitError,
   submitSuccess,
@@ -91,7 +89,6 @@ export function PostEditorForm({
           hint="Envie a capa do post e use a URL publica retornada no conteudo."
           label="Imagem de capa"
           onChange={(value) => updateField('coverImageUrl', value)}
-          token={token}
           value={form.coverImageUrl}
         />
 

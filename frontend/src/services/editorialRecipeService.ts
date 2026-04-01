@@ -1,51 +1,51 @@
 import type { AdminRecipe, AdminRecipeInput } from '../types/editorial';
 import { deleteRequest, getJson, patchJson, postJson, putJson } from './httpClient';
-import { buildEditorialHeaders, buildStatusQuery } from './editorialRequest';
+import { buildStatusQuery } from './editorialRequest';
 
-export function getAdminRecipes(token: string, status: 'ALL' | 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' = 'ALL') {
+export function getAdminRecipes(status: 'ALL' | 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' = 'ALL') {
   return getJson<AdminRecipe[]>(`/v1/admin/recipes${buildStatusQuery(status)}`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function getAdminRecipeById(token: string, id: number) {
+export function getAdminRecipeById(id: number) {
   return getJson<AdminRecipe>(`/v1/admin/recipes/${id}`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function createAdminRecipe(token: string, payload: AdminRecipeInput) {
+export function createAdminRecipe(payload: AdminRecipeInput) {
   return postJson<AdminRecipe, AdminRecipeInput>('/v1/admin/recipes', payload, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function updateAdminRecipe(token: string, id: number, payload: AdminRecipeInput) {
+export function updateAdminRecipe(id: number, payload: AdminRecipeInput) {
   return putJson<AdminRecipe, AdminRecipeInput>(`/v1/admin/recipes/${id}`, payload, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function publishAdminRecipe(token: string, id: number) {
+export function publishAdminRecipe(id: number) {
   return patchJson<AdminRecipe>(`/v1/admin/recipes/${id}/publish`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function draftAdminRecipe(token: string, id: number) {
+export function draftAdminRecipe(id: number) {
   return patchJson<AdminRecipe>(`/v1/admin/recipes/${id}/draft`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function archiveAdminRecipe(token: string, id: number) {
+export function archiveAdminRecipe(id: number) {
   return patchJson<AdminRecipe>(`/v1/admin/recipes/${id}/archive`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function deleteAdminRecipe(token: string, id: number) {
+export function deleteAdminRecipe(id: number) {
   return deleteRequest(`/v1/admin/recipes/${id}`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }

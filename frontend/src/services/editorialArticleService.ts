@@ -1,51 +1,51 @@
 import type { AdminArticle, AdminArticleInput } from '../types/editorial';
 import { deleteRequest, getJson, patchJson, postJson, putJson } from './httpClient';
-import { buildEditorialHeaders, buildStatusQuery } from './editorialRequest';
+import { buildStatusQuery } from './editorialRequest';
 
-export function getAdminArticles(token: string, status: 'ALL' | 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' = 'ALL') {
+export function getAdminArticles(status: 'ALL' | 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' = 'ALL') {
   return getJson<AdminArticle[]>(`/v1/admin/articles${buildStatusQuery(status)}`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function getAdminArticleById(token: string, id: number) {
+export function getAdminArticleById(id: number) {
   return getJson<AdminArticle>(`/v1/admin/articles/${id}`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function createAdminArticle(token: string, payload: AdminArticleInput) {
+export function createAdminArticle(payload: AdminArticleInput) {
   return postJson<AdminArticle, AdminArticleInput>('/v1/admin/articles', payload, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function updateAdminArticle(token: string, id: number, payload: AdminArticleInput) {
+export function updateAdminArticle(id: number, payload: AdminArticleInput) {
   return putJson<AdminArticle, AdminArticleInput>(`/v1/admin/articles/${id}`, payload, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function publishAdminArticle(token: string, id: number) {
+export function publishAdminArticle(id: number) {
   return patchJson<AdminArticle>(`/v1/admin/articles/${id}/publish`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function draftAdminArticle(token: string, id: number) {
+export function draftAdminArticle(id: number) {
   return patchJson<AdminArticle>(`/v1/admin/articles/${id}/draft`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function archiveAdminArticle(token: string, id: number) {
+export function archiveAdminArticle(id: number) {
   return patchJson<AdminArticle>(`/v1/admin/articles/${id}/archive`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }
 
-export function deleteAdminArticle(token: string, id: number) {
+export function deleteAdminArticle(id: number) {
   return deleteRequest(`/v1/admin/articles/${id}`, {
-    headers: buildEditorialHeaders(token),
+    auth: true,
   });
 }

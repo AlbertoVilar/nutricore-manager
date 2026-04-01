@@ -7,7 +7,6 @@ import {
 } from '../../components/editorial/EditorialStatusFilter';
 import { ErrorState } from '../../components/ErrorState';
 import { LoadingState } from '../../components/LoadingState';
-import { useEditorialSession } from '../../hooks/useEditorialSession';
 import {
   archiveAdminPost,
   deleteAdminPost,
@@ -18,7 +17,6 @@ import {
 import type { AdminPost } from '../../types/editorial';
 
 export function EditorialPostsPage() {
-  const { token } = useEditorialSession();
   const [posts, setPosts] = useState<AdminPost[]>([]);
   const [filter, setFilter] = useState<EditorialStatusFilterValue>('ALL');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -29,13 +27,13 @@ export function EditorialPostsPage() {
     setErrorMessage(null);
 
     try {
-      setPosts(await getAdminPosts(token, filter));
+      setPosts(await getAdminPosts(filter));
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar os posts editoriais.');
     } finally {
       setIsLoading(false);
     }
-  }, [filter, token]);
+  }, [filter]);
 
   useEffect(() => {
     void loadPosts();
@@ -79,16 +77,16 @@ export function EditorialPostsPage() {
           emptyTitle="Nenhum post encontrado para o filtro atual."
           entityLabel="post"
           onArchive={(id) => {
-            void executeAction(() => archiveAdminPost(token, id), 'Arquivar este post?');
+            void executeAction(() => archiveAdminPost(id), 'Arquivar este post?');
           }}
           onDelete={(id) => {
-            void executeAction(() => deleteAdminPost(token, id), 'Excluir este post permanentemente?');
+            void executeAction(() => deleteAdminPost(id), 'Excluir este post permanentemente?');
           }}
           onDraft={(id) => {
-            void executeAction(() => draftAdminPost(token, id), 'Mover este post de volta para rascunho?');
+            void executeAction(() => draftAdminPost(id), 'Mover este post de volta para rascunho?');
           }}
           onPublish={(id) => {
-            void executeAction(() => publishAdminPost(token, id));
+            void executeAction(() => publishAdminPost(id));
           }}
           rows={posts.map((post) => ({
             id: post.id,

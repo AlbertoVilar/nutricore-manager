@@ -6,21 +6,24 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { ApiError } from '../services/httpClient';
-import { getAdminPosts } from '../services/editorialPostService';
+import type { AuthSession, AuthenticatedUser, LoginCredentials } from '../types/auth';
+import { loginEditorialUser, getAuthenticatedEditorialUser } from '../services/authService';
 import {
-  clearStoredEditorialToken,
-  getStoredEditorialToken,
-  storeEditorialToken,
+  clearStoredEditorialSession,
+  getStoredEditorialSession,
+  isEditorialSessionExpired,
+  storeEditorialSession,
 } from '../services/editorialSessionService';
+import { ApiError, registerAuthFailureHandler } from '../services/httpClient';
 
 interface EditorialSessionContextValue {
-  token: string;
+  session: AuthSession | null;
+  user: AuthenticatedUser | null;
   isAuthenticated: boolean;
   isReady: boolean;
   errorMessage: string | null;
-  signIn: (token: string) => Promise<void>;
-  signOut: () => void;
+  signIn: (credentials: LoginCredentials) => Promise<void>;
+  signOut: (reason?: string) => void;
   clearError: () => void;
 }
 
@@ -31,45 +34,128 @@ interface EditorialSessionProviderProps {
 }
 
 export function EditorialSessionProvider({ children }: EditorialSessionProviderProps) {
-  const [token, setToken] = useState('');
+  const [session, setSession] = useState<AuthSession | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    setToken(getStoredEditorialToken());
-    setIsReady(true);
+    let isMounted = true;
+
+    async function restoreSession() {
+      const storedSession = getStoredEditorialSession();
+
+      if (!storedSession) {
+        if (isMounted) {
+          setIsReady(true);
+        }
+        return;
+      }
+
+      if (isEditorialSessionExpired(storedSession)) {
+        clearStoredEditorialSession();
+
+        if (isMounted) {
+          setSession(null);
+          setErrorMessage('Sua sessao expirou. Faca login novamente.');
+          setIsReady(true);
+        }
+        return;
+      }
+
+      setSession(storedSession);
+
+      try {
+        const authenticatedUser = await getAuthenticatedEditorialUser();
+        const refreshedSession = {
+          ...storedSession,
+          user: authenticatedUser,
+        };
+
+        storeEditorialSession(refreshedSession);
+
+        if (isMounted) {
+          setSession(refreshedSession);
+          setErrorMessage(null);
+        }
+      } catch (error) {
+        clearStoredEditorialSession();
+
+        if (isMounted) {
+          setSession(null);
+          setErrorMessage(
+            error instanceof ApiError && error.status === 401
+              ? 'Sua sessao expirou. Faca login novamente.'
+              : 'Nao foi possivel restaurar a sessao editorial.',
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setIsReady(true);
+        }
+      }
+    }
+
+    void restoreSession();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  async function signIn(nextToken: string) {
-    const trimmedToken = nextToken.trim();
+  useEffect(() => {
+    registerAuthFailureHandler((error) => {
+      if (!getStoredEditorialSession()) {
+        return;
+      }
 
-    if (!trimmedToken) {
-      throw new Error('Informe o acesso editorial deste ambiente.');
+      clearStoredEditorialSession();
+      setSession(null);
+      setErrorMessage(
+        error.status === 401
+          ? 'Sua sessao expirou ou ficou invalida. Faca login novamente.'
+          : 'Seu acesso editorial foi encerrado.',
+      );
+    });
+
+    return () => {
+      registerAuthFailureHandler(null);
+    };
+  }, []);
+
+  async function signIn(credentials: LoginCredentials) {
+    const email = credentials.email.trim();
+
+    if (!email || !credentials.password.trim()) {
+      throw new Error('Informe email e senha para acessar o CMS.');
     }
 
     try {
-      await getAdminPosts(trimmedToken, 'ALL');
-      storeEditorialToken(trimmedToken);
-      setToken(trimmedToken);
+      const authenticatedSession = await loginEditorialUser({
+        email,
+        password: credentials.password,
+      });
+
+      storeEditorialSession(authenticatedSession);
+      setSession(authenticatedSession);
       setErrorMessage(null);
     } catch (error) {
-      clearStoredEditorialToken();
-      setToken('');
+      clearStoredEditorialSession();
+      setSession(null);
 
       if (error instanceof ApiError) {
         setErrorMessage(error.message);
         throw error;
       }
 
-      setErrorMessage('Nao foi possivel validar o acesso editorial agora.');
+      setErrorMessage('Nao foi possivel autenticar o acesso editorial agora.');
       throw error;
     }
   }
 
-  function signOut() {
-    clearStoredEditorialToken();
-    setToken('');
-    setErrorMessage(null);
+  function signOut(reason?: string) {
+    clearStoredEditorialSession();
+    setSession(null);
+    setErrorMessage(reason ?? null);
   }
 
   function clearError() {
@@ -78,15 +164,16 @@ export function EditorialSessionProvider({ children }: EditorialSessionProviderP
 
   const value = useMemo<EditorialSessionContextValue>(
     () => ({
-      token,
-      isAuthenticated: token.trim().length > 0,
+      session,
+      user: session?.user ?? null,
+      isAuthenticated: session !== null,
       isReady,
       errorMessage,
       signIn,
       signOut,
       clearError,
     }),
-    [errorMessage, isReady, token],
+    [errorMessage, isReady, session],
   );
 
   return <EditorialSessionContext.Provider value={value}>{children}</EditorialSessionContext.Provider>;

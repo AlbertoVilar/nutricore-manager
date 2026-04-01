@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArticleEditorForm } from '../../components/editorial/ArticleEditorForm';
 import { ErrorState } from '../../components/ErrorState';
 import { LoadingState } from '../../components/LoadingState';
-import { useEditorialSession } from '../../hooks/useEditorialSession';
 import { createAdminArticle, getAdminArticleById, updateAdminArticle } from '../../services/editorialArticleService';
 import type { AdminArticleInput } from '../../types/editorial';
 
@@ -24,7 +23,6 @@ const emptyArticle: AdminArticleInput = {
 export function EditorialArticleEditorPage() {
   const { id } = useParams();
   const isEditMode = Boolean(id);
-  const { token } = useEditorialSession();
   const navigate = useNavigate();
   const location = useLocation();
   const [initialValue, setInitialValue] = useState<AdminArticleInput>(emptyArticle);
@@ -46,7 +44,7 @@ export function EditorialArticleEditorPage() {
       setLoadError(null);
 
       try {
-        const response = await getAdminArticleById(token, Number(id));
+        const response = await getAdminArticleById(Number(id));
         setInitialValue({
           title: response.title,
           slug: response.slug,
@@ -68,7 +66,7 @@ export function EditorialArticleEditorPage() {
     }
 
     void loadArticle();
-  }, [id, isEditMode, token]);
+  }, [id, isEditMode]);
 
   async function handleSubmit(payload: AdminArticleInput) {
     setIsSubmitting(true);
@@ -77,8 +75,8 @@ export function EditorialArticleEditorPage() {
 
     try {
       const response = isEditMode && id
-        ? await updateAdminArticle(token, Number(id), payload)
-        : await createAdminArticle(token, payload);
+        ? await updateAdminArticle(Number(id), payload)
+        : await createAdminArticle(payload);
 
       if (!isEditMode) {
         navigate(`/editor/articles/${response.id}/editar`, {
@@ -120,7 +118,6 @@ export function EditorialArticleEditorPage() {
           onSubmit={handleSubmit}
           submitError={submitError}
           submitSuccess={submitSuccess}
-          token={token}
         />
       ) : null}
     </section>

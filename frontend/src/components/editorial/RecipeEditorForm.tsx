@@ -6,7 +6,6 @@ import { TextListField } from './TextListField';
 
 interface RecipeEditorFormProps {
   initialValue: AdminRecipeInput;
-  token: string;
   isSubmitting: boolean;
   submitError: string | null;
   submitSuccess: string | null;
@@ -15,7 +14,6 @@ interface RecipeEditorFormProps {
 
 export function RecipeEditorForm({
   initialValue,
-  token,
   isSubmitting,
   submitError,
   submitSuccess,
@@ -85,7 +83,6 @@ export function RecipeEditorForm({
           hint="Imagem principal da receita exibida no site publico."
           label="Imagem"
           onChange={(value) => updateField('imageUrl', value)}
-          token={token}
           value={form.imageUrl}
         />
 

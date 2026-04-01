@@ -5,12 +5,11 @@ import { resolveAssetUrl } from '../../utils/media';
 interface EditorialImageFieldProps {
   label: string;
   hint: string;
-  token: string;
   value: string;
   onChange: (value: string) => void;
 }
 
-export function EditorialImageField({ label, hint, token, value, onChange }: EditorialImageFieldProps) {
+export function EditorialImageField({ label, hint, value, onChange }: EditorialImageFieldProps) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -23,7 +22,7 @@ export function EditorialImageField({ label, hint, token, value, onChange }: Edi
     setErrorMessage(null);
 
     try {
-      const response = await uploadEditorialImage(token, file);
+      const response = await uploadEditorialImage(file);
       onChange(response.url);
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel enviar a imagem.');
