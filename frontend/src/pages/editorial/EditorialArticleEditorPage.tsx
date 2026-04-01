@@ -59,7 +59,7 @@ export function EditorialArticleEditorPage() {
           publishedAt: response.publishedAt,
         });
       } catch (error) {
-        setLoadError(error instanceof Error ? error.message : 'Nao foi possivel carregar o artigo.');
+        setLoadError(error instanceof Error ? error.message : 'Não foi possível carregar o artigo.');
       } finally {
         setIsLoading(false);
       }
@@ -88,7 +88,7 @@ export function EditorialArticleEditorPage() {
 
       setSubmitSuccess('Artigo atualizado com sucesso.');
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : 'Nao foi possivel salvar o artigo.');
+      setSubmitError(error instanceof Error ? error.message : 'Não foi possível salvar o artigo.');
     } finally {
       setIsSubmitting(false);
     }

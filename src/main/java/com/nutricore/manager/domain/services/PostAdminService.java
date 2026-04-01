@@ -92,7 +92,7 @@ public class PostAdminService {
 
     private Post findEntityById(Long id) {
         return postRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Post nao encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Post não encontrado."));
     }
 
     private String resolveSlug(String requestedSlug, String title, Long currentId) {
@@ -100,7 +100,7 @@ public class PostAdminService {
         String baseSlug = SlugGenerator.slugify(source);
 
         if (baseSlug.isBlank()) {
-            throw new BusinessException("Nao foi possivel gerar um slug valido para o post.");
+            throw new BusinessException("Não foi possível gerar um slug válido para o post.");
         }
 
         String candidate = baseSlug;

@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
             HttpServletRequest request
     ) {
         HttpStatus status = HttpStatus.NOT_FOUND;
-        StandardError err = createStandardError(status, "Recurso nao encontrado", ex.getMessage(), request);
+        StandardError err = createStandardError(status, "Recurso não encontrado", ex.getMessage(), request);
         return ResponseEntity.status(status).body(err);
     }
 
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
             HttpServletRequest request
     ) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-        StandardError err = createStandardError(status, "Recurso invalido", "Erro de validacao nos campos", request);
+        StandardError err = createStandardError(status, "Recurso inválido", "Erro de validação nos campos", request);
 
         List<FieldMessage> errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(fieldError -> new FieldMessage(fieldError.getField(), fieldError.getDefaultMessage()))
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
             HttpServletRequest request
     ) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardError err = createStandardError(status, "Violacao de regra de negocio", ex.getMessage(), request);
+        StandardError err = createStandardError(status, "Violação de regra de negócio", ex.getMessage(), request);
         return ResponseEntity.status(status).body(err);
     }
 
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
             HttpServletRequest request
     ) {
         HttpStatus status = HttpStatus.UNAUTHORIZED;
-        StandardError err = createStandardError(status, "Credenciais invalidas", ex.getMessage(), request);
+        StandardError err = createStandardError(status, "Credenciais inválidas", ex.getMessage(), request);
         return ResponseEntity.status(status).body(err);
     }
 
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
             HttpServletRequest request
     ) {
         HttpStatus status = HttpStatus.UNAUTHORIZED;
-        StandardError err = createStandardError(status, "Nao autenticado", ex.getMessage(), request);
+        StandardError err = createStandardError(status, "Não autenticado", ex.getMessage(), request);
         return ResponseEntity.status(status).body(err);
     }
 
@@ -103,19 +103,19 @@ public class GlobalExceptionHandler {
 
             if (invalidField.getTargetType().isEnum()) {
                 message = String.format(
-                        "O valor '%s' nao e aceito para o campo '%s'. Verifique os valores permitidos.",
+                        "O valor '%s' não é aceito para o campo '%s'. Verifique os valores permitidos.",
                         valueSent,
                         fieldName
                 );
             } else if (targetType.equals("LocalDate")) {
                 message = String.format(
-                        "A data '%s' no campo '%s' esta em formato invalido. Use o padrao ISO (AAAA-MM-DD).",
+                        "A data '%s' no campo '%s' está em formato inválido. Use o padrão ISO (AAAA-MM-DD).",
                         valueSent,
                         fieldName
                 );
             } else {
                 message = String.format(
-                        "O valor '%s' e incompativel com o tipo esperado para o campo '%s'.",
+                        "O valor '%s' é incompatível com o tipo esperado para o campo '%s'.",
                         valueSent,
                         fieldName
                 );

@@ -61,7 +61,7 @@ export function EditorialPostEditorPage() {
           publishedAt: response.publishedAt,
         });
       } catch (error) {
-        setLoadError(error instanceof Error ? error.message : 'Nao foi possivel carregar o post.');
+        setLoadError(error instanceof Error ? error.message : 'Não foi possível carregar o post.');
       } finally {
         setIsLoading(false);
       }
@@ -90,7 +90,7 @@ export function EditorialPostEditorPage() {
 
       setSubmitSuccess('Post atualizado com sucesso.');
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : 'Nao foi possivel salvar o post.');
+      setSubmitError(error instanceof Error ? error.message : 'Não foi possível salvar o post.');
     } finally {
       setIsSubmitting(false);
     }

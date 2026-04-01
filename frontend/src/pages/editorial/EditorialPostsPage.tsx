@@ -29,7 +29,7 @@ export function EditorialPostsPage() {
     try {
       setPosts(await getAdminPosts(filter));
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar os posts editoriais.');
+      setErrorMessage(error instanceof Error ? error.message : 'Não foi possível carregar os posts editoriais.');
     } finally {
       setIsLoading(false);
     }
@@ -48,7 +48,7 @@ export function EditorialPostsPage() {
       await callback();
       await loadPosts();
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel concluir a acao.');
+      setErrorMessage(error instanceof Error ? error.message : 'Não foi possível concluir a ação.');
     }
   }
 
@@ -57,7 +57,7 @@ export function EditorialPostsPage() {
       <div className="editorial-toolbar">
         <div>
           <span className="section-eyebrow">Posts</span>
-          <h2>Mensagens rapidas, rotina profissional e conteudo com video.</h2>
+          <h2>Mensagens rápidas, rotina profissional e conteúdo com vídeo.</h2>
         </div>
         <Link className="button button-primary" to="/editor/posts/novo">
           Novo post

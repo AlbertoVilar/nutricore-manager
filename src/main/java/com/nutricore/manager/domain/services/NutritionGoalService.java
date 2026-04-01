@@ -63,7 +63,7 @@ public class NutritionGoalService {
     @Transactional(readOnly = true)
     public Page<NutritionGoalResponseDTO> findAllByPatient(Long patientId, Pageable pageable) {
         throw new UnsupportedOperationException(
-                "A listagem de objetivos nutricionais por paciente ainda nao faz parte da base estavel.");
+                "A listagem de objetivos nutricionais por paciente ainda não faz parte da base estável.");
     }
 
     @Transactional

@@ -27,13 +27,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/admin/posts")
-@Tag(name = "Admin Posts", description = "Gestao editorial de posts")
+@Tag(name = "Admin posts", description = "Gestão editorial de posts")
 public class AdminPostController {
 
     private final PostAdminService postAdminService;
 
     @GetMapping
-    @Operation(summary = "Lista posts para administracao")
+    @Operation(summary = "Lista posts para administração")
     public ResponseEntity<List<AdminPostResponseDTO>> findAll(
             @RequestParam(required = false) EditorialStatus status
     ) {
@@ -41,7 +41,7 @@ public class AdminPostController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Busca um post pelo id para edicao")
+    @Operation(summary = "Busca um post pelo id para edição")
     public ResponseEntity<AdminPostResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(postAdminService.findById(id));
     }

@@ -23,7 +23,7 @@ export function ArticleDetailPage() {
       try {
         setArticle(await getPublicArticleBySlug(slug));
       } catch (error) {
-        setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar o artigo.');
+        setErrorMessage(error instanceof Error ? error.message : 'Não foi possível carregar o artigo.');
       } finally {
         setIsLoading(false);
       }
@@ -37,7 +37,7 @@ export function ArticleDetailPage() {
   }
 
   if (!article || errorMessage) {
-    return <ErrorState description={errorMessage ?? 'Artigo nao encontrado.'} />;
+    return <ErrorState description={errorMessage ?? 'Artigo não encontrado.'} />;
   }
 
   return (
@@ -75,7 +75,7 @@ export function ArticleDetailPage() {
 
           <aside className="glass-card detail-sidebar">
             <h3>Biblioteca de artigos</h3>
-            <p>Volte para a selecao de leituras e continue explorando temas publicados pela nutricionista.</p>
+            <p>Volte para a seleção de leituras e continue explorando temas publicados pela nutricionista.</p>
             <div className="detail-sidebar-actions">
               <Link className="button button-secondary" to="/conteudos#artigos">
                 Voltar para artigos

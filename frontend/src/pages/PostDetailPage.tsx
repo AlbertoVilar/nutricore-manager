@@ -25,7 +25,7 @@ export function PostDetailPage() {
       try {
         setPost(await getPublicPostBySlug(slug));
       } catch (error) {
-        setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar o post.');
+        setErrorMessage(error instanceof Error ? error.message : 'Não foi possível carregar o post.');
       } finally {
         setIsLoading(false);
       }
@@ -39,7 +39,7 @@ export function PostDetailPage() {
   }
 
   if (!post || errorMessage) {
-    return <ErrorState description={errorMessage ?? 'Post nao encontrado.'} />;
+    return <ErrorState description={errorMessage ?? 'Post não encontrado.'} />;
   }
 
   const coverImageUrl = resolveAssetUrl(post.coverImageUrl ?? post.galleryImageUrls[0] ?? null);
@@ -54,7 +54,7 @@ export function PostDetailPage() {
             <span>{formatPublishedDate(post.publishedAt)}</span>
           </div>
         }
-        description={post.summary ?? post.caption ?? 'Post publicado pela nutricionista para a camada publica do site.'}
+        description={post.summary ?? post.caption ?? 'Post publicado pela nutricionista para a camada pública do site.'}
         eyebrow="Post"
         title={post.title}
       />
@@ -80,12 +80,12 @@ export function PostDetailPage() {
             <h3>{routine ? 'Rotina da Nutri' : 'Continuar navegando'}</h3>
             <p>
               {routine
-                ? 'Este post faz parte da colecao de treino e rotina. Volte para a biblioteca e veja outros conteudos da mesma linha.'
+                ? 'Este post faz parte da coleção de treino e rotina. Volte para a biblioteca e veja outros conteúdos da mesma linha.'
                 : 'Volte para a biblioteca e acompanhe outros temas publicados pela nutricionista.'}
             </p>
             <div className="detail-sidebar-actions">
               <Link className="button button-secondary" to={routine ? '/conteudos#rotina-da-nutri' : '/conteudos#posts'}>
-                {routine ? 'Ver colecao de treino' : 'Voltar para posts'}
+                {routine ? 'Ver coleção de treino' : 'Voltar para posts'}
               </Link>
               <Link className="button button-tertiary" to="/planos">
                 Conhecer planos

@@ -10,7 +10,7 @@ export function VideoEmbed({ url }: VideoEmbedProps) {
   if (!embedUrl) {
     return (
       <a className="button button-secondary" href={url} rel="noreferrer" target="_blank">
-        Abrir video externo
+        Abrir vídeo externo
       </a>
     );
   }
@@ -21,7 +21,7 @@ export function VideoEmbed({ url }: VideoEmbedProps) {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
         src={embedUrl}
-        title="Video relacionado ao conteudo"
+        title="Vídeo relacionado ao conteúdo"
       />
     </div>
   );

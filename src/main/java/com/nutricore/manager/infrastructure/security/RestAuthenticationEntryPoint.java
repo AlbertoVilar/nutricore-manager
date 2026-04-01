@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 
 @Component
@@ -31,7 +32,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 response,
                 request,
                 HttpStatus.UNAUTHORIZED,
-                "Autenticacao obrigatoria",
+                "Autenticação obrigatória",
                 resolveMessage(request)
         );
     }
@@ -42,7 +43,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
             return message;
         }
 
-        return "Autenticacao obrigatoria para acessar este recurso.";
+        return "Autenticação obrigatória para acessar este recurso.";
     }
 
     private void writeError(
@@ -60,6 +61,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         standardError.setPath(request.getRequestURI());
 
         response.setStatus(status.value());
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write(objectMapper.writeValueAsString(standardError));
     }

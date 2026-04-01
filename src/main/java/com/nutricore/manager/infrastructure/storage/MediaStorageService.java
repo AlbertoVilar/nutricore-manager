@@ -28,7 +28,7 @@ public class MediaStorageService {
         try {
             Files.createDirectories(this.imageDirectory);
         } catch (IOException ex) {
-            throw new IllegalStateException("Nao foi possivel preparar o diretorio de midia.", ex);
+            throw new IllegalStateException("Não foi possível preparar o diretório de mídia.", ex);
         }
     }
 
@@ -42,7 +42,7 @@ public class MediaStorageService {
         try {
             file.transferTo(targetFile);
         } catch (IOException ex) {
-            throw new IllegalStateException("Nao foi possivel salvar a imagem enviada.", ex);
+            throw new IllegalStateException("Não foi possível salvar a imagem enviada.", ex);
         }
 
         return "/api/media/images/" + filename;
@@ -54,16 +54,16 @@ public class MediaStorageService {
 
     private void validateImage(MultipartFile file) {
         if (file == null || file.isEmpty()) {
-            throw new BusinessException("Envie um arquivo de imagem valido.");
+            throw new BusinessException("Envie um arquivo de imagem válido.");
         }
 
         String contentType = file.getContentType();
         if (contentType == null || !contentType.toLowerCase(Locale.ROOT).startsWith("image/")) {
-            throw new BusinessException("Apenas arquivos de imagem sao aceitos neste MVP.");
+            throw new BusinessException("Apenas arquivos de imagem são aceitos neste MVP.");
         }
 
         if (file.getSize() > maxImageBytes) {
-            throw new BusinessException("A imagem excede o tamanho maximo permitido para o MVP.");
+            throw new BusinessException("A imagem excede o tamanho máximo permitido para o MVP.");
         }
     }
 

@@ -25,7 +25,7 @@ export function EditorialLayout() {
             <span className="brand-mark">NC</span>
             <div>
               <strong>NutriCore CMS</strong>
-              <span>Area privada da nutricionista</span>
+              <span>Área privada da nutricionista</span>
             </div>
           </div>
 
@@ -37,7 +37,7 @@ export function EditorialLayout() {
             </div>
           ) : null}
 
-          <nav aria-label="Navegacao editorial" className="editorial-nav">
+          <nav aria-label="Navegação editorial" className="editorial-nav">
             {editorialNavigation.map((item) => (
               <NavLink
                 key={item.to}
@@ -51,13 +51,13 @@ export function EditorialLayout() {
           </nav>
 
           <div className="editorial-sidebar-footer">
-            <p>Gerencie tudo o que vai ao ar no site publico e revise o conteudo antes de publicar.</p>
+            <p>Gerencie tudo o que vai ao ar no site público e revise o conteúdo antes de publicar.</p>
             <div className="editorial-sidebar-actions">
               <Link className="button button-secondary" to="/">
-                Ver site publico
+                Ver site público
               </Link>
               <button className="button button-tertiary" onClick={() => signOut()} type="button">
-                Sair da sessao
+                Sair da sessão
               </button>
             </div>
           </div>
@@ -67,9 +67,9 @@ export function EditorialLayout() {
       <div className="editorial-main-shell">
         <header className="editorial-topbar">
           <div>
-            <span className="section-eyebrow">Area privada</span>
+            <span className="section-eyebrow">Área privada</span>
             <h1>Central editorial</h1>
-            <p>Posts, artigos e receitas organizados em rascunho, publicacao e arquivamento.</p>
+            <p>Posts, artigos e receitas organizados em rascunho, publicação e arquivamento.</p>
           </div>
         </header>
 

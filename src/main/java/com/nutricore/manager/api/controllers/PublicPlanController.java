@@ -15,13 +15,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/public/plans")
-@Tag(name = "Public Plans", description = "Planos publicos exibidos no site")
+@Tag(name = "Planos públicos", description = "Planos públicos exibidos no site")
 public class PublicPlanController {
 
     private final PublicPlanService publicPlanService;
 
     @GetMapping
-    @Operation(summary = "Lista os planos publicos")
+    @Operation(summary = "Lista os planos públicos")
     public ResponseEntity<List<PublicPlanResponseDTO>> findAll() {
         return ResponseEntity.ok(publicPlanService.findAll());
     }

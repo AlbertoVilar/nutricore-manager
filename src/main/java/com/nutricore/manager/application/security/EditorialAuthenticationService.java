@@ -30,13 +30,13 @@ public class EditorialAuthenticationService {
                     new UsernamePasswordAuthenticationToken(normalizedEmail, password)
             );
         } catch (DisabledException ex) {
-            throw new InvalidCredentialsException("Sua conta editorial esta desativada.");
+            throw new InvalidCredentialsException("Sua conta editorial está desativada.");
         } catch (BadCredentialsException ex) {
-            throw new InvalidCredentialsException("Email ou senha invalidos.");
+            throw new InvalidCredentialsException("E-mail ou senha inválidos.");
         }
 
         UserAccount userAccount = userAccountRepository.findByEmailIgnoreCase(normalizedEmail)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario editorial nao encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário editorial não encontrado."));
 
         return buildAuthenticationResult(userAccount);
     }
@@ -44,7 +44,7 @@ public class EditorialAuthenticationService {
     @Transactional(readOnly = true)
     public AuthenticatedUserSnapshot getAuthenticatedUser(String email) {
         UserAccount userAccount = userAccountRepository.findByEmailIgnoreCase(normalizeEmail(email))
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario editorial nao encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário editorial não encontrado."));
 
         return toSnapshot(userAccount);
     }

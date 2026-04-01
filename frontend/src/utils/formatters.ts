@@ -1,6 +1,6 @@
 export function formatPublishedDate(value: string | null | undefined) {
   if (!value) {
-    return 'Nao publicado';
+    return 'Não publicado';
   }
 
   const normalizedValue = value.includes('T') ? value : `${value}T00:00:00`;
@@ -14,7 +14,7 @@ export function formatPublishedDate(value: string | null | undefined) {
 
 export function formatDateTime(value: string | null | undefined) {
   if (!value) {
-    return 'Nao definido';
+    return 'Não definido';
   }
 
   return new Intl.DateTimeFormat('pt-BR', {

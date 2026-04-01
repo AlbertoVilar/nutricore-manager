@@ -79,35 +79,35 @@ export function PublicSiteDataProvider({ children }: PublicSiteDataProviderProps
       setProfile(profileResult.value);
     } else {
       setProfile(null);
-      nextErrors.profile = 'Nao foi possivel carregar o perfil publico.';
+      nextErrors.profile = 'Não foi possível carregar o perfil público.';
     }
 
     if (plansResult.status === 'fulfilled') {
       setPlans(plansResult.value);
     } else {
       setPlans([]);
-      nextErrors.plans = 'Nao foi possivel carregar os planos de atendimento.';
+      nextErrors.plans = 'Não foi possível carregar os planos de atendimento.';
     }
 
     if (articlesResult.status === 'fulfilled') {
       setArticles(articlesResult.value);
     } else {
       setArticles([]);
-      nextErrors.articles = 'Nao foi possivel carregar os artigos publicados.';
+      nextErrors.articles = 'Não foi possível carregar os artigos publicados.';
     }
 
     if (postsResult.status === 'fulfilled') {
       setPosts(postsResult.value);
     } else {
       setPosts([]);
-      nextErrors.posts = 'Nao foi possivel carregar os conteudos publicados.';
+      nextErrors.posts = 'Não foi possível carregar os conteúdos publicados.';
     }
 
     if (recipesResult.status === 'fulfilled') {
       setRecipes(recipesResult.value);
     } else {
       setRecipes([]);
-      nextErrors.recipes = 'Nao foi possivel carregar as receitas.';
+      nextErrors.recipes = 'Não foi possível carregar as receitas.';
     }
 
     setErrors(nextErrors);

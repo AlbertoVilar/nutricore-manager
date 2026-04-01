@@ -29,7 +29,7 @@ export function EditorialRecipesPage() {
     try {
       setRecipes(await getAdminRecipes(filter));
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar as receitas.');
+      setErrorMessage(error instanceof Error ? error.message : 'Não foi possível carregar as receitas.');
     } finally {
       setIsLoading(false);
     }
@@ -48,7 +48,7 @@ export function EditorialRecipesPage() {
       await callback();
       await loadRecipes();
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel concluir a acao.');
+      setErrorMessage(error instanceof Error ? error.message : 'Não foi possível concluir a ação.');
     }
   }
 
@@ -57,7 +57,7 @@ export function EditorialRecipesPage() {
       <div className="editorial-toolbar">
         <div>
           <span className="section-eyebrow">Receitas</span>
-          <h2>Biblioteca publica com ingredientes, modo de preparo e imagem.</h2>
+          <h2>Biblioteca pública com ingredientes, modo de preparo e imagem.</h2>
         </div>
         <Link className="button button-primary" to="/editor/recipes/novo">
           Nova receita
@@ -73,7 +73,7 @@ export function EditorialRecipesPage() {
         <EditorialContentTable
           createHref="/editor/recipes/novo"
           editHrefBase="/editor/recipes"
-          emptyDescription="Receitas publicadas ajudam a demonstrar utilidade pratica do acompanhamento."
+          emptyDescription="Receitas publicadas ajudam a demonstrar a utilidade prática do acompanhamento."
           emptyTitle="Nenhuma receita encontrada para o filtro atual."
           entityLabel="receita"
           onArchive={(id) => {

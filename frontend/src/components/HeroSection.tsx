@@ -33,8 +33,8 @@ export function HeroSection({ profile }: HeroSectionProps) {
             <img alt={profile.fullName} src={resolveAssetUrl(profile.heroImageUrl)} />
           </div>
           <div className="hero-floating-card glass-card">
-            <strong>Nutricao com estrategia e vida real</strong>
-            <p>Consulta, conteudo e acompanhamento organizados para transformar orientacao em rotina possivel.</p>
+            <strong>Nutrição com estratégia e vida real</strong>
+            <p>Consulta, conteúdo e acompanhamento organizados para transformar orientação em rotina possível.</p>
           </div>
         </div>
       </div>

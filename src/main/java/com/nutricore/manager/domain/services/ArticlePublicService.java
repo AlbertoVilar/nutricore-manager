@@ -29,6 +29,6 @@ public class ArticlePublicService {
     public PublicArticleResponseDTO findBySlug(String slug) {
         return articleRepository.findBySlugAndStatus(slug, EditorialStatus.PUBLISHED)
                 .map(publicArticleMapper::toResponse)
-                .orElseThrow(() -> new ResourceNotFoundException("Artigo publico nao encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Artigo público não encontrado."));
     }
 }

@@ -15,8 +15,8 @@ export function PostCard({ post }: PostCardProps) {
     <article className="content-card glass-card">
       {imageUrl ? <img alt={post.title} className="content-card-image" src={imageUrl} /> : null}
       <div className="content-card-meta">
-        <span>{post.category ?? 'Rotina clinica'}</span>
-        <span>{post.videoUrl ? 'Com video' : 'Post rapido'}</span>
+        <span>{post.category ?? 'Rotina clínica'}</span>
+        <span>{post.videoUrl ? 'Com vídeo' : 'Post rápido'}</span>
       </div>
       <h3>{post.title}</h3>
       <p>{summary}</p>

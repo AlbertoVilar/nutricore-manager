@@ -60,12 +60,12 @@ export function ArticleEditorForm({
       <div className="editorial-form-layout">
         <div className="editorial-form-main">
           <EditorialFormSection
-            description="Organize o artigo com titulo, resumo e corpo principal em uma estrutura clara para leitura."
-            title="Conteudo principal"
+            description="Organize o artigo com título, resumo e corpo principal em uma estrutura clara para leitura."
+            title="Conteúdo principal"
           >
             <div className="editorial-form-grid">
               <div className="form-field">
-                <label htmlFor="article-title">Titulo</label>
+                <label htmlFor="article-title">Título</label>
                 <input id="article-title" onChange={(event) => updateField('title', event.target.value)} required type="text" value={form.title} />
               </div>
 
@@ -93,7 +93,7 @@ export function ArticleEditorForm({
               </div>
 
               <div className="form-field editorial-form-grid-span-2">
-                <label htmlFor="article-body">Conteudo completo</label>
+                <label htmlFor="article-body">Conteúdo completo</label>
                 <textarea
                   id="article-body"
                   onChange={(event) => updateField('body', event.target.value)}
@@ -106,13 +106,13 @@ export function ArticleEditorForm({
           </EditorialFormSection>
 
           <EditorialFormSection
-            description="A capa ajuda nas listagens publicas e as tags fortalecem a organizacao editorial."
-            title="Midia e organizacao"
+            description="A capa ajuda nas listagens públicas e as tags fortalecem a organização editorial."
+            title="Mídia e organização"
           >
             <div className="editorial-form-grid">
               <EditorialImageField
                 className="editorial-form-grid-span-2"
-                hint="A imagem de capa aparece nas listagens publicas e no detalhe do artigo."
+                hint="A imagem de capa aparece nas listagens públicas e no detalhe do artigo."
                 label="Imagem de capa"
                 onChange={(value) => updateField('coverImageUrl', value)}
                 value={form.coverImageUrl}
@@ -133,8 +133,8 @@ export function ArticleEditorForm({
         <aside className="editorial-form-aside">
           <EditorialFormSection
             compact
-            description="Defina como o artigo sera classificado e quanto tempo de leitura ele costuma exigir."
-            title="Classificacao"
+            description="Defina como o artigo será classificado e quanto tempo de leitura ele costuma exigir."
+            title="Classificação"
           >
             <div className="editorial-form-grid editorial-form-grid-single">
               <div className="form-field">
@@ -155,11 +155,11 @@ export function ArticleEditorForm({
                   onChange={(event) =>
                     updateField('readTimeMinutes', event.target.value ? Number(event.target.value) : null)
                   }
-                  placeholder="Auto se vazio"
+                  placeholder="Automático se ficar vazio"
                   type="number"
                   value={form.readTimeMinutes ?? ''}
                 />
-                <small className="form-hint">Se deixar vazio, o sistema pode estimar depois.</small>
+                <small className="form-hint">Se deixar vazio, o sistema estima depois.</small>
               </div>
             </div>
           </EditorialFormSection>
@@ -167,7 +167,7 @@ export function ArticleEditorForm({
           <EditorialFormSection
             compact
             description="Controle quando o artigo vai ao ar e se ele aparece com destaque."
-            title="Publicacao"
+            title="Publicação"
           >
             <div className="editorial-form-grid editorial-form-grid-single">
               <div className="form-field">
@@ -184,7 +184,7 @@ export function ArticleEditorForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="article-published-at">Data de publicacao</label>
+                <label htmlFor="article-published-at">Data de publicação</label>
                 <input
                   id="article-published-at"
                   onChange={(event) => updateField('publishedAt', event.target.value || null)}

@@ -44,7 +44,7 @@ class EditorialManagementIntegrationTest {
     void shouldRequireAuthenticationForAdminEndpoints() throws Exception {
         mockMvc.perform(get("/api/v1/admin/posts").contextPath(API_CONTEXT))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(containsString("Autenticacao obrigatoria")));
+                .andExpect(jsonPath("$.message").value(containsString("Autenticação obrigatória")));
     }
 
     @Test

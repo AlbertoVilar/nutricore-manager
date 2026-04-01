@@ -1,9 +1,9 @@
 import { Link, NavLink } from 'react-router-dom';
 
 const navigationItems = [
-  { to: '/', label: 'Inicio' },
+  { to: '/', label: 'Início' },
   { to: '/sobre', label: 'Sobre' },
-  { to: '/conteudos', label: 'Conteudo' },
+  { to: '/conteudos', label: 'Conteúdo' },
   { to: '/receitas', label: 'Receitas' },
   { to: '/planos', label: 'Planos' },
   { to: '/contato', label: 'Contato' },
@@ -17,11 +17,11 @@ export function Header() {
           <span className="brand-mark">NC</span>
           <div>
             <strong>NutriCore</strong>
-            <span>Nutricao clinica e rotina real</span>
+            <span>Nutrição clínica e rotina real</span>
           </div>
         </Link>
 
-        <nav className="main-nav" aria-label="Navegacao principal">
+        <nav className="main-nav" aria-label="Navegação principal">
           {navigationItems.map((item) => (
             <NavLink
               key={item.to}
@@ -38,7 +38,7 @@ export function Header() {
             Acessos
           </Link>
           <Link className="button button-primary header-cta" to="/contato">
-            Agendar avaliacao
+            Agendar avaliação
           </Link>
         </div>
       </div>

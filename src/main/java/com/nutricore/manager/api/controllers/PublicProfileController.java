@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/public/profile")
-@Tag(name = "Public Profile", description = "Dados institucionais publicos da nutricionista")
+@Tag(name = "Perfil público", description = "Dados institucionais públicos da nutricionista")
 public class PublicProfileController {
 
     private final PublicProfileService publicProfileService;
 
     @GetMapping
-    @Operation(summary = "Retorna o perfil publico principal")
+    @Operation(summary = "Retorna o perfil público principal")
     public ResponseEntity<PublicProfileResponseDTO> getProfile() {
         return ResponseEntity.ok(publicProfileService.getProfile());
     }

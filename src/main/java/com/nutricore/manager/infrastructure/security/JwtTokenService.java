@@ -26,7 +26,7 @@ public class JwtTokenService {
     @PostConstruct
     public void initialize() {
         if (jwtProperties.getSecret() == null || jwtProperties.getSecret().isBlank()) {
-            throw new IllegalStateException("JWT secret nao configurado para este ambiente.");
+            throw new IllegalStateException("JWT secret não configurado para este ambiente.");
         }
 
         byte[] keyBytes = jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8);

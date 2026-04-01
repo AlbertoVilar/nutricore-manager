@@ -5,7 +5,7 @@ interface ErrorStateProps {
 }
 
 export function ErrorState({
-  title = 'Nao foi possivel carregar esta secao.',
+  title = 'Não foi possível carregar esta seção.',
   description,
   onRetry,
 }: ErrorStateProps) {

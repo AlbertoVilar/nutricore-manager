@@ -62,12 +62,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
             request.setAttribute(
                     RestAuthenticationEntryPoint.AUTH_ERROR_MESSAGE_ATTRIBUTE,
-                    "Token de acesso invalido ou expirado."
+                    "Token de acesso inválido ou expirado."
             );
             restAuthenticationEntryPoint.commence(
                     request,
                     response,
-                    new InsufficientAuthenticationException("Token de acesso invalido.", ex)
+                    new InsufficientAuthenticationException("Token de acesso inválido.", ex)
             );
         }
     }

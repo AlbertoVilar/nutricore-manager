@@ -72,7 +72,7 @@ class AuthIntegrationTest {
                                 }
                                 """))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value("Email ou senha invalidos."));
+                .andExpect(jsonPath("$.message").value("E-mail ou senha inválidos."));
     }
 
     @Test
@@ -87,7 +87,7 @@ class AuthIntegrationTest {
         mockMvc.perform(get("/api/v1/admin/posts")
                         .contextPath(API_CONTEXT))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(containsString("Autenticacao obrigatoria")));
+                .andExpect(jsonPath("$.message").value(containsString("Autenticação obrigatória")));
     }
 
     @Test
@@ -109,7 +109,7 @@ class AuthIntegrationTest {
                         .contextPath(API_CONTEXT)
                         .header("Authorization", bearerToken(accessToken)))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value("Voce nao possui permissao para acessar este recurso."));
+                .andExpect(jsonPath("$.message").value("Você não possui permissão para acessar este recurso."));
     }
 
     @Test

@@ -29,7 +29,7 @@ export function EditorialArticlesPage() {
     try {
       setArticles(await getAdminArticles(filter));
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar os artigos.');
+      setErrorMessage(error instanceof Error ? error.message : 'Não foi possível carregar os artigos.');
     } finally {
       setIsLoading(false);
     }
@@ -48,7 +48,7 @@ export function EditorialArticlesPage() {
       await callback();
       await loadArticles();
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel concluir a acao.');
+      setErrorMessage(error instanceof Error ? error.message : 'Não foi possível concluir a ação.');
     }
   }
 
@@ -57,7 +57,7 @@ export function EditorialArticlesPage() {
       <div className="editorial-toolbar">
         <div>
           <span className="section-eyebrow">Artigos</span>
-          <h2>Conteudos densos com resumo, tags e leitura estimada.</h2>
+          <h2>Conteúdos densos com resumo, tags e leitura estimada.</h2>
         </div>
         <Link className="button button-primary" to="/editor/articles/novo">
           Novo artigo

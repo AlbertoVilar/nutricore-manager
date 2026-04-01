@@ -23,7 +23,7 @@ export function HomePage() {
 
   return (
     <>
-      {isLoading && !profile ? <LoadingState message="Preparando a experiencia publica..." /> : null}
+      {isLoading && !profile ? <LoadingState message="Preparando a experiência pública..." /> : null}
 
       {profile ? <HeroSection profile={profile} /> : null}
 
@@ -31,7 +31,7 @@ export function HomePage() {
         <section className="section">
           <div className="container">
             <ErrorState
-              description="Nao foi possivel carregar a apresentacao principal do site agora."
+              description="Não foi possível carregar a apresentação principal do site agora."
               onRetry={() => {
                 void refresh();
               }}
@@ -44,7 +44,7 @@ export function HomePage() {
         <div className="container">
           <SectionHeading
             centered
-            description="Cada etapa do atendimento nasce para funcionar na vida real: consulta com estrategia, conduta viavel e acompanhamento que conversa com a rotina."
+            description="Cada etapa do atendimento nasce para funcionar na vida real: consulta com estratégia, conduta viável e acompanhamento que conversa com a rotina."
             eyebrow="Como funciona"
             title="Uma jornada clara para orientar, acompanhar e sustentar resultado."
           />
@@ -61,9 +61,9 @@ export function HomePage() {
         <div className="container two-column-grid">
           <div>
             <SectionHeading
-              description="A consulta vai alem do plano alimentar. O foco e combinar contexto, treino, aderencia e acompanhamento em uma mesma linguagem."
+              description="A consulta vai além do plano alimentar. O foco é combinar contexto, treino, aderência e acompanhamento em uma mesma linguagem."
               eyebrow="Abordagem"
-              title="Atendimento pensado para caber na agenda, no treino e nas refeicoes do dia a dia."
+              title="Atendimento pensado para caber na agenda, no treino e nas refeições do dia a dia."
             />
             <div className="pillar-stack">
               {servicePillars.map((pillar) => (
@@ -77,7 +77,7 @@ export function HomePage() {
 
           <div className="glass-card callout-card">
             <span className="section-eyebrow">Sobre a nutricionista</span>
-            <h3>{profile?.aboutTitle ?? 'Conduta clara, proxima e sustentavel.'}</h3>
+            <h3>{profile?.aboutTitle ?? 'Conduta clara, próxima e sustentável.'}</h3>
             <p>
               {profile?.aboutDescription ??
                 'Atendimento com leitura de rotina, objetivo e contexto antes de qualquer ajuste nutricional.'}
@@ -98,7 +98,7 @@ export function HomePage() {
           />
 
           {errors.plans ? (
-            <ErrorState description="Os planos de atendimento nao foram carregados." />
+            <ErrorState description="Os planos de atendimento não foram carregados." />
           ) : (
             <div className="plan-grid">
               {plans.map((plan) => (
@@ -112,7 +112,7 @@ export function HomePage() {
               Ver detalhes dos planos
             </Link>
             <Link className="button button-secondary" to="/contato">
-              Tirar duvidas sobre atendimento
+              Tirar dúvidas sobre atendimento
             </Link>
           </div>
         </div>
@@ -123,13 +123,13 @@ export function HomePage() {
       <section className="section">
         <div className="container">
           <SectionHeading
-            description="Artigos aprofundam temas importantes. Posts curtos mantem o contato frequente com treino, alimentacao e vida real."
-            eyebrow="Conteudo"
+            description="Artigos aprofundam temas importantes. Posts curtos mantêm o contato frequente com treino, alimentação e vida real."
+            eyebrow="Conteúdo"
             title="Biblioteca para orientar com clareza antes, durante e depois da consulta."
           />
 
           {errors.articles ? (
-            <ErrorState description="Os artigos em destaque nao puderam ser exibidos." />
+            <ErrorState description="Os artigos em destaque não puderam ser exibidos." />
           ) : featuredArticle || generalPosts.length > 0 ? (
             <div className="card-grid home-content-grid">
               {featuredArticle ? (
@@ -139,7 +139,7 @@ export function HomePage() {
               )}
 
               {errors.posts ? (
-                <ErrorState description="Os posts publicados nao puderam ser exibidos." />
+                <ErrorState description="Os posts publicados não puderam ser exibidos." />
               ) : generalPosts.length > 0 ? (
                 generalPosts.slice(0, 2).map((post) => <PostCard key={post.id} post={post} />)
               ) : (
@@ -147,7 +147,7 @@ export function HomePage() {
               )}
             </div>
           ) : (
-            <ErrorState description="A biblioteca publica ainda nao tem conteudos suficientes para destaque nesta secao." />
+            <ErrorState description="A biblioteca pública ainda não tem conteúdos suficientes para destaque nesta seção." />
           )}
 
           <div className="section-actions">
@@ -161,13 +161,13 @@ export function HomePage() {
       <section className="section recipes-section">
         <div className="container">
           <SectionHeading
-            description="Receitas publicadas ajudam a mostrar repertorio, praticidade e escolhas que respeitam a rotina."
+            description="Receitas publicadas ajudam a mostrar repertório, praticidade e escolhas que respeitam a rotina."
             eyebrow="Receitas"
-            title="Sugestoes saudaveis para manter consistencia sem perder prazer em comer."
+            title="Sugestões saudáveis para manter consistência sem perder prazer em comer."
           />
 
           {errors.recipes ? (
-            <ErrorState description="As receitas publicas nao puderam ser exibidas." />
+            <ErrorState description="As receitas públicas não puderam ser exibidas." />
           ) : (
             <div className="recipe-grid">
               {recipes.slice(0, 3).map((recipe) => (
@@ -188,9 +188,9 @@ export function HomePage() {
         <div className="container">
           <SectionHeading
             centered
-            description="A jornada nutricional ganha aderencia quando existe acolhimento, clareza e ajuste fino ao longo do caminho."
+            description="A jornada nutricional ganha aderência quando existe acolhimento, clareza e ajuste fino ao longo do caminho."
             eyebrow="Relatos"
-            title="Percepcoes de quem buscou mais estrutura para comer, treinar e sustentar resultado."
+            title="Percepções de quem buscou mais estrutura para comer, treinar e sustentar resultado."
           />
 
           <div className="testimonial-grid">
@@ -205,9 +205,9 @@ export function HomePage() {
         <div className="container cta-banner">
           <div>
             <span className="section-eyebrow">Contato</span>
-            <h2>Pronta para organizar alimentacao, treino e rotina com mais clareza?</h2>
+            <h2>Pronta para organizar alimentação, treino e rotina com mais clareza?</h2>
             <p>
-              O proximo passo e conversar sobre objetivo, momento atual e o tipo de acompanhamento que faz sentido
+              O próximo passo é conversar sobre objetivo, momento atual e o tipo de acompanhamento que faz sentido
               para sua rotina.
             </p>
           </div>

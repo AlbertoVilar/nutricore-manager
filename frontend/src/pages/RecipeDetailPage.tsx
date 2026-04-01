@@ -22,7 +22,7 @@ export function RecipeDetailPage() {
       try {
         setRecipe(await getPublicRecipeBySlug(slug));
       } catch (error) {
-        setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar a receita.');
+        setErrorMessage(error instanceof Error ? error.message : 'Não foi possível carregar a receita.');
       } finally {
         setIsLoading(false);
       }
@@ -36,7 +36,7 @@ export function RecipeDetailPage() {
   }
 
   if (!recipe || errorMessage) {
-    return <ErrorState description={errorMessage ?? 'Receita nao encontrada.'} />;
+    return <ErrorState description={errorMessage ?? 'Receita não encontrada.'} />;
   }
 
   return (

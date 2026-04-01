@@ -56,7 +56,7 @@ export function EditorialSessionProvider({ children }: EditorialSessionProviderP
 
         if (isMounted) {
           setSession(null);
-          setErrorMessage('Sua sessao expirou. Faca login novamente.');
+          setErrorMessage('Sua sessão expirou. Faça login novamente.');
           setIsReady(true);
         }
         return;
@@ -84,8 +84,8 @@ export function EditorialSessionProvider({ children }: EditorialSessionProviderP
           setSession(null);
           setErrorMessage(
             error instanceof ApiError && error.status === 401
-              ? 'Sua sessao expirou. Faca login novamente.'
-              : 'Nao foi possivel restaurar a sessao editorial.',
+              ? 'Sua sessão expirou. Faça login novamente.'
+              : 'Não foi possível restaurar a sessão editorial.',
           );
         }
       } finally {
@@ -112,7 +112,7 @@ export function EditorialSessionProvider({ children }: EditorialSessionProviderP
       setSession(null);
       setErrorMessage(
         error.status === 401
-          ? 'Sua sessao expirou ou ficou invalida. Faca login novamente.'
+          ? 'Sua sessão expirou ou ficou inválida. Faça login novamente.'
           : 'Seu acesso editorial foi encerrado.',
       );
     });
@@ -126,7 +126,7 @@ export function EditorialSessionProvider({ children }: EditorialSessionProviderP
     const email = credentials.email.trim();
 
     if (!email || !credentials.password.trim()) {
-      throw new Error('Informe email e senha para acessar o CMS.');
+      throw new Error('Informe e-mail e senha para acessar o CMS.');
     }
 
     try {
@@ -147,7 +147,7 @@ export function EditorialSessionProvider({ children }: EditorialSessionProviderP
         throw error;
       }
 
-      setErrorMessage('Nao foi possivel autenticar o acesso editorial agora.');
+      setErrorMessage('Não foi possível autenticar o acesso editorial agora.');
       throw error;
     }
   }

@@ -25,7 +25,7 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("NutriCore Manager API")
                         .version("1.0")
-                        .description("API para gerenciamento de pacientes, conteudo editorial e acesso privado.")
+                        .description("API para gerenciamento de pacientes, conteúdo editorial e acesso privado.")
                         .contact(new Contact()
                                 .name("Alberto Vilar")
                                 .email("albertovilar1@gmail.com")

@@ -24,7 +24,7 @@ export function EditorialAccessPage() {
   const destination = state?.from?.pathname ?? '/editor';
 
   if (!isReady) {
-    return <LoadingState message="Verificando sessao editorial..." />;
+    return <LoadingState message="Verificando sessão editorial..." />;
   }
 
   if (isAuthenticated) {
@@ -50,10 +50,10 @@ export function EditorialAccessPage() {
       <div className="container editorial-access-grid">
         <div>
           <span className="section-eyebrow">Acesso editorial</span>
-          <h1>Area privada para controlar o que vai ao ar no site.</h1>
+          <h1>Área privada para controlar o que vai ao ar no site.</h1>
           <p>
-            O ambiente editorial fica separado da navegacao publica e agora exige autenticacao real para editar,
-            publicar e arquivar conteudos do site.
+            O ambiente editorial fica separado da navegação pública e agora exige autenticação real para editar,
+            publicar e arquivar conteúdos do site.
           </p>
           <div className="cta-actions">
             <Link className="button button-secondary" to="/">
@@ -70,7 +70,7 @@ export function EditorialAccessPage() {
           }}
         >
           <div className="form-field">
-            <label htmlFor="editorial-email">Email</label>
+            <label htmlFor="editorial-email">E-mail</label>
             <input
               autoComplete="username"
               id="editorial-email"

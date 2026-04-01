@@ -13,7 +13,7 @@ export function ContentPage() {
   const generalPosts = getGeneralPosts(posts);
 
   if (isLoading && posts.length === 0 && articles.length === 0) {
-    return <LoadingState message="Carregando publicacoes..." />;
+    return <LoadingState message="Carregando publicações..." />;
   }
 
   return (
@@ -32,17 +32,17 @@ export function ContentPage() {
             </a>
           </div>
         }
-        description="Aqui ficam os artigos de aprofundamento, a colecao Rotina da Nutri e os posts rapidos que acompanham o dia a dia da nutricionista."
-        eyebrow="Conteudo"
-        title="Uma biblioteca publica organizada por profundidade, contexto e rotina."
+        description="Aqui ficam os artigos de aprofundamento, a coleção Rotina da Nutri e os posts rápidos que acompanham o dia a dia da nutricionista."
+        eyebrow="Conteúdo"
+        title="Uma biblioteca pública organizada por profundidade, contexto e rotina."
       />
 
       <section className="section section-anchor" id="artigos">
         <div className="container">
           <SectionHeading
-            description="Artigos estruturados aprofundam temas relevantes de nutricao, adesao, saude e performance."
+            description="Artigos estruturados aprofundam temas relevantes de nutrição, adesão, saúde e performance."
             eyebrow="Artigos"
-            title="Leituras mais completas para quem quer contexto e direcao."
+            title="Leituras mais completas para quem quer contexto e direção."
           />
 
           {errors.articles ? (
@@ -53,7 +53,7 @@ export function ContentPage() {
               }}
             />
           ) : articles.length === 0 ? (
-            <ErrorState description="Os artigos publicados vao aparecer aqui assim que entrarem no ar." />
+            <ErrorState description="Os artigos publicados vão aparecer aqui assim que entrarem no ar." />
           ) : (
             <div className="card-grid">
               {articles.map((article) => (
@@ -67,9 +67,9 @@ export function ContentPage() {
       <section className="section section-soft section-anchor" id="rotina-da-nutri">
         <div className="container">
           <SectionHeading
-            description="A Rotina da Nutri e uma colecao editorial dentro de posts, dedicada a treino, movimento e consistencia fora do consultorio."
+            description="A Rotina da Nutri é uma coleção editorial dentro de posts, dedicada a treino, movimento e consistência fora do consultório."
             eyebrow="Rotina da Nutri"
-            title="Treino, exemplo e disciplina aplicada a vida real."
+            title="Treino, exemplo e disciplina aplicada à vida real."
           />
 
           {errors.posts ? (
@@ -80,7 +80,7 @@ export function ContentPage() {
               }}
             />
           ) : routinePosts.length === 0 ? (
-            <ErrorState description="Ainda nao ha posts de treino publicados nesta colecao." />
+            <ErrorState description="Ainda não há posts de treino publicados nesta coleção." />
           ) : (
             <div className="card-grid">
               {routinePosts.map((post) => (
@@ -94,9 +94,9 @@ export function ContentPage() {
       <section className="section section-anchor" id="posts">
         <div className="container">
           <SectionHeading
-            description="Posts mais leves para bastidores, reflexoes, dicas rapidas e orientacoes pontuais."
+            description="Posts mais leves para bastidores, reflexões, dicas rápidas e orientações pontuais."
             eyebrow="Posts"
-            title="Atualizacoes curtas para manter presenca, clareza e frequencia."
+            title="Atualizações curtas para manter presença, clareza e frequência."
           />
 
           {errors.posts ? (
@@ -107,7 +107,7 @@ export function ContentPage() {
               }}
             />
           ) : generalPosts.length === 0 ? (
-            <ErrorState description="Nao ha posts curtos publicados alem da colecao de treino neste momento." />
+            <ErrorState description="Não há posts curtos publicados além da coleção de treino neste momento." />
           ) : (
             <div className="card-grid">
               {generalPosts.map((post) => (

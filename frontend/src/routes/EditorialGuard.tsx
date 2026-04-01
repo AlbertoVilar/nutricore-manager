@@ -7,7 +7,7 @@ export function EditorialGuard() {
   const { isAuthenticated, isReady } = useEditorialSession();
 
   if (!isReady) {
-    return <LoadingState message="Validando sessao editorial..." />;
+    return <LoadingState message="Validando sessão editorial..." />;
   }
 
   if (!isAuthenticated) {

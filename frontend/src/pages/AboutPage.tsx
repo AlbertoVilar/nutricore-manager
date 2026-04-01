@@ -11,7 +11,7 @@ export function AboutPage() {
   const { isLoading, profile, refresh } = usePublicSiteData();
 
   if (isLoading && !profile) {
-    return <LoadingState message="Carregando apresentacao profissional..." />;
+    return <LoadingState message="Carregando apresentação profissional..." />;
   }
 
   if (!profile) {
@@ -19,7 +19,7 @@ export function AboutPage() {
       <section className="section">
         <div className="container">
           <ErrorState
-            description="Nao foi possivel carregar a apresentacao da nutricionista neste momento."
+            description="Não foi possível carregar a apresentação da nutricionista neste momento."
             onRetry={() => {
               void refresh();
             }}
@@ -32,7 +32,7 @@ export function AboutPage() {
   return (
     <>
       <PageHero
-        description={`${profile.professionalTitle} em ${profile.city}, com uma abordagem que combina estrategia, rotina real e acompanhamento proximo.`}
+        description={`${profile.professionalTitle} em ${profile.city}, com uma abordagem que combina estratégia, rotina real e acompanhamento próximo.`}
         eyebrow="Sobre"
         title={profile.fullName}
       />
@@ -41,7 +41,7 @@ export function AboutPage() {
         <div className="container two-column-grid">
           <div className="glass-card about-card">
             <SectionHeading
-              description="Uma leitura profissional que considera contexto, adesao e consistencia antes de qualquer ajuste."
+              description="Uma leitura profissional que considera contexto, adesão e consistência antes de qualquer ajuste."
               eyebrow="Posicionamento"
               title={profile.aboutTitle}
             />
@@ -58,9 +58,9 @@ export function AboutPage() {
         <div className="container">
           <SectionHeading
             centered
-            description="O trabalho combina leitura tecnica, planejamento aplicavel e acompanhamento que respeita a vida como ela e."
+            description="O trabalho combina leitura técnica, planejamento aplicável e acompanhamento que respeita a vida como ela é."
             eyebrow="Como funciona"
-            title="Uma abordagem pensada para vida real, adesao e resultado mensuravel."
+            title="Uma abordagem pensada para vida real, adesão e resultado mensurável."
           />
 
           <div className="card-grid">
@@ -78,9 +78,9 @@ export function AboutPage() {
         <div className="container">
           <SectionHeading
             centered
-            description="Relatos que ajudam a traduzir a experiencia de um acompanhamento claro, sustentavel e orientado a rotina."
-            eyebrow="Percepcao de valor"
-            title="Relatos que conectam autoridade, acolhimento e consistencia."
+            description="Relatos que ajudam a traduzir a experiência de um acompanhamento claro, sustentável e orientado à rotina."
+            eyebrow="Percepção de valor"
+            title="Relatos que conectam autoridade, acolhimento e consistência."
           />
 
           <div className="testimonial-grid">

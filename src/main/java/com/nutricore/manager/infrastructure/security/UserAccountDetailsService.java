@@ -19,7 +19,7 @@ public class UserAccountDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         UserAccount userAccount = userAccountRepository.findByEmailIgnoreCase(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado."));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
 
         return User.builder()
                 .username(userAccount.getEmail())

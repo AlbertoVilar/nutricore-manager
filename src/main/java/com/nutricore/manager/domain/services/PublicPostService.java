@@ -29,6 +29,6 @@ public class PublicPostService {
     public PublicPostResponseDTO findBySlug(String slug) {
         return postRepository.findBySlugAndStatus(slug, EditorialStatus.PUBLISHED)
                 .map(publicPostMapper::toResponse)
-                .orElseThrow(() -> new ResourceNotFoundException("Post publico nao encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Post público não encontrado."));
     }
 }

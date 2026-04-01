@@ -22,14 +22,14 @@ export function TrainingRoutineSpotlight({ post }: TrainingRoutineSpotlightProps
             <p>
               {post.summary ??
                 post.caption ??
-                'Uma colecao de posts sobre treino, disciplina e constancia para inspirar o que acontece fora do consultorio.'}
+                'Uma coleção de posts sobre treino, disciplina e constância para inspirar o que acontece fora do consultório.'}
             </p>
 
             <div className="routine-spotlight-meta">
               <span>{post.category ?? 'Treino'}</span>
               <span>{post.featured ? 'Destaque' : 'Rotina'}</span>
               <span>{formatPublishedDate(post.publishedAt)}</span>
-              {post.videoUrl ? <span>Video externo</span> : null}
+              {post.videoUrl ? <span>Vídeo externo</span> : null}
             </div>
 
             {post.caption ? <p className="routine-spotlight-caption">{post.caption}</p> : null}
@@ -39,7 +39,7 @@ export function TrainingRoutineSpotlight({ post }: TrainingRoutineSpotlightProps
                 Ver rotina completa
               </Link>
               <Link className="button button-secondary" to="/conteudos#rotina-da-nutri">
-                Explorar colecao
+                Explorar coleção
               </Link>
             </div>
           </div>

@@ -27,13 +27,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/admin/recipes")
-@Tag(name = "Admin Recipes", description = "Gestao editorial de receitas")
+@Tag(name = "Admin receitas", description = "Gestão editorial de receitas")
 public class AdminRecipeController {
 
     private final RecipeAdminService recipeAdminService;
 
     @GetMapping
-    @Operation(summary = "Lista receitas para administracao")
+    @Operation(summary = "Lista receitas para administração")
     public ResponseEntity<List<AdminRecipeResponseDTO>> findAll(
             @RequestParam(required = false) EditorialStatus status
     ) {
@@ -41,7 +41,7 @@ public class AdminRecipeController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Busca uma receita pelo id para edicao")
+    @Operation(summary = "Busca uma receita pelo id para edição")
     public ResponseEntity<AdminRecipeResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(recipeAdminService.findById(id));
     }

@@ -20,6 +20,6 @@ public class PublicProfileService {
         return publicProfileRepository.findAll().stream()
                 .findFirst()
                 .map(publicProfileMapper::toResponse)
-                .orElseThrow(() -> new ResourceNotFoundException("Perfil publico nao encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Perfil público não encontrado."));
     }
 }

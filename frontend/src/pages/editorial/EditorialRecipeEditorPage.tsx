@@ -61,7 +61,7 @@ export function EditorialRecipeEditorPage() {
           publishedAt: response.publishedAt,
         });
       } catch (error) {
-        setLoadError(error instanceof Error ? error.message : 'Nao foi possivel carregar a receita.');
+        setLoadError(error instanceof Error ? error.message : 'Não foi possível carregar a receita.');
       } finally {
         setIsLoading(false);
       }
@@ -90,7 +90,7 @@ export function EditorialRecipeEditorPage() {
 
       setSubmitSuccess('Receita atualizada com sucesso.');
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : 'Nao foi possivel salvar a receita.');
+      setSubmitError(error instanceof Error ? error.message : 'Não foi possível salvar a receita.');
     } finally {
       setIsSubmitting(false);
     }

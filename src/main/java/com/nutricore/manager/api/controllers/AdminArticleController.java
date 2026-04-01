@@ -27,13 +27,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/admin/articles")
-@Tag(name = "Admin Articles", description = "Gestao editorial de artigos")
+@Tag(name = "Admin artigos", description = "Gestão editorial de artigos")
 public class AdminArticleController {
 
     private final ArticleAdminService articleAdminService;
 
     @GetMapping
-    @Operation(summary = "Lista artigos para administracao")
+    @Operation(summary = "Lista artigos para administração")
     public ResponseEntity<List<AdminArticleResponseDTO>> findAll(
             @RequestParam(required = false) EditorialStatus status
     ) {
@@ -41,7 +41,7 @@ public class AdminArticleController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Busca um artigo pelo id para edicao")
+    @Operation(summary = "Busca um artigo pelo id para edição")
     public ResponseEntity<AdminArticleResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(articleAdminService.findById(id));
     }

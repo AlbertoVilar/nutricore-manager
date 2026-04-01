@@ -5,9 +5,9 @@ export function NotFoundPage() {
   return (
     <>
       <PageHero
-        description="A pagina que voce tentou acessar nao esta disponivel."
+        description="A página que você tentou acessar não está disponível."
         eyebrow="404"
-        title="Pagina nao encontrada."
+        title="Página não encontrada."
       />
 
       <section className="section">

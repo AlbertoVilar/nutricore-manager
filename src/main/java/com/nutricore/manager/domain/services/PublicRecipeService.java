@@ -29,6 +29,6 @@ public class PublicRecipeService {
     public PublicRecipeResponseDTO findBySlug(String slug) {
         return recipeRepository.findBySlugAndStatus(slug, EditorialStatus.PUBLISHED)
                 .map(publicRecipeMapper::toResponse)
-                .orElseThrow(() -> new ResourceNotFoundException("Receita publica nao encontrada."));
+                .orElseThrow(() -> new ResourceNotFoundException("Receita pública não encontrada."));
     }
 }

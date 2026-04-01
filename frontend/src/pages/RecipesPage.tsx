@@ -15,17 +15,17 @@ export function RecipesPage() {
   return (
     <>
       <PageHero
-        description="Receitas pensadas para repertorio, praticidade e aderencia ao plano alimentar."
+        description="Receitas pensadas para repertório, praticidade e aderência ao plano alimentar."
         eyebrow="Receitas"
-        title="Preparos saudaveis para dias corridos e metas ambiciosas."
+        title="Preparos saudáveis para dias corridos e metas ambiciosas."
       />
 
       <section className="section recipes-section">
         <div className="container">
           <SectionHeading
-            description="As receitas reforcam repertorio alimentar, praticidade e uma relacao mais leve com a rotina de preparo."
+            description="As receitas reforçam repertório alimentar, praticidade e uma relação mais leve com a rotina de preparo."
             eyebrow="Biblioteca"
-            title="Sugestoes com preparo simples, imagem clara e orientacao objetiva."
+            title="Sugestões com preparo simples, imagem clara e orientação objetiva."
           />
 
           {errors.recipes ? (

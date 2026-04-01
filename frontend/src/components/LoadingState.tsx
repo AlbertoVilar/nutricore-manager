@@ -2,7 +2,7 @@ interface LoadingStateProps {
   message?: string;
 }
 
-export function LoadingState({ message = 'Carregando conteudo...' }: LoadingStateProps) {
+export function LoadingState({ message = 'Carregando conteúdo...' }: LoadingStateProps) {
   return (
     <div className="state-card">
       <div className="loading-dot-row" aria-hidden="true">

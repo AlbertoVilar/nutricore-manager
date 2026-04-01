@@ -15,11 +15,11 @@ export function ContactCtaForm({ contactPhone, fallbackUrl }: ContactCtaFormProp
     event.preventDefault();
 
     const message = [
-      'Ola, vim pelo site do NutriCore.',
-      `Nome: ${name || 'Nao informado'}.`,
-      `Objetivo: ${objective || 'Nao informado'}.`,
-      `Rotina/treino: ${routine || 'Nao informado'}.`,
-      'Quero agendar uma avaliacao.',
+      'Olá, vim pelo site do NutriCore.',
+      `Nome: ${name || 'Não informado'}.`,
+      `Objetivo: ${objective || 'Não informado'}.`,
+      `Rotina/treino: ${routine || 'Não informado'}.`,
+      'Quero agendar uma avaliação.',
     ].join(' ');
 
     const targetUrl = contactPhone.trim() ? buildWhatsAppLink(contactPhone, message) : fallbackUrl;
@@ -35,7 +35,7 @@ export function ContactCtaForm({ contactPhone, fallbackUrl }: ContactCtaFormProp
           id="name"
           name="name"
           onChange={(event) => setName(event.target.value)}
-          placeholder="Como voce prefere ser chamado?"
+          placeholder="Como você prefere ser chamado?"
           type="text"
           value={name}
         />

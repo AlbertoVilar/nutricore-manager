@@ -92,7 +92,7 @@ public class RecipeAdminService {
 
     private Recipe findEntityById(Long id) {
         return recipeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Receita nao encontrada."));
+                .orElseThrow(() -> new ResourceNotFoundException("Receita não encontrada."));
     }
 
     private String resolveSlug(String requestedSlug, String title, Long currentId) {
@@ -100,7 +100,7 @@ public class RecipeAdminService {
         String baseSlug = SlugGenerator.slugify(source);
 
         if (baseSlug.isBlank()) {
-            throw new BusinessException("Nao foi possivel gerar um slug valido para a receita.");
+            throw new BusinessException("Não foi possível gerar um slug válido para a receita.");
         }
 
         String candidate = baseSlug;

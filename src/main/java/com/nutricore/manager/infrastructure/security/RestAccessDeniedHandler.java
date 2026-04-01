@@ -11,6 +11,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 
 @Component
@@ -29,10 +30,11 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
         standardError.setTimestamp(OffsetDateTime.now().toString());
         standardError.setStatus(HttpStatus.FORBIDDEN.value());
         standardError.setError("Acesso negado");
-        standardError.setMessage("Voce nao possui permissao para acessar este recurso.");
+        standardError.setMessage("Você não possui permissão para acessar este recurso.");
         standardError.setPath(request.getRequestURI());
 
         response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write(objectMapper.writeValueAsString(standardError));
     }

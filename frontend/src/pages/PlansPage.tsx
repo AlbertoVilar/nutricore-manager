@@ -19,21 +19,21 @@ export function PlansPage() {
         actions={
           <div className="page-hero-actions">
             <Link className="button button-primary" to="/contato">
-              Quero uma avaliacao
+              Quero uma avaliação
             </Link>
           </div>
         }
-        description="Planos pensados para diferentes momentos da jornada, com clareza sobre apoio, acompanhamento e ritmo de evolucao."
+        description="Planos pensados para diferentes momentos da jornada, com clareza sobre apoio, acompanhamento e ritmo de evolução."
         eyebrow="Planos"
-        title="Opcoes de acompanhamento para diferentes fases da jornada."
+        title="Opções de acompanhamento para diferentes fases da jornada."
       />
 
       <section className="section plans-section">
         <div className="container">
           <SectionHeading
-            description="Cada plano organiza o nivel de proximidade, revisao e suporte para ajudar a transformar orientacao em aderencia."
+            description="Cada plano organiza o nível de proximidade, revisão e suporte para ajudar a transformar orientação em aderência."
             eyebrow="Atendimento"
-            title="Comparacao objetiva entre niveis de acompanhamento."
+            title="Comparação objetiva entre níveis de acompanhamento."
           />
 
           {errors.plans ? (
@@ -56,10 +56,10 @@ export function PlansPage() {
       <section className="section section-soft">
         <div className="container cta-banner">
           <div>
-            <span className="section-eyebrow">Proximo passo</span>
-            <h2>{profile?.primaryCtaLabel ?? 'Agendar avaliacao'}</h2>
+            <span className="section-eyebrow">Próximo passo</span>
+            <h2>{profile?.primaryCtaLabel ?? 'Agendar avaliação'}</h2>
             <p>
-              Se voce quiser entender qual formato faz mais sentido para o seu momento, a conversa inicial segue por
+              Se você quiser entender qual formato faz mais sentido para o seu momento, a conversa inicial segue por
               canais diretos com a nutricionista.
             </p>
           </div>

@@ -22,7 +22,7 @@ public class SecurityBootstrapRunner implements ApplicationRunner {
         if (isBlank(bootstrapUserProperties.getFullName())
                 || isBlank(bootstrapUserProperties.getEmail())
                 || isBlank(bootstrapUserProperties.getPassword())) {
-            throw new IllegalStateException("Bootstrap de seguranca habilitado sem credenciais completas.");
+            throw new IllegalStateException("Bootstrap de segurança habilitado sem credenciais completas.");
         }
 
         userAccountProvisioningService.provisionBootstrapUser(

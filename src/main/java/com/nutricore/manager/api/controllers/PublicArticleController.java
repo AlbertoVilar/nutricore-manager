@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/public/articles")
-@Tag(name = "Public Articles", description = "Artigos publicados do site")
+@Tag(name = "Artigos públicos", description = "Artigos publicados do site")
 public class PublicArticleController {
 
     private final ArticlePublicService articlePublicService;

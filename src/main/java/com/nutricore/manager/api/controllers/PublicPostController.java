@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/public/posts")
-@Tag(name = "Public Posts", description = "Conteudos publicos do site")
+@Tag(name = "Posts públicos", description = "Conteúdos públicos do site")
 public class PublicPostController {
 
     private final PublicPostService publicPostService;

@@ -16,13 +16,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/public/recipes")
-@Tag(name = "Public Recipes", description = "Receitas e dicas publicas do site")
+@Tag(name = "Receitas públicas", description = "Receitas e dicas públicas do site")
 public class PublicRecipeController {
 
     private final PublicRecipeService publicRecipeService;
 
     @GetMapping
-    @Operation(summary = "Lista as receitas publicas")
+    @Operation(summary = "Lista as receitas públicas")
     public ResponseEntity<List<PublicRecipeResponseDTO>> findAll() {
         return ResponseEntity.ok(publicRecipeService.findAllPublished());
     }

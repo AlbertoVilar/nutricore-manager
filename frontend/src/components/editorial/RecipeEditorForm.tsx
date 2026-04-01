@@ -61,23 +61,23 @@ export function RecipeEditorForm({
       <div className="editorial-form-layout">
         <div className="editorial-form-main">
           <EditorialFormSection
-            description="Defina o nome, a descricao e o passo a passo da receita com clareza para leitura publica."
-            title="Conteudo principal"
+            description="Defina o nome, a descrição e o passo a passo da receita com clareza para leitura pública."
+            title="Conteúdo principal"
           >
             <div className="editorial-form-grid">
               <div className="form-field">
-                <label htmlFor="recipe-title">Titulo</label>
+                <label htmlFor="recipe-title">Título</label>
                 <input id="recipe-title" onChange={(event) => updateField('title', event.target.value)} required type="text" value={form.title} />
               </div>
 
               <div className="form-field">
                 <label htmlFor="recipe-slug">Slug manual opcional</label>
                 <input id="recipe-slug" onChange={(event) => updateField('slug', event.target.value)} type="text" value={form.slug} />
-                <small className="form-hint">Se ficar vazio, o sistema gera automaticamente um slug unico.</small>
+                <small className="form-hint">Se ficar vazio, o sistema gera automaticamente um slug único.</small>
               </div>
 
               <div className="form-field editorial-form-grid-span-2">
-                <label htmlFor="recipe-description">Descricao</label>
+                <label htmlFor="recipe-description">Descrição</label>
                 <textarea
                   id="recipe-description"
                   onChange={(event) => updateField('description', event.target.value)}
@@ -108,13 +108,13 @@ export function RecipeEditorForm({
           </EditorialFormSection>
 
           <EditorialFormSection
-            description="Use uma capa forte e complete os dados praticos que ajudam o visitante a executar a receita."
-            title="Midia e dados da receita"
+            description="Use uma capa forte e complete os dados práticos que ajudam o visitante a executar a receita."
+            title="Mídia e dados da receita"
           >
             <div className="editorial-form-grid">
               <EditorialImageField
                 className="editorial-form-grid-span-2"
-                hint="Imagem principal da receita exibida no site publico."
+                hint="Imagem principal da receita exibida no site público."
                 label="Imagem"
                 onChange={(value) => updateField('imageUrl', value)}
                 value={form.imageUrl}
@@ -149,8 +149,8 @@ export function RecipeEditorForm({
         <aside className="editorial-form-aside">
           <EditorialFormSection
             compact
-            description="Classifique a receita para facilitar a organizacao editorial e a navegacao publica."
-            title="Classificacao"
+            description="Classifique a receita para facilitar a organização editorial e a navegação pública."
+            title="Classificação"
           >
             <div className="editorial-form-grid editorial-form-grid-single">
               <div className="form-field">
@@ -168,7 +168,7 @@ export function RecipeEditorForm({
           <EditorialFormSection
             compact
             description="Controle quando a receita vai ao ar e se ela deve aparecer como destaque."
-            title="Publicacao"
+            title="Publicação"
           >
             <div className="editorial-form-grid editorial-form-grid-single">
               <div className="form-field">
@@ -181,7 +181,7 @@ export function RecipeEditorForm({
               </div>
 
               <div className="form-field">
-                <label htmlFor="recipe-published-at">Data de publicacao</label>
+                <label htmlFor="recipe-published-at">Data de publicação</label>
                 <input
                   id="recipe-published-at"
                   onChange={(event) => updateField('publishedAt', event.target.value || null)}

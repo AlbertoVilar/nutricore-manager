@@ -95,7 +95,7 @@ public class ArticleAdminService {
 
     private Article findEntityById(Long id) {
         return articleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Artigo nao encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Artigo não encontrado."));
     }
 
     private int resolveReadTime(AdminArticleUpsertRequestDTO request) {
@@ -110,7 +110,7 @@ public class ArticleAdminService {
         String baseSlug = SlugGenerator.slugify(source);
 
         if (baseSlug.isBlank()) {
-            throw new BusinessException("Nao foi possivel gerar um slug valido para o artigo.");
+            throw new BusinessException("Não foi possível gerar um slug válido para o artigo.");
         }
 
         String candidate = baseSlug;

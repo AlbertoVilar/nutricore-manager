@@ -42,7 +42,7 @@ export function EditorialDashboardPage() {
           createSummary('Receitas', '/editor/recipes', recipes.map((item) => item.status)),
         ]);
       } catch (error) {
-        setErrorMessage(error instanceof Error ? error.message : 'Nao foi possivel carregar o dashboard editorial.');
+        setErrorMessage(error instanceof Error ? error.message : 'Não foi possível carregar o dashboard editorial.');
       } finally {
         setIsLoading(false);
       }
@@ -64,12 +64,12 @@ export function EditorialDashboardPage() {
       <section className="editorial-header-card glass-card">
         <div>
           <span className="section-eyebrow">Resumo</span>
-          <h2>O que esta publicado, o que segue em rascunho e o que saiu do ar.</h2>
+          <h2>O que está publicado, o que segue em rascunho e o que saiu do ar.</h2>
           <p>
-            O CMS organiza tudo em torno de rascunho, publicacao e arquivamento. O publico so enxerga o que esta em{' '}
+            O CMS organiza tudo em torno de rascunho, publicação e arquivamento. O público só enxerga o que está em{' '}
             <strong>PUBLISHED</strong>.
           </p>
-          {user ? <p className="form-hint">Sessao ativa: {user.fullName} ({user.role})</p> : null}
+          {user ? <p className="form-hint">Sessão ativa: {user.fullName} ({user.role})</p> : null}
           <div className="cta-actions">
             <Link className="button button-primary" to="/editor/posts/novo">
               Novo post
@@ -81,7 +81,7 @@ export function EditorialDashboardPage() {
               Nova receita
             </Link>
             <Link className="button button-tertiary" to="/">
-              Ver site publico
+              Ver site público
             </Link>
           </div>
         </div>

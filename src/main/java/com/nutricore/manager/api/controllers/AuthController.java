@@ -21,20 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/auth")
-@Tag(name = "Authentication", description = "Autenticacao e sessao da area privada")
+@Tag(name = "Autenticação", description = "Autenticação e sessão da área privada")
 public class AuthController {
 
     private final EditorialAuthenticationService editorialAuthenticationService;
 
     @PostMapping("/login")
-    @Operation(summary = "Autentica um usuario editorial")
+    @Operation(summary = "Autentica um usuário editorial")
     public ResponseEntity<AuthSessionResponseDTO> login(@Valid @RequestBody AuthLoginRequestDTO request) {
         AuthenticationResult result = editorialAuthenticationService.authenticate(request.email(), request.password());
         return ResponseEntity.ok(toSessionResponse(result));
     }
 
     @GetMapping("/me")
-    @Operation(summary = "Retorna o usuario autenticado na sessao atual")
+    @Operation(summary = "Retorna o usuário autenticado na sessão atual")
     public ResponseEntity<AuthenticatedUserResponseDTO> me(Authentication authentication) {
         AuthenticatedUserSnapshot snapshot = editorialAuthenticationService.getAuthenticatedUser(authentication.getName());
         return ResponseEntity.ok(toUserResponse(snapshot));
