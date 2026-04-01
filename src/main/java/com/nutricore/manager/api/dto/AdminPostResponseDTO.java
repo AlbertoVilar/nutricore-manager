@@ -1,9 +1,11 @@
 package com.nutricore.manager.api.dto;
 
+import com.nutricore.manager.domain.enums.editorial.EditorialStatus;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record PublicPostResponseDTO(
+public record AdminPostResponseDTO(
         Long id,
         String title,
         String slug,
@@ -15,6 +17,9 @@ public record PublicPostResponseDTO(
         String caption,
         String category,
         Boolean featured,
-        LocalDateTime publishedAt
+        EditorialStatus status,
+        LocalDateTime publishedAt,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 ) {
 }

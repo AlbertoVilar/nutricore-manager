@@ -45,6 +45,14 @@ class PublicContentIntegrationTest {
     }
 
     @Test
+    void shouldReturnPublicArticles() throws Exception {
+        mockMvc.perform(get("/api/v1/public/articles").contextPath("/api"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].readTimeMinutes").exists());
+    }
+
+    @Test
     void shouldReturnPublicRecipes() throws Exception {
         mockMvc.perform(get("/api/v1/public/recipes").contextPath("/api"))
                 .andExpect(status().isOk())

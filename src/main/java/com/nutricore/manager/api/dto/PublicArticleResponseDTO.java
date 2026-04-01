@@ -3,17 +3,16 @@ package com.nutricore.manager.api.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record PublicPostResponseDTO(
+public record PublicArticleResponseDTO(
         Long id,
         String title,
         String slug,
         String summary,
         String body,
         String coverImageUrl,
-        List<String> galleryImageUrls,
-        String videoUrl,
-        String caption,
+        List<String> tags,
         String category,
+        Integer readTimeMinutes,
         Boolean featured,
         LocalDateTime publishedAt
 ) {
