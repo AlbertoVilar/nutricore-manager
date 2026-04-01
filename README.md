@@ -185,6 +185,9 @@ Se o slug nao for informado, o backend gera automaticamente a partir do titulo e
 
 ### API privada/editorial
 
+- `POST /api/v1/auth/login`
+- `GET /api/v1/auth/me`
+
 - `GET /api/v1/admin/posts`
 - `GET /api/v1/admin/posts/{id}`
 - `POST /api/v1/admin/posts`
@@ -214,24 +217,49 @@ Se o slug nao for informado, o backend gera automaticamente a partir do titulo e
 
 - `POST /api/v1/admin/media/images`
 
-## Protecao provisoria da area editorial
+## Autenticacao e autorizacao editorial
 
-Autenticacao real ainda nao foi implementada.
+Foi implementada autenticacao real com Spring Security + JWT para separar definitivamente a camada publica da camada privada editorial.
 
-Para nao deixar a area editorial solta, o backend usa uma protecao provisoria por header:
+### Regras de acesso
 
-- header obrigatorio: `X-Editorial-Token`
+- `/api/v1/public/**` -> publico
+- `/api/v1/auth/login` -> publico para login
+- `/api/v1/auth/me` -> autenticado
+- `/api/v1/admin/**` -> exige role `ADMIN` ou `EDITOR`
+- demais rotas privadas do backend continuam reservadas a `ADMIN`
 
-Esse mecanismo:
+### Sessao
 
-- protege apenas `/api/v1/admin/**`
-- existe para esta etapa do MVP
-- sera substituido por autenticacao/autorizacao real no futuro
+- o login retorna `accessToken`, `tokenType`, `expiresAt` e o usuario autenticado
+- o frontend guarda a sessao em `sessionStorage`
+- as requisicoes editoriais usam `Authorization: Bearer <token>`
+- quando o token expira ou fica invalido, o frontend limpa a sessao local e redireciona de volta para `/editor/acesso`
+
+### Credenciais de desenvolvimento
+
+Bootstrap local configurado por propriedades:
+
+- nome: `Alberto Vilar`
+- email: `albertovilar1@gmail.com`
+- senha inicial: `132747`
+- role: `ADMIN`
 
 Configuracao atual:
 
-- `application-test.properties` define `app.editorial.admin-token=nutricore-dev-editor`
-- `application-dev.properties` usa `EDITORIAL_ADMIN_TOKEN` com fallback local
+- `application-test.properties` ativa o bootstrap automaticamente
+- `application-dev.properties` ativa o bootstrap por padrao, com override por variaveis de ambiente
+
+Para trocar depois:
+
+- altere `APP_SECURITY_BOOTSTRAP_EMAIL`
+- altere `APP_SECURITY_BOOTSTRAP_PASSWORD`
+- altere `APP_SECURITY_BOOTSTRAP_ROLE`
+- depois reinicie o backend
+
+Observacao:
+
+- o bootstrap existe para ambiente local e deve evoluir no futuro para um fluxo administrativo controlado, sem depender de seed permanente em producao
 
 ## Midia no MVP
 
@@ -314,19 +342,21 @@ Rodar com H2 em modo local:
 
 ```powershell
 Set-Location C:\Dev\manager
-.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=test"
+.\mvnw.cmd -DskipTests package
+java -jar target\manager-0.0.1-SNAPSHOT.jar --spring.profiles.active=test
 ```
 
 Rodar com PostgreSQL em dev:
 
 ```powershell
 Set-Location C:\Dev\manager
-$env:SPRING_PROFILES_ACTIVE='dev'
 $env:DB_URL='jdbc:postgresql://localhost:5432/nutricore_manager'
 $env:DB_USERNAME='postgres'
 $env:DB_PASSWORD='postgres'
-$env:EDITORIAL_ADMIN_TOKEN='defina-um-token-seguro'
-.\mvnw.cmd spring-boot:run
+$env:APP_SECURITY_BOOTSTRAP_EMAIL='albertovilar1@gmail.com'
+$env:APP_SECURITY_BOOTSTRAP_PASSWORD='132747'
+.\mvnw.cmd -DskipTests package
+java -jar target\manager-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev
 ```
 
 ### Frontend
@@ -350,20 +380,27 @@ Valor padrao:
 VITE_API_BASE_URL=http://localhost:8080/api
 ```
 
+Se voce optar por rodar o frontend em uma porta diferente de `5173`, ajuste tambem o backend:
+
+```powershell
+$env:APP_CORS_ALLOWED_ORIGINS='http://localhost:5173,http://127.0.0.1:5173,http://127.0.0.1:4173'
+```
+
 ## Como testar o fluxo editorial
 
 1. Suba o backend em `test` ou `dev`.
 2. Suba o frontend em `frontend/`.
 3. Acesse `http://localhost:5173/editor/acesso`.
-4. Informe o token editorial do ambiente.
+4. Faça login com email e senha.
 5. Crie ou edite posts, artigos e receitas.
 6. Salve como rascunho, publique ou arquive.
 7. Valide no site publico que apenas conteudo `PUBLISHED` aparece.
 
-Token local de demonstracao no perfil `test`:
+Credenciais locais de demonstracao no perfil `test`:
 
 ```text
-nutricore-dev-editor
+email: albertovilar1@gmail.com
+senha: 132747
 ```
 
 ## Como validar a navegacao visualmente
@@ -394,19 +431,36 @@ Com backend e frontend rodando:
 ## Validacao realizada nesta etapa
 
 - `.\mvnw.cmd test`
+- `.\mvnw.cmd -DskipTests package`
 - `npm run build` em `frontend/`
-- validacao isolada de runtime com backend em `8081` usando perfil `test`
+- validacao isolada de runtime com backend em `8080` usando perfil `test`
 - respostas HTTP confirmadas:
   - `GET /api/v1/public/articles` -> `200`
+  - `POST /api/v1/auth/login` com credencial valida -> `200`
+  - `POST /api/v1/auth/login` com credencial invalida -> `401`
   - `GET /api/v1/admin/posts` sem token -> `401`
-  - `GET /api/v1/admin/posts` com token -> `200`
+  - `GET /api/v1/admin/posts` com bearer token -> `200`
+  - `GET /api/v1/auth/me` com bearer token -> `200`
+  - `GET /api/v1/public/posts/{slug}` para draft -> `404`
+  - `GET /api/v1/public/posts/{slug}` para publicado -> `200`
   - `GET http://127.0.0.1:5173/conteudos` -> `200`
   - `GET http://127.0.0.1:5173/editor/acesso` -> `200`
-- validacao visual da separacao publico/editorial e da nova hierarquia da home
+- validacao visual real com Edge headless em:
+  - `/`
+  - `/conteudos`
+  - `/receitas`
+  - `/planos`
+  - `/contato`
+  - `/editor/acesso`
+  - `/editor`
+  - `/editor/posts`
+- validacao de redirecionamento:
+  - `/editor` sem sessao -> redireciona para `/editor/acesso`
+  - login com credencial valida -> abre `/editor`
+  - logout -> retorna para `/editor/acesso`
 
 ## O que ficou fora desta etapa
 
-- autenticacao/JWT e autorizacao real
 - area clinica privada
 - fechamento de `MealPlan`
 - fechamento da listagem de `NutritionGoal` por paciente
@@ -415,7 +469,7 @@ Com backend e frontend rodando:
 
 ## Proximos passos recomendados
 
-1. Substituir o token provisorio por autenticacao real da nutricionista.
-2. Ligar o perfil publico institucional a uma area privada de configuracao.
+1. Ligar perfil publico institucional e planos a configuracao privada autenticada.
+2. Adicionar refresh token ou estrategia equivalente quando a area privada crescer.
 3. Criar a primeira camada privada clinica para pacientes e acompanhamento.
 4. Retomar `MealPlan` e concluir a parte clinica pendente.
