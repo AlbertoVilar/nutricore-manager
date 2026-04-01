@@ -5,8 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,18 +22,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableConfigurationProperties({JwtProperties.class, BootstrapUserProperties.class})
 public class SecurityConfig {
 
-    private final UserAccountDetailsService userAccountDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     private final RestAccessDeniedHandler restAccessDeniedHandler;
 
     public SecurityConfig(
-            UserAccountDetailsService userAccountDetailsService,
             JwtAuthenticationFilter jwtAuthenticationFilter,
             RestAuthenticationEntryPoint restAuthenticationEntryPoint,
             RestAccessDeniedHandler restAccessDeniedHandler
     ) {
-        this.userAccountDetailsService = userAccountDetailsService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
         this.restAccessDeniedHandler = restAccessDeniedHandler;
@@ -68,17 +63,8 @@ public class SecurityConfig {
                         .requestMatchers("/v1/auth/me").hasAnyRole("ADMIN", "EDITOR")
                         .anyRequest().hasRole("ADMIN")
                 )
-                .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userAccountDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
     }
 
     @Bean
