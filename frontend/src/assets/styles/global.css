@@ -13,10 +13,10 @@
   --shadow-strong: 0 30px 60px rgba(31, 44, 37, 0.14);
   --radius-xl: 32px;
   --radius-lg: 24px;
-  --container-width: 1180px;
-  --section-space: 80px;
-  --section-space-mobile: 64px;
-  --grid-gap: 24px;
+  --container-width: 1120px;
+  --section-space: 88px;
+  --section-space-mobile: 60px;
+  --grid-gap: 20px;
   --card-padding: 24px;
 }
 
@@ -72,6 +72,8 @@ select {
 .section-soft {
   background: rgba(255, 255, 255, 0.62);
   backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(31, 44, 37, 0.04);
+  border-bottom: 1px solid rgba(31, 44, 37, 0.04);
 }
 
 .recipes-section {
@@ -125,9 +127,15 @@ select {
 
 .glass-card {
   background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow-soft);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2), box-shadow 0.35s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 32px 56px rgba(31, 44, 37, 0.12);
 }
 
 .site-header {
@@ -226,8 +234,9 @@ select {
 }
 
 .two-column-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1.2fr 0.8fr;
   align-items: start;
+  gap: 40px;
 }
 
 .contact-grid {
@@ -292,7 +301,7 @@ select {
   color: var(--color-primary-dark);
   font-size: 0.86rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -414,7 +423,6 @@ select {
 
 .metric-card,
 .pillar-card,
-.callout-card,
 .about-card,
 .contact-card,
 .state-card,
@@ -423,6 +431,26 @@ select {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.callout-card {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  position: sticky;
+  top: 100px; /* Faz com que o card lateral do "Sobre a nutri" deslize com o scroll sem esticar vazio */
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(31, 44, 37, 0.04);
+  box-shadow: 0 12px 24px rgba(31, 44, 37, 0.03);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(31, 44, 37, 0.08);
 }
 
 .metric-card h3,
@@ -551,12 +579,24 @@ select {
   background: rgba(255, 255, 255, 0.78);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-soft);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.plan-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 56px rgba(31, 44, 37, 0.1);
 }
 
 .plan-card.featured {
   transform: translateY(-8px);
-  border-color: rgba(47, 125, 77, 0.32);
-  box-shadow: var(--shadow-strong);
+  border: 2px solid rgba(47, 125, 77, 0.28);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 251, 248, 0.98));
+  box-shadow: 0 32px 64px rgba(47, 125, 77, 0.12);
+}
+
+.plan-card.featured:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 40px 72px rgba(47, 125, 77, 0.16);
 }
 
 .plan-badge {
@@ -810,7 +850,6 @@ select {
   color: rgba(255, 255, 255, 0.56);
 }
 
-.editorial-home-grid,
 .editorial-dashboard-grid,
 .detail-layout,
 .recipe-detail-grid,
@@ -819,16 +858,14 @@ select {
   gap: 24px;
 }
 
-.editorial-home-grid {
-  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
-  align-items: stretch;
-}
-
-.editorial-home-stack,
 .editorial-stack,
 .editorial-dashboard-stack {
   display: grid;
   gap: 20px;
+}
+
+.home-content-grid {
+  align-items: stretch;
 }
 
 .editorial-shell {
@@ -1407,7 +1444,6 @@ select {
     grid-template-columns: 1fr;
   }
 
-  .editorial-home-grid,
   .editorial-shell,
   .editorial-row,
   .editorial-row-main {

@@ -128,18 +128,16 @@ export function HomePage() {
             title="Biblioteca para orientar com clareza antes, durante e depois da consulta."
           />
 
-          <div className="editorial-home-grid">
-            <div>
-              {errors.articles ? (
-                <ErrorState description="Os artigos em destaque nao puderam ser exibidos." />
-              ) : featuredArticle ? (
+          {errors.articles ? (
+            <ErrorState description="Os artigos em destaque nao puderam ser exibidos." />
+          ) : featuredArticle || generalPosts.length > 0 ? (
+            <div className="card-grid home-content-grid">
+              {featuredArticle ? (
                 <ArticleCard article={featuredArticle} />
               ) : (
                 <ErrorState description="Nenhum artigo publicado foi encontrado no momento." />
               )}
-            </div>
 
-            <div className="editorial-home-stack">
               {errors.posts ? (
                 <ErrorState description="Os posts publicados nao puderam ser exibidos." />
               ) : generalPosts.length > 0 ? (
@@ -148,7 +146,9 @@ export function HomePage() {
                 <ErrorState description="Novos posts curtos e bastidores entram aqui assim que forem publicados." />
               )}
             </div>
-          </div>
+          ) : (
+            <ErrorState description="A biblioteca publica ainda nao tem conteudos suficientes para destaque nesta secao." />
+          )}
 
           <div className="section-actions">
             <Link className="button button-secondary" to="/conteudos">
