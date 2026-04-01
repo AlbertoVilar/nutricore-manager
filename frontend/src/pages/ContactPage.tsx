@@ -31,7 +31,7 @@ export function ContactPage() {
   return (
     <>
       <PageHero
-        description="A etapa atual do MVP concentra a conversao em canais diretos, sem fingir um fluxo clinico completo que ainda nao entrou."
+        description="Use os canais abaixo para tirar duvidas, entender o atendimento e iniciar a conversa sobre sua rotina."
         eyebrow="Contato"
         title="Fale com a nutricionista e leve sua rotina para um plano viavel."
       />
@@ -40,7 +40,7 @@ export function ContactPage() {
         <div className="container contact-grid">
           <div>
             <SectionHeading
-              description="Os dados abaixo vem do endpoint de perfil publico. O formulario ao lado monta uma mensagem para WhatsApp."
+              description="Os canais abaixo facilitam o primeiro contato. O formulario ao lado organiza uma mensagem inicial para continuar no WhatsApp."
               eyebrow="Canais ativos"
               title="Contato direto para avaliacao, planos e orientacoes iniciais."
             />

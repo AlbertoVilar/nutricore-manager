@@ -703,6 +703,11 @@ select {
   gap: 32px;
 }
 
+.footer-grid h4 {
+  margin: 0 0 18px;
+  font-family: 'Outfit', sans-serif;
+}
+
 .footer-brand-mark {
   margin-bottom: 18px;
 }
@@ -807,6 +812,14 @@ select {
   color: rgba(255, 255, 255, 0.9);
 }
 
+.editorial-sidebar-actions,
+.detail-sidebar-actions,
+.section-link-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .editorial-sidebar-footer .button-secondary {
   background: rgba(255, 255, 255, 0.14);
   border-color: rgba(255, 255, 255, 0.08);
@@ -836,6 +849,11 @@ select {
   margin-top: 12px;
   font-size: clamp(2rem, 3vw, 3rem);
   line-height: 1.05;
+}
+
+.editorial-topbar p {
+  max-width: 56ch;
+  color: var(--color-muted);
 }
 
 .editorial-main {
@@ -1127,6 +1145,10 @@ select {
   top: 110px;
 }
 
+.section-anchor {
+  scroll-margin-top: 110px;
+}
+
 .rich-content {
   display: grid;
   gap: 16px;
@@ -1373,6 +1395,13 @@ select {
 
   .editorial-row-actions {
     justify-content: flex-start;
+  }
+
+  .editorial-sidebar-actions,
+  .detail-sidebar-actions,
+  .section-link-row {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .editorial-form-grid-span-2 {

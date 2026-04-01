@@ -7,6 +7,7 @@ import { RichContent } from '../components/RichContent';
 import { VideoEmbed } from '../components/VideoEmbed';
 import { getPublicPostBySlug } from '../services/publicContentService';
 import type { PublicPost } from '../types/public-content';
+import { isRoutinePost } from '../utils/contentCollections';
 import { formatPublishedDate } from '../utils/formatters';
 import { resolveAssetUrl } from '../utils/media';
 
@@ -42,6 +43,7 @@ export function PostDetailPage() {
   }
 
   const coverImageUrl = resolveAssetUrl(post.coverImageUrl ?? post.galleryImageUrls[0] ?? null);
+  const routine = isRoutinePost(post);
 
   return (
     <>
@@ -75,11 +77,20 @@ export function PostDetailPage() {
           </article>
 
           <aside className="glass-card detail-sidebar">
-            <h3>Continuar navegando</h3>
-            <p>Volte para a biblioteca editorial e acompanhe outros temas publicados.</p>
-            <Link className="button button-secondary" to="/conteudos">
-              Ver mais conteudos
-            </Link>
+            <h3>{routine ? 'Rotina da Nutri' : 'Continuar navegando'}</h3>
+            <p>
+              {routine
+                ? 'Este post faz parte da colecao de treino e rotina. Volte para a biblioteca e veja outros conteudos da mesma linha.'
+                : 'Volte para a biblioteca e acompanhe outros temas publicados pela nutricionista.'}
+            </p>
+            <div className="detail-sidebar-actions">
+              <Link className="button button-secondary" to={routine ? '/conteudos#rotina-da-nutri' : '/conteudos#posts'}>
+                {routine ? 'Ver colecao de treino' : 'Voltar para posts'}
+              </Link>
+              <Link className="button button-tertiary" to="/planos">
+                Conhecer planos
+              </Link>
+            </div>
           </aside>
         </div>
       </section>

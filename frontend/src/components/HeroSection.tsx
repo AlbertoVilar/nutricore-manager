@@ -33,8 +33,8 @@ export function HeroSection({ profile }: HeroSectionProps) {
             <img alt={profile.fullName} src={resolveAssetUrl(profile.heroImageUrl)} />
           </div>
           <div className="hero-floating-card glass-card">
-            <strong>NutriCore Public MVP</strong>
-            <p>Base visual inspirada na landing original, agora integrada ao backend real.</p>
+            <strong>Nutricao com estrategia e vida real</strong>
+            <p>Consulta, conteudo e acompanhamento organizados para transformar orientacao em rotina possivel.</p>
           </div>
         </div>
       </div>

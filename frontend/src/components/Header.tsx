@@ -1,9 +1,9 @@
 import { Link, NavLink } from 'react-router-dom';
 
 const navigationItems = [
-  { to: '/', label: 'Home' },
+  { to: '/', label: 'Inicio' },
   { to: '/sobre', label: 'Sobre' },
-  { to: '/conteudos', label: 'Conteudos' },
+  { to: '/conteudos', label: 'Conteudo' },
   { to: '/receitas', label: 'Receitas' },
   { to: '/planos', label: 'Planos' },
   { to: '/contato', label: 'Contato' },
@@ -17,7 +17,7 @@ export function Header() {
           <span className="brand-mark">NC</span>
           <div>
             <strong>NutriCore</strong>
-            <span>Manager Public Site</span>
+            <span>Nutricao clinica e rotina real</span>
           </div>
         </Link>
 

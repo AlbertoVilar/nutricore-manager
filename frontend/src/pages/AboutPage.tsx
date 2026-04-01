@@ -8,7 +8,7 @@ import { usePublicSiteData } from '../hooks/usePublicSiteData';
 import { resolveAssetUrl } from '../utils/media';
 
 export function AboutPage() {
-  const { errors, isLoading, profile, refresh } = usePublicSiteData();
+  const { isLoading, profile, refresh } = usePublicSiteData();
 
   if (isLoading && !profile) {
     return <LoadingState message="Carregando apresentacao profissional..." />;
@@ -19,7 +19,7 @@ export function AboutPage() {
       <section className="section">
         <div className="container">
           <ErrorState
-            description="O perfil publico ainda nao esta disponivel para montar a pagina Sobre."
+            description="Nao foi possivel carregar a apresentacao da nutricionista neste momento."
             onRetry={() => {
               void refresh();
             }}
@@ -32,24 +32,16 @@ export function AboutPage() {
   return (
     <>
       <PageHero
-        description={`${profile.professionalTitle} em ${profile.city}. Esta pagina usa o perfil institucional vindo do backend e complementa com secoes editoriais locais para sustentar o MVP.`}
+        description={`${profile.professionalTitle} em ${profile.city}, com uma abordagem que combina estrategia, rotina real e acompanhamento proximo.`}
         eyebrow="Sobre"
         title={profile.fullName}
       />
-
-      {errors.length > 0 ? (
-        <section className="section">
-          <div className="container">
-            <ErrorState description={errors.join(' ')} />
-          </div>
-        </section>
-      ) : null}
 
       <section className="section">
         <div className="container two-column-grid">
           <div className="glass-card about-card">
             <SectionHeading
-              description="Conteudo institucional vindo diretamente do endpoint de perfil publico."
+              description="Uma leitura profissional que considera contexto, adesao e consistencia antes de qualquer ajuste."
               eyebrow="Posicionamento"
               title={profile.aboutTitle}
             />
@@ -66,8 +58,8 @@ export function AboutPage() {
         <div className="container">
           <SectionHeading
             centered
-            description="Os pilares abaixo seguem locais por enquanto, mas ja encaixados em estrutura pronta para futura administracao via painel."
-            eyebrow="Como trabalha"
+            description="O trabalho combina leitura tecnica, planejamento aplicavel e acompanhamento que respeita a vida como ela e."
+            eyebrow="Como funciona"
             title="Uma abordagem pensada para vida real, adesao e resultado mensuravel."
           />
 
@@ -86,7 +78,7 @@ export function AboutPage() {
         <div className="container">
           <SectionHeading
             centered
-            description="Resultados ilustrativos com os assets da landing original reaproveitados para a camada publica do MVP."
+            description="Relatos que ajudam a traduzir a experiencia de um acompanhamento claro, sustentavel e orientado a rotina."
             eyebrow="Percepcao de valor"
             title="Relatos que conectam autoridade, acolhimento e consistencia."
           />

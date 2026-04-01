@@ -64,11 +64,25 @@ export function EditorialDashboardPage() {
       <section className="editorial-header-card glass-card">
         <div>
           <span className="section-eyebrow">Resumo</span>
-          <h2>O que esta no ar e o que ainda esta em preparacao.</h2>
+          <h2>O que esta publicado, o que segue em rascunho e o que saiu do ar.</h2>
           <p>
             O CMS organiza tudo em torno de rascunho, publicacao e arquivamento. O publico so enxerga o que esta em{' '}
             <strong>PUBLISHED</strong>.
           </p>
+          <div className="cta-actions">
+            <Link className="button button-primary" to="/editor/posts/novo">
+              Novo post
+            </Link>
+            <Link className="button button-secondary" to="/editor/articles/novo">
+              Novo artigo
+            </Link>
+            <Link className="button button-secondary" to="/editor/recipes/novo">
+              Nova receita
+            </Link>
+            <Link className="button button-tertiary" to="/">
+              Ver site publico
+            </Link>
+          </div>
         </div>
       </section>
 

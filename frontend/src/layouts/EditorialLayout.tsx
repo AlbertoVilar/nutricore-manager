@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useEditorialSession } from '../hooks/useEditorialSession';
 
 const editorialNavigation = [
@@ -25,7 +25,7 @@ export function EditorialLayout() {
             <span className="brand-mark">NC</span>
             <div>
               <strong>NutriCore CMS</strong>
-              <span>Gestao editorial provisoria</span>
+              <span>Area privada da nutricionista</span>
             </div>
           </div>
 
@@ -43,13 +43,15 @@ export function EditorialLayout() {
           </nav>
 
           <div className="editorial-sidebar-footer">
-            <p>
-              Esta camada privada ainda usa token provisorio em vez de autenticacao real. A substituicao por JWT vira
-              na proxima etapa.
-            </p>
-            <button className="button button-secondary" onClick={signOut} type="button">
-              Encerrar acesso
-            </button>
+            <p>Gerencie tudo o que vai ao ar no site publico e revise o conteudo antes de publicar.</p>
+            <div className="editorial-sidebar-actions">
+              <Link className="button button-secondary" to="/">
+                Ver site publico
+              </Link>
+              <button className="button button-tertiary" onClick={signOut} type="button">
+                Encerrar acesso
+              </button>
+            </div>
           </div>
         </div>
       </aside>
@@ -58,7 +60,8 @@ export function EditorialLayout() {
         <header className="editorial-topbar">
           <div>
             <span className="section-eyebrow">Area privada</span>
-            <h1>Conteudo publico controlado pela nutricionista</h1>
+            <h1>Central editorial</h1>
+            <p>Posts, artigos e receitas organizados em rascunho, publicacao e arquivamento.</p>
           </div>
         </header>
 

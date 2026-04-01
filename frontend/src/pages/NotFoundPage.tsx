@@ -5,7 +5,7 @@ export function NotFoundPage() {
   return (
     <>
       <PageHero
-        description="A rota solicitada nao existe neste MVP publico."
+        description="A pagina que voce tentou acessar nao esta disponivel."
         eyebrow="404"
         title="Pagina nao encontrada."
       />

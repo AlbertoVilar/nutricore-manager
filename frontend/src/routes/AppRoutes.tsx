@@ -24,6 +24,8 @@ import { EditorialGuard } from './EditorialGuard';
 export function AppRoutes() {
   return (
     <Routes>
+      <Route path="/editor/acesso" element={<EditorialAccessPage />} />
+
       <Route element={<PublicLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/sobre" element={<AboutPage />} />
@@ -34,7 +36,6 @@ export function AppRoutes() {
         <Route path="/receitas/:slug" element={<RecipeDetailPage />} />
         <Route path="/planos" element={<PlansPage />} />
         <Route path="/contato" element={<ContactPage />} />
-        <Route path="/editor/acesso" element={<EditorialAccessPage />} />
         <Route path="/404" element={<NotFoundPage />} />
       </Route>
 

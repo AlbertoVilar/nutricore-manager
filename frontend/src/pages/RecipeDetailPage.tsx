@@ -83,9 +83,14 @@ export function RecipeDetailPage() {
           <aside className="glass-card detail-sidebar">
             <h3>Rendimento</h3>
             <p>{recipe.yieldInfo}</p>
-            <Link className="button button-secondary" to="/receitas">
-              Ver mais receitas
-            </Link>
+            <div className="detail-sidebar-actions">
+              <Link className="button button-secondary" to="/receitas">
+                Ver mais receitas
+              </Link>
+              <Link className="button button-tertiary" to="/planos">
+                Conhecer planos
+              </Link>
+            </div>
           </aside>
         </div>
       </section>

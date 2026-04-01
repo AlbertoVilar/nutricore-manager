@@ -13,8 +13,6 @@ export function PlansPage() {
     return <LoadingState message="Carregando planos de atendimento..." />;
   }
 
-  const planError = errors.find((item) => item.includes('planos'));
-
   return (
     <>
       <PageHero
@@ -25,7 +23,7 @@ export function PlansPage() {
             </Link>
           </div>
         }
-        description="Planos claros para transformar interesse em conversa comercial e preparar a entrada do paciente na camada clinica."
+        description="Planos pensados para diferentes momentos da jornada, com clareza sobre apoio, acompanhamento e ritmo de evolucao."
         eyebrow="Planos"
         title="Opcoes de acompanhamento para diferentes fases da jornada."
       />
@@ -33,14 +31,14 @@ export function PlansPage() {
       <section className="section plans-section">
         <div className="container">
           <SectionHeading
-            description="Conteudo vindo do backend, pronto para ser evoluido futuramente por uma area protegida."
-            eyebrow="Oferta publica"
+            description="Cada plano organiza o nivel de proximidade, revisao e suporte para ajudar a transformar orientacao em aderencia."
+            eyebrow="Atendimento"
             title="Comparacao objetiva entre niveis de acompanhamento."
           />
 
-          {planError ? (
+          {errors.plans ? (
             <ErrorState
-              description={planError}
+              description={errors.plans}
               onRetry={() => {
                 void refresh();
               }}
@@ -58,11 +56,11 @@ export function PlansPage() {
       <section className="section section-soft">
         <div className="container cta-banner">
           <div>
-            <span className="section-eyebrow">Encaminhamento comercial</span>
+            <span className="section-eyebrow">Proximo passo</span>
             <h2>{profile?.primaryCtaLabel ?? 'Agendar avaliacao'}</h2>
             <p>
-              O fluxo atual do MVP leva a conversa para WhatsApp e contato direto, sem mascarar
-              funcionalidades administrativas que ainda nao entraram.
+              Se voce quiser entender qual formato faz mais sentido para o seu momento, a conversa inicial segue por
+              canais diretos com a nutricionista.
             </p>
           </div>
           <div className="cta-actions">

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useEditorialSession } from '../../hooks/useEditorialSession';
 
 interface AccessLocationState {
@@ -41,11 +41,16 @@ export function EditorialAccessPage() {
       <div className="container editorial-access-grid">
         <div>
           <span className="section-eyebrow">Acesso editorial</span>
-          <h1>Camada privada para controlar posts, artigos e receitas.</h1>
+          <h1>Area privada para controlar o que vai ao ar no site.</h1>
           <p>
-            Esta etapa usa um token provisorio de administracao para separar a area editorial da area publica. O
-            desenho ja deixa um ponto claro para substituir isso por autenticacao real da nutricionista depois.
+            O ambiente editorial fica separado da navegacao publica. Neste estagio de desenvolvimento, o acesso ainda
+            usa um token temporario antes da autenticacao definitiva da nutricionista.
           </p>
+          <div className="cta-actions">
+            <Link className="button button-secondary" to="/">
+              Voltar ao site
+            </Link>
+          </div>
         </div>
 
         <form

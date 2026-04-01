@@ -74,11 +74,16 @@ export function ArticleDetailPage() {
           </article>
 
           <aside className="glass-card detail-sidebar">
-            <h3>Biblioteca publica</h3>
-            <p>Os artigos publicados saem diretamente do CMS privado da nutricionista.</p>
-            <Link className="button button-secondary" to="/conteudos">
-              Voltar para conteudos
-            </Link>
+            <h3>Biblioteca de artigos</h3>
+            <p>Volte para a selecao de leituras e continue explorando temas publicados pela nutricionista.</p>
+            <div className="detail-sidebar-actions">
+              <Link className="button button-secondary" to="/conteudos#artigos">
+                Voltar para artigos
+              </Link>
+              <Link className="button button-tertiary" to="/planos">
+                Conhecer planos
+              </Link>
+            </div>
           </aside>
         </div>
       </section>

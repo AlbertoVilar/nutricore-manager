@@ -12,8 +12,6 @@ export function RecipesPage() {
     return <LoadingState message="Carregando receitas..." />;
   }
 
-  const recipeError = errors.find((item) => item.includes('receitas'));
-
   return (
     <>
       <PageHero
@@ -25,14 +23,14 @@ export function RecipesPage() {
       <section className="section recipes-section">
         <div className="container">
           <SectionHeading
-            description="As receitas abaixo vem da API publica e ajudam a mostrar utilidade pratica do site desde o MVP."
-            eyebrow="Biblioteca inicial"
-            title="Sugestoes visuais com preparo simples e comunicacao clara."
+            description="As receitas reforcam repertorio alimentar, praticidade e uma relacao mais leve com a rotina de preparo."
+            eyebrow="Biblioteca"
+            title="Sugestoes com preparo simples, imagem clara e orientacao objetiva."
           />
 
-          {recipeError ? (
+          {errors.recipes ? (
             <ErrorState
-              description={recipeError}
+              description={errors.recipes}
               onRetry={() => {
                 void refresh();
               }}

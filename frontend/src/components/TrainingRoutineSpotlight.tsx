@@ -17,9 +17,13 @@ export function TrainingRoutineSpotlight({ post }: TrainingRoutineSpotlightProps
       <div className="container">
         <div className="routine-spotlight glass-card">
           <div className="routine-spotlight-copy">
-            <span className="section-eyebrow">Rotina em movimento</span>
+            <span className="section-eyebrow">Rotina da Nutri</span>
             <h2>{post.title}</h2>
-            <p>{post.summary ?? post.caption ?? 'Conteudo editorial pensado para inspirar consistencia fora do consultorio.'}</p>
+            <p>
+              {post.summary ??
+                post.caption ??
+                'Uma colecao de posts sobre treino, disciplina e constancia para inspirar o que acontece fora do consultorio.'}
+            </p>
 
             <div className="routine-spotlight-meta">
               <span>{post.category ?? 'Treino'}</span>
@@ -34,8 +38,8 @@ export function TrainingRoutineSpotlight({ post }: TrainingRoutineSpotlightProps
               <Link className="button button-primary" to={`/conteudos/posts/${post.slug}`}>
                 Ver rotina completa
               </Link>
-              <Link className="button button-secondary" to="/conteudos">
-                Mais publicacoes
+              <Link className="button button-secondary" to="/conteudos#rotina-da-nutri">
+                Explorar colecao
               </Link>
             </div>
           </div>

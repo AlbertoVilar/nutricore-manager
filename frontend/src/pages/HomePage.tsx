@@ -12,20 +12,18 @@ import { TestimonialCard } from '../components/TestimonialCard';
 import { TrainingRoutineSpotlight } from '../components/TrainingRoutineSpotlight';
 import { servicePillars, siteMetrics, testimonials } from '../data/site-content';
 import { usePublicSiteData } from '../hooks/usePublicSiteData';
+import { getGeneralPosts, getRoutineSpotlightPost } from '../utils/contentCollections';
 
 export function HomePage() {
   const { articles, errors, isLoading, plans, posts, profile, recipes, refresh } = usePublicSiteData();
   const hasBlockingError = !isLoading && !profile;
   const featuredArticle = articles.find((article) => article.featured) ?? articles[0] ?? null;
-  const trainingPost =
-    posts.find((post) => post.featured && post.category?.toLowerCase() === 'treino') ??
-    posts.find((post) => post.category?.toLowerCase() === 'treino') ??
-    posts[0] ??
-    null;
+  const trainingPost = getRoutineSpotlightPost(posts);
+  const generalPosts = getGeneralPosts(posts);
 
   return (
     <>
-      {isLoading && !profile ? <LoadingState message="Preparando a experiencia publica do NutriCore..." /> : null}
+      {isLoading && !profile ? <LoadingState message="Preparando a experiencia publica..." /> : null}
 
       {profile ? <HeroSection profile={profile} /> : null}
 
@@ -33,7 +31,7 @@ export function HomePage() {
         <section className="section">
           <div className="container">
             <ErrorState
-              description="O backend nao respondeu com o perfil publico principal. Verifique a API e tente novamente."
+              description="Nao foi possivel carregar a apresentacao principal do site agora."
               onRetry={() => {
                 void refresh();
               }}
@@ -46,9 +44,9 @@ export function HomePage() {
         <div className="container">
           <SectionHeading
             centered
-            description="Os cards abaixo reforcam a proposta de valor da camada publica e complementam o conteudo vindo do backend."
-            eyebrow="Valor de negocio"
-            title="Presenca profissional para converter, educar e preparar a gestao clinica."
+            description="Cada etapa do atendimento nasce para funcionar na vida real: consulta com estrategia, conduta viavel e acompanhamento que conversa com a rotina."
+            eyebrow="Como funciona"
+            title="Uma jornada clara para orientar, acompanhar e sustentar resultado."
           />
 
           <div className="metric-grid">
@@ -63,9 +61,9 @@ export function HomePage() {
         <div className="container two-column-grid">
           <div>
             <SectionHeading
-              description="A experiencia publica nao e uma vitrine solta. Ela prepara o paciente para uma jornada clinica mais madura e orientada."
-              eyebrow="Metodo"
-              title="Conteudo, atendimento e acompanhamento conversando na mesma linguagem."
+              description="A consulta vai alem do plano alimentar. O foco e combinar contexto, treino, aderencia e acompanhamento em uma mesma linguagem."
+              eyebrow="Abordagem"
+              title="Atendimento pensado para caber na agenda, no treino e nas refeicoes do dia a dia."
             />
             <div className="pillar-stack">
               {servicePillars.map((pillar) => (
@@ -78,14 +76,43 @@ export function HomePage() {
           </div>
 
           <div className="glass-card callout-card">
-            <span className="section-eyebrow">Sobre a profissional</span>
-            <h3>{profile?.aboutTitle ?? 'Atendimento com direcao clinica e comercial.'}</h3>
+            <span className="section-eyebrow">Sobre a nutricionista</span>
+            <h3>{profile?.aboutTitle ?? 'Conduta clara, proxima e sustentavel.'}</h3>
             <p>
               {profile?.aboutDescription ??
-                'A camada publica continua dependente da API para o conteudo principal. Quando o backend responde, esta area mostra o posicionamento oficial da nutricionista.'}
+                'Atendimento com leitura de rotina, objetivo e contexto antes de qualquer ajuste nutricional.'}
             </p>
             <Link className="button button-secondary" to="/sobre">
-              Ver apresentacao completa
+              Conhecer a profissional
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section plans-section">
+        <div className="container">
+          <SectionHeading
+            description="Os planos organizam o primeiro passo comercial do site com ofertas claras e encaminhamento objetivo para conversa."
+            eyebrow="Planos"
+            title="Formas de acompanhamento para diferentes momentos da jornada."
+          />
+
+          {errors.plans ? (
+            <ErrorState description="Os planos de atendimento nao foram carregados." />
+          ) : (
+            <div className="plan-grid">
+              {plans.map((plan) => (
+                <PlanCard key={plan.id} plan={plan} />
+              ))}
+            </div>
+          )}
+
+          <div className="section-actions">
+            <Link className="button button-primary" to="/planos">
+              Ver detalhes dos planos
+            </Link>
+            <Link className="button button-secondary" to="/contato">
+              Tirar duvidas sobre atendimento
             </Link>
           </div>
         </div>
@@ -96,15 +123,15 @@ export function HomePage() {
       <section className="section">
         <div className="container">
           <SectionHeading
-            description="O CMS ja entrega artigos e posts publicados, com separacao clara entre conteudo institucional e rotina editorial."
-            eyebrow="Editorial"
-            title="Artigos em destaque e posts curtos vindos da API publica."
+            description="Artigos aprofundam temas importantes. Posts curtos mantem o contato frequente com treino, alimentacao e vida real."
+            eyebrow="Conteudo"
+            title="Biblioteca para orientar com clareza antes, durante e depois da consulta."
           />
 
           <div className="editorial-home-grid">
             <div>
-              {errors.includes('Nao foi possivel carregar os artigos publicados.') ? (
-                <ErrorState description="A lista de artigos publicos nao foi carregada." />
+              {errors.articles ? (
+                <ErrorState description="Os artigos em destaque nao puderam ser exibidos." />
               ) : featuredArticle ? (
                 <ArticleCard article={featuredArticle} />
               ) : (
@@ -113,17 +140,19 @@ export function HomePage() {
             </div>
 
             <div className="editorial-home-stack">
-              {errors.includes('Nao foi possivel carregar os conteudos publicados.') ? (
-                <ErrorState description="A lista de posts publicos nao foi carregada." />
+              {errors.posts ? (
+                <ErrorState description="Os posts publicados nao puderam ser exibidos." />
+              ) : generalPosts.length > 0 ? (
+                generalPosts.slice(0, 2).map((post) => <PostCard key={post.id} post={post} />)
               ) : (
-                posts.slice(0, 2).map((post) => <PostCard key={post.id} post={post} />)
+                <ErrorState description="Novos posts curtos e bastidores entram aqui assim que forem publicados." />
               )}
             </div>
           </div>
 
           <div className="section-actions">
             <Link className="button button-secondary" to="/conteudos">
-              Ver biblioteca editorial
+              Explorar biblioteca
             </Link>
           </div>
         </div>
@@ -132,13 +161,13 @@ export function HomePage() {
       <section className="section recipes-section">
         <div className="container">
           <SectionHeading
-            description="Receitas publicas para mostrar utilidade pratica, repertorio alimentar e consistencia de marca."
+            description="Receitas publicadas ajudam a mostrar repertorio, praticidade e escolhas que respeitam a rotina."
             eyebrow="Receitas"
-            title="Preparos saudaveis para manter estrategia e adesao."
+            title="Sugestoes saudaveis para manter consistencia sem perder prazer em comer."
           />
 
-          {errors.includes('Nao foi possivel carregar as receitas.') ? (
-            <ErrorState description="A lista de receitas publicas nao foi carregada." />
+          {errors.recipes ? (
+            <ErrorState description="As receitas publicas nao puderam ser exibidas." />
           ) : (
             <div className="recipe-grid">
               {recipes.slice(0, 3).map((recipe) => (
@@ -149,7 +178,7 @@ export function HomePage() {
 
           <div className="section-actions">
             <Link className="button button-secondary" to="/receitas">
-              Explorar receitas
+              Ver receitas
             </Link>
           </div>
         </div>
@@ -159,9 +188,9 @@ export function HomePage() {
         <div className="container">
           <SectionHeading
             centered
-            description="Secao visual reaproveitando os assets da landing original para reforcar prova social e credibilidade."
-            eyebrow="Resultados percebidos"
-            title="Relatos e contextos que traduzem o impacto do acompanhamento."
+            description="A jornada nutricional ganha aderencia quando existe acolhimento, clareza e ajuste fino ao longo do caminho."
+            eyebrow="Relatos"
+            title="Percepcoes de quem buscou mais estrutura para comer, treinar e sustentar resultado."
           />
 
           <div className="testimonial-grid">
@@ -172,43 +201,23 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="section plans-section">
-        <div className="container">
-          <SectionHeading
-            description="Planos publicos vindos do backend para o fluxo comercial inicial do site."
-            eyebrow="Planos"
-            title="Ofertas claras para converter interesse em conversa."
-          />
-
-          {errors.includes('Nao foi possivel carregar os planos de atendimento.') ? (
-            <ErrorState description="Os planos publicos nao foram carregados." />
-          ) : (
-            <div className="plan-grid">
-              {plans.map((plan) => (
-                <PlanCard key={plan.id} plan={plan} />
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
       <section className="section cta-section">
         <div className="container cta-banner">
           <div>
-            <span className="section-eyebrow">Proxima etapa</span>
-            <h2>Backend estavel. Frontend publico e editorial integrados. Base pronta para crescer.</h2>
+            <span className="section-eyebrow">Contato</span>
+            <h2>Pronta para organizar alimentacao, treino e rotina com mais clareza?</h2>
             <p>
-              O MVP atual fecha a camada publica/comercial e a gestao de conteudo com contrato real de API e
-              estrutura preparada para autenticacao forte depois.
+              O proximo passo e conversar sobre objetivo, momento atual e o tipo de acompanhamento que faz sentido
+              para sua rotina.
             </p>
           </div>
 
           <div className="cta-actions">
-            <Link className="button button-secondary" to="/contato">
+            <Link className="button button-primary" to="/contato">
               Falar com a nutricionista
             </Link>
-            <Link className="button button-tertiary" to="/editor/acesso">
-              Acessar CMS
+            <Link className="button button-secondary" to="/planos">
+              Conhecer os planos
             </Link>
           </div>
         </div>

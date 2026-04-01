@@ -66,7 +66,7 @@ export function ContactCtaForm({ contactPhone, fallbackUrl }: ContactCtaFormProp
       </div>
 
       <button className="button button-primary" type="submit">
-        Enviar no WhatsApp
+        Continuar no WhatsApp
       </button>
     </form>
   );

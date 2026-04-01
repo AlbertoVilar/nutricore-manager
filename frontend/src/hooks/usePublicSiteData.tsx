@@ -16,6 +16,14 @@ import {
 } from '../services/publicContentService';
 import type { PublicArticle, PublicPlan, PublicPost, PublicProfile, PublicRecipe } from '../types/public-content';
 
+interface PublicSiteDataErrors {
+  profile: string | null;
+  plans: string | null;
+  articles: string | null;
+  posts: string | null;
+  recipes: string | null;
+}
+
 interface PublicSiteDataContextValue {
   profile: PublicProfile | null;
   plans: PublicPlan[];
@@ -23,7 +31,7 @@ interface PublicSiteDataContextValue {
   posts: PublicPost[];
   recipes: PublicRecipe[];
   isLoading: boolean;
-  errors: string[];
+  errors: PublicSiteDataErrors;
   refresh: () => Promise<void>;
 }
 
@@ -39,7 +47,13 @@ export function PublicSiteDataProvider({ children }: PublicSiteDataProviderProps
   const [articles, setArticles] = useState<PublicArticle[]>([]);
   const [posts, setPosts] = useState<PublicPost[]>([]);
   const [recipes, setRecipes] = useState<PublicRecipe[]>([]);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<PublicSiteDataErrors>({
+    profile: null,
+    plans: null,
+    articles: null,
+    posts: null,
+    recipes: null,
+  });
   const [isLoading, setIsLoading] = useState(true);
 
   const refresh = useCallback(async () => {
@@ -53,41 +67,47 @@ export function PublicSiteDataProvider({ children }: PublicSiteDataProviderProps
       getPublicRecipes(),
     ]);
 
-    const nextErrors: string[] = [];
+    const nextErrors: PublicSiteDataErrors = {
+      profile: null,
+      plans: null,
+      articles: null,
+      posts: null,
+      recipes: null,
+    };
 
     if (profileResult.status === 'fulfilled') {
       setProfile(profileResult.value);
     } else {
       setProfile(null);
-      nextErrors.push('Nao foi possivel carregar o perfil publico.');
+      nextErrors.profile = 'Nao foi possivel carregar o perfil publico.';
     }
 
     if (plansResult.status === 'fulfilled') {
       setPlans(plansResult.value);
     } else {
       setPlans([]);
-      nextErrors.push('Nao foi possivel carregar os planos de atendimento.');
+      nextErrors.plans = 'Nao foi possivel carregar os planos de atendimento.';
     }
 
     if (articlesResult.status === 'fulfilled') {
       setArticles(articlesResult.value);
     } else {
       setArticles([]);
-      nextErrors.push('Nao foi possivel carregar os artigos publicados.');
+      nextErrors.articles = 'Nao foi possivel carregar os artigos publicados.';
     }
 
     if (postsResult.status === 'fulfilled') {
       setPosts(postsResult.value);
     } else {
       setPosts([]);
-      nextErrors.push('Nao foi possivel carregar os conteudos publicados.');
+      nextErrors.posts = 'Nao foi possivel carregar os conteudos publicados.';
     }
 
     if (recipesResult.status === 'fulfilled') {
       setRecipes(recipesResult.value);
     } else {
       setRecipes([]);
-      nextErrors.push('Nao foi possivel carregar as receitas.');
+      nextErrors.recipes = 'Nao foi possivel carregar as receitas.';
     }
 
     setErrors(nextErrors);
@@ -100,15 +120,15 @@ export function PublicSiteDataProvider({ children }: PublicSiteDataProviderProps
 
   const value = useMemo<PublicSiteDataContextValue>(
     () => ({
-        profile,
-        plans,
-        articles,
-        posts,
-        recipes,
-        isLoading,
-        errors,
-        refresh,
-      }),
+      profile,
+      plans,
+      articles,
+      posts,
+      recipes,
+      isLoading,
+      errors,
+      refresh,
+    }),
     [articles, errors, isLoading, plans, posts, profile, recipes, refresh],
   );
 

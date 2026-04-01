@@ -13,23 +13,26 @@ export function Footer() {
             <span className="brand-mark">NC</span>
             <div>
               <strong>NutriCore</strong>
-              <span>Plataforma publica + clinica</span>
+              <span>Conteudo, atendimento e conversao</span>
             </div>
           </div>
           <p>
-            MVP publico construindo a camada comercial da nutricionista sobre uma base backend consistente e pronta
-            para evolucao.
+            Acompanhamento nutricional com linguagem clara, conteudo util e uma jornada publica organizada para quem
+            quer mudar a rotina com estrategia.
           </p>
         </div>
 
         <div>
-          <h4>Rotas publicas</h4>
+          <h4>Navegacao</h4>
           <ul className="footer-links">
             <li>
               <Link to="/sobre">Sobre</Link>
             </li>
             <li>
-              <Link to="/conteudos">Conteudos</Link>
+              <Link to="/conteudos">Biblioteca</Link>
+            </li>
+            <li>
+              <Link to="/conteudos#rotina-da-nutri">Rotina da Nutri</Link>
             </li>
             <li>
               <Link to="/receitas">Receitas</Link>
@@ -38,7 +41,7 @@ export function Footer() {
               <Link to="/planos">Planos</Link>
             </li>
             <li>
-              <Link to="/editor/acesso">Acesso editorial</Link>
+              <Link to="/contato">Contato</Link>
             </li>
           </ul>
         </div>
@@ -63,7 +66,7 @@ export function Footer() {
       </div>
 
       <div className="container footer-bottom">
-        <span>NutriCore Manager MVP - Frontend publico integrado ao backend Spring.</span>
+        <span>NutriCore Manager | Site institucional, conteudo editorial e conversao comercial.</span>
       </div>
     </footer>
   );
