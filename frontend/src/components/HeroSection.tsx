@@ -1,0 +1,42 @@
+import { Link } from 'react-router-dom';
+import type { PublicProfile } from '../types/public-content';
+
+interface HeroSectionProps {
+  profile: PublicProfile;
+}
+
+export function HeroSection({ profile }: HeroSectionProps) {
+  return (
+    <section className="hero-section">
+      <div className="container hero-grid">
+        <div className="hero-copy">
+          <span className="hero-badge">{profile.heroBadge}</span>
+          <h1>{profile.heroTitle}</h1>
+          <p>{profile.heroDescription}</p>
+          <div className="hero-actions">
+            <a className="button button-primary" href={profile.primaryCtaUrl} rel="noreferrer" target="_blank">
+              {profile.primaryCtaLabel}
+            </a>
+            <Link className="button button-secondary" to="/planos">
+              {profile.secondaryCtaLabel}
+            </Link>
+          </div>
+          <div className="hero-footnote">
+            <span>{profile.professionalTitle}</span>
+            <span>{profile.city}</span>
+          </div>
+        </div>
+
+        <div className="hero-visual">
+          <div className="hero-image-frame">
+            <img alt={profile.fullName} src={profile.heroImageUrl} />
+          </div>
+          <div className="hero-floating-card glass-card">
+            <strong>NutriCore Public MVP</strong>
+            <p>Base visual inspirada na landing original, agora integrada ao backend real.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
