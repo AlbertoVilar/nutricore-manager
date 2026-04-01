@@ -7,9 +7,10 @@ interface EditorialImageFieldProps {
   hint: string;
   value: string;
   onChange: (value: string) => void;
+  className?: string;
 }
 
-export function EditorialImageField({ label, hint, value, onChange }: EditorialImageFieldProps) {
+export function EditorialImageField({ label, hint, value, onChange, className }: EditorialImageFieldProps) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -32,7 +33,7 @@ export function EditorialImageField({ label, hint, value, onChange }: EditorialI
   }
 
   return (
-    <div className="form-field">
+    <div className={`form-field${className ? ` ${className}` : ''}`}>
       <label>{label}</label>
       <input onChange={(event) => onChange(event.target.value)} placeholder="/api/media/images/..." type="text" value={value} />
       <div className="editorial-upload-row">
