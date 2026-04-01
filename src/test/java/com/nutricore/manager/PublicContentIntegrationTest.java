@@ -40,8 +40,9 @@ class PublicContentIntegrationTest {
     void shouldReturnPublicPosts() throws Exception {
         mockMvc.perform(get("/api/v1/public/posts").contextPath("/api"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(3))
-                .andExpect(jsonPath("$[0].category").exists());
+                .andExpect(jsonPath("$.length()").value(4))
+                .andExpect(jsonPath("$[0].slug").value("rotina-da-nutri-dando-exemplo"))
+                .andExpect(jsonPath("$[0].galleryImageUrls.length()").value(3));
     }
 
     @Test

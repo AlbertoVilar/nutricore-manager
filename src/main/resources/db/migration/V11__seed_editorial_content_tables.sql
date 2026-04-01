@@ -32,6 +32,24 @@ INSERT INTO tb_posts (
     CURRENT_TIMESTAMP
 ),
 (
+    'Rotina da Nutri - Dando exemplo',
+    'rotina-da-nutri-dando-exemplo',
+    'Bastidores de treino e atividade fisica para inspirar constancia fora do consultorio.',
+    'A nutricionista tambem sustenta a propria rotina com movimento, planejamento e consistencia. Este post mostra um recorte simples de treino, organizacao e vida real para inspirar quem acompanha o processo.',
+    '/images/routine-1.jpg',
+    '/images/routine-2.jpg
+/images/routine-3.jpg
+/images/routine-4.jpg',
+    'https://www.youtube.com/watch?v=9No-FiEInLA',
+    'Treino, postura e exemplo para a rotina editorial.',
+    'Treino',
+    TRUE,
+    'PUBLISHED',
+    TIMESTAMP '2026-04-01 07:00:00',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+),
+(
     'Dicas rapidas para montar marmitas com mais adesao',
     'dicas-rapidas-para-marmitas-com-mais-adesao',
     'Pequenas decisoes que deixam a marmita mais pratica e mais facil de repetir.',

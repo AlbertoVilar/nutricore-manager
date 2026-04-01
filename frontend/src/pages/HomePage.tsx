@@ -9,6 +9,7 @@ import { PostCard } from '../components/PostCard';
 import { RecipeCard } from '../components/RecipeCard';
 import { SectionHeading } from '../components/SectionHeading';
 import { TestimonialCard } from '../components/TestimonialCard';
+import { TrainingRoutineSpotlight } from '../components/TrainingRoutineSpotlight';
 import { servicePillars, siteMetrics, testimonials } from '../data/site-content';
 import { usePublicSiteData } from '../hooks/usePublicSiteData';
 
@@ -16,6 +17,11 @@ export function HomePage() {
   const { articles, errors, isLoading, plans, posts, profile, recipes, refresh } = usePublicSiteData();
   const hasBlockingError = !isLoading && !profile;
   const featuredArticle = articles.find((article) => article.featured) ?? articles[0] ?? null;
+  const trainingPost =
+    posts.find((post) => post.featured && post.category?.toLowerCase() === 'treino') ??
+    posts.find((post) => post.category?.toLowerCase() === 'treino') ??
+    posts[0] ??
+    null;
 
   return (
     <>
@@ -84,6 +90,8 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      {trainingPost ? <TrainingRoutineSpotlight post={trainingPost} /> : null}
 
       <section className="section">
         <div className="container">

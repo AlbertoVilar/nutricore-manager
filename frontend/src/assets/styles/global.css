@@ -1165,6 +1165,76 @@ select {
   margin-top: 12px;
 }
 
+.routine-spotlight {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: 28px;
+  align-items: center;
+  padding: 32px;
+}
+
+.routine-spotlight-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.routine-spotlight-copy h2 {
+  margin: 0;
+  max-width: 12ch;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2.3rem, 4vw, 3.6rem);
+  line-height: 1.02;
+}
+
+.routine-spotlight-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.routine-spotlight-meta span {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(47, 125, 77, 0.08);
+  color: var(--color-primary-dark);
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.routine-spotlight-caption {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.routine-spotlight-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.routine-spotlight-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.routine-spotlight-card {
+  overflow: hidden;
+  margin: 0;
+  border-radius: 28px;
+  aspect-ratio: 0.82;
+  background: linear-gradient(135deg, rgba(47, 125, 77, 0.1), rgba(255, 154, 61, 0.16));
+  box-shadow: var(--shadow-soft);
+}
+
+.routine-spotlight-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @keyframes pulse {
   0%,
   80%,
@@ -1199,7 +1269,8 @@ select {
   .recipe-grid,
   .testimonial-grid,
   .contact-card-grid,
-  .editorial-dashboard-grid {
+  .editorial-dashboard-grid,
+  .routine-spotlight-gallery {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1226,7 +1297,8 @@ select {
   .contact-card-grid,
   .editorial-dashboard-grid,
   .detail-gallery,
-  .editorial-form-grid {
+  .editorial-form-grid,
+  .routine-spotlight-gallery {
     grid-template-columns: 1fr;
   }
 
@@ -1305,5 +1377,13 @@ select {
 
   .editorial-form-grid-span-2 {
     grid-column: span 1;
+  }
+
+  .routine-spotlight {
+    padding: 22px;
+  }
+
+  .routine-spotlight-copy h2 {
+    max-width: none;
   }
 }
