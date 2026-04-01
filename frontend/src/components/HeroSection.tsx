@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { PublicProfile } from '../types/public-content';
+import { resolveAssetUrl } from '../utils/media';
 
 interface HeroSectionProps {
   profile: PublicProfile;
@@ -29,7 +30,7 @@ export function HeroSection({ profile }: HeroSectionProps) {
 
         <div className="hero-visual">
           <div className="hero-image-frame">
-            <img alt={profile.fullName} src={profile.heroImageUrl} />
+            <img alt={profile.fullName} src={resolveAssetUrl(profile.heroImageUrl)} />
           </div>
           <div className="hero-floating-card glass-card">
             <strong>NutriCore Public MVP</strong>

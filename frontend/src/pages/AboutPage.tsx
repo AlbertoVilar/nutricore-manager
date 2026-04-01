@@ -5,6 +5,7 @@ import { SectionHeading } from '../components/SectionHeading';
 import { TestimonialCard } from '../components/TestimonialCard';
 import { servicePillars, testimonials } from '../data/site-content';
 import { usePublicSiteData } from '../hooks/usePublicSiteData';
+import { resolveAssetUrl } from '../utils/media';
 
 export function AboutPage() {
   const { errors, isLoading, profile, refresh } = usePublicSiteData();
@@ -56,7 +57,7 @@ export function AboutPage() {
           </div>
 
           <div className="hero-image-frame about-image-frame">
-            <img alt={profile.fullName} src={profile.heroImageUrl} />
+            <img alt={profile.fullName} src={resolveAssetUrl(profile.heroImageUrl)} />
           </div>
         </div>
       </section>

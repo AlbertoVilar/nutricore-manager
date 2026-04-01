@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ArticleCard } from '../components/ArticleCard';
 import { ErrorState } from '../components/ErrorState';
 import { HeroSection } from '../components/HeroSection';
 import { LoadingState } from '../components/LoadingState';
@@ -12,8 +13,9 @@ import { servicePillars, siteMetrics, testimonials } from '../data/site-content'
 import { usePublicSiteData } from '../hooks/usePublicSiteData';
 
 export function HomePage() {
-  const { errors, isLoading, plans, posts, profile, recipes, refresh } = usePublicSiteData();
+  const { articles, errors, isLoading, plans, posts, profile, recipes, refresh } = usePublicSiteData();
   const hasBlockingError = !isLoading && !profile;
+  const featuredArticle = articles.find((article) => article.featured) ?? articles[0] ?? null;
 
   return (
     <>
@@ -86,24 +88,34 @@ export function HomePage() {
       <section className="section">
         <div className="container">
           <SectionHeading
-            description="Posts reais vindos do backend para validar a integracao e a estrutura editorial do site."
-            eyebrow="Conteudo"
-            title="Publicacoes para orientar rotina, treino e estrategia alimentar."
+            description="O CMS ja entrega artigos e posts publicados, com separacao clara entre conteudo institucional e rotina editorial."
+            eyebrow="Editorial"
+            title="Artigos em destaque e posts curtos vindos da API publica."
           />
 
-          {errors.includes('Nao foi possivel carregar os conteudos publicados.') ? (
-            <ErrorState description="A lista de posts publicos nao foi carregada." />
-          ) : (
-            <div className="card-grid">
-              {posts.slice(0, 3).map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
+          <div className="editorial-home-grid">
+            <div>
+              {errors.includes('Nao foi possivel carregar os artigos publicados.') ? (
+                <ErrorState description="A lista de artigos publicos nao foi carregada." />
+              ) : featuredArticle ? (
+                <ArticleCard article={featuredArticle} />
+              ) : (
+                <ErrorState description="Nenhum artigo publicado foi encontrado no momento." />
+              )}
             </div>
-          )}
+
+            <div className="editorial-home-stack">
+              {errors.includes('Nao foi possivel carregar os conteudos publicados.') ? (
+                <ErrorState description="A lista de posts publicos nao foi carregada." />
+              ) : (
+                posts.slice(0, 2).map((post) => <PostCard key={post.id} post={post} />)
+              )}
+            </div>
+          </div>
 
           <div className="section-actions">
             <Link className="button button-secondary" to="/conteudos">
-              Ver todos os conteudos
+              Ver biblioteca editorial
             </Link>
           </div>
         </div>
@@ -176,10 +188,10 @@ export function HomePage() {
         <div className="container cta-banner">
           <div>
             <span className="section-eyebrow">Proxima etapa</span>
-            <h2>Backend estavel. Frontend publico integrado. Base pronta para crescer.</h2>
+            <h2>Backend estavel. Frontend publico e editorial integrados. Base pronta para crescer.</h2>
             <p>
-              O MVP atual fecha a camada publica/comercial com contrato real de API e estrutura
-              preparada para futuras rotas protegidas.
+              O MVP atual fecha a camada publica/comercial e a gestao de conteudo com contrato real de API e
+              estrutura preparada para autenticacao forte depois.
             </p>
           </div>
 
@@ -187,8 +199,8 @@ export function HomePage() {
             <Link className="button button-secondary" to="/contato">
               Falar com a nutricionista
             </Link>
-            <Link className="button button-tertiary" to="/planos">
-              Comparar planos
+            <Link className="button button-tertiary" to="/editor/acesso">
+              Acessar CMS
             </Link>
           </div>
         </div>

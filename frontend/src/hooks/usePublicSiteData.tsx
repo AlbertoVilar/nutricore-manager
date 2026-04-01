@@ -8,16 +8,18 @@ import {
   type ReactNode,
 } from 'react';
 import {
+  getPublicArticles,
   getPublicPlans,
   getPublicPosts,
   getPublicProfile,
   getPublicRecipes,
 } from '../services/publicContentService';
-import type { PublicPlan, PublicPost, PublicProfile, PublicRecipe } from '../types/public-content';
+import type { PublicArticle, PublicPlan, PublicPost, PublicProfile, PublicRecipe } from '../types/public-content';
 
 interface PublicSiteDataContextValue {
   profile: PublicProfile | null;
   plans: PublicPlan[];
+  articles: PublicArticle[];
   posts: PublicPost[];
   recipes: PublicRecipe[];
   isLoading: boolean;
@@ -34,6 +36,7 @@ interface PublicSiteDataProviderProps {
 export function PublicSiteDataProvider({ children }: PublicSiteDataProviderProps) {
   const [profile, setProfile] = useState<PublicProfile | null>(null);
   const [plans, setPlans] = useState<PublicPlan[]>([]);
+  const [articles, setArticles] = useState<PublicArticle[]>([]);
   const [posts, setPosts] = useState<PublicPost[]>([]);
   const [recipes, setRecipes] = useState<PublicRecipe[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
@@ -42,9 +45,10 @@ export function PublicSiteDataProvider({ children }: PublicSiteDataProviderProps
   const refresh = useCallback(async () => {
     setIsLoading(true);
 
-    const [profileResult, plansResult, postsResult, recipesResult] = await Promise.allSettled([
+    const [profileResult, plansResult, articlesResult, postsResult, recipesResult] = await Promise.allSettled([
       getPublicProfile(),
       getPublicPlans(),
+      getPublicArticles(),
       getPublicPosts(),
       getPublicRecipes(),
     ]);
@@ -63,6 +67,13 @@ export function PublicSiteDataProvider({ children }: PublicSiteDataProviderProps
     } else {
       setPlans([]);
       nextErrors.push('Nao foi possivel carregar os planos de atendimento.');
+    }
+
+    if (articlesResult.status === 'fulfilled') {
+      setArticles(articlesResult.value);
+    } else {
+      setArticles([]);
+      nextErrors.push('Nao foi possivel carregar os artigos publicados.');
     }
 
     if (postsResult.status === 'fulfilled') {
@@ -89,15 +100,16 @@ export function PublicSiteDataProvider({ children }: PublicSiteDataProviderProps
 
   const value = useMemo<PublicSiteDataContextValue>(
     () => ({
-      profile,
-      plans,
-      posts,
-      recipes,
-      isLoading,
-      errors,
-      refresh,
-    }),
-    [errors, isLoading, plans, posts, profile, recipes, refresh],
+        profile,
+        plans,
+        articles,
+        posts,
+        recipes,
+        isLoading,
+        errors,
+        refresh,
+      }),
+    [articles, errors, isLoading, plans, posts, profile, recipes, refresh],
   );
 
   return <PublicSiteDataContext.Provider value={value}>{children}</PublicSiteDataContext.Provider>;

@@ -33,10 +33,28 @@ export interface PublicPost {
   id: number;
   title: string;
   slug: string;
+  summary: string | null;
+  body: string;
+  coverImageUrl: string | null;
+  galleryImageUrls: string[];
+  videoUrl: string | null;
+  caption: string | null;
   category: string;
-  excerpt: string;
+  featured: boolean;
+  publishedAt: string;
+}
+
+export interface PublicArticle {
+  id: number;
+  title: string;
+  slug: string;
+  summary: string;
+  body: string;
+  coverImageUrl: string | null;
+  tags: string[];
+  category: string | null;
   readTimeMinutes: number;
-  imageUrl: string;
+  featured: boolean;
   publishedAt: string;
 }
 
@@ -44,12 +62,15 @@ export interface PublicRecipe {
   id: number;
   title: string;
   slug: string;
-  summary: string;
-  imageUrl: string;
-  prepTimeMinutes: number;
-  caloriesLabel: string;
+  description: string;
+  imageUrl: string | null;
   ingredients: string[];
   preparationSteps: string[];
+  prepTimeMinutes: number;
+  yieldInfo: string;
+  category: string | null;
+  featured: boolean;
+  publishedAt: string;
 }
 
 export interface SiteMetric {

@@ -1,11 +1,14 @@
+import { EditorialSessionProvider } from './hooks/useEditorialSession';
 import { PublicSiteDataProvider } from './hooks/usePublicSiteData';
 import { AppRoutes } from './routes/AppRoutes';
 
 function App() {
   return (
-    <PublicSiteDataProvider>
-      <AppRoutes />
-    </PublicSiteDataProvider>
+    <EditorialSessionProvider>
+      <PublicSiteDataProvider>
+        <AppRoutes />
+      </PublicSiteDataProvider>
+    </EditorialSessionProvider>
   );
 }
 

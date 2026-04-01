@@ -17,8 +17,8 @@ export function Footer() {
             </div>
           </div>
           <p>
-            MVP publico construindo a camada comercial da nutricionista sobre uma base backend
-            consistente e pronta para evolucao.
+            MVP publico construindo a camada comercial da nutricionista sobre uma base backend consistente e pronta
+            para evolucao.
           </p>
         </div>
 
@@ -36,6 +36,9 @@ export function Footer() {
             </li>
             <li>
               <Link to="/planos">Planos</Link>
+            </li>
+            <li>
+              <Link to="/editor/acesso">Acesso editorial</Link>
             </li>
           </ul>
         </div>
@@ -60,7 +63,7 @@ export function Footer() {
       </div>
 
       <div className="container footer-bottom">
-        <span>NutriCore Manager MVP · Frontend publico integrado ao backend Spring.</span>
+        <span>NutriCore Manager MVP - Frontend publico integrado ao backend Spring.</span>
       </div>
     </footer>
   );
