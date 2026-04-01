@@ -31,7 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class EditorialManagementIntegrationTest {
 
     private static final String API_CONTEXT = "/api";
-    private static final String EDITORIAL_TOKEN = "nutricore-dev-editor";
+    private static final String ADMIN_EMAIL = "albertovilar1@gmail.com";
+    private static final String ADMIN_PASSWORD = "132747";
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,14 +41,16 @@ class EditorialManagementIntegrationTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void shouldRequireEditorialTokenForAdminEndpoints() throws Exception {
+    void shouldRequireAuthenticationForAdminEndpoints() throws Exception {
         mockMvc.perform(get("/api/v1/admin/posts").contextPath(API_CONTEXT))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(containsString("token editorial valido")));
+                .andExpect(jsonPath("$.message").value(containsString("Autenticacao obrigatoria")));
     }
 
     @Test
     void shouldCreateDraftPostAndKeepItPrivate() throws Exception {
+        String accessToken = loginAndExtractToken(ADMIN_EMAIL, ADMIN_PASSWORD);
+
         String requestBody = """
                 {
                   "title": "Post em rascunho de teste",
@@ -62,7 +65,7 @@ class EditorialManagementIntegrationTest {
         mockMvc.perform(post("/api/v1/admin/posts")
                         .contextPath(API_CONTEXT)
                         .contentType(APPLICATION_JSON)
-                        .header("X-Editorial-Token", EDITORIAL_TOKEN)
+                        .header("Authorization", bearerToken(accessToken))
                         .content(requestBody))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.status").value("DRAFT"))
@@ -70,7 +73,7 @@ class EditorialManagementIntegrationTest {
 
         mockMvc.perform(get("/api/v1/admin/posts")
                         .contextPath(API_CONTEXT)
-                        .header("X-Editorial-Token", EDITORIAL_TOKEN)
+                        .header("Authorization", bearerToken(accessToken))
                         .param("status", "DRAFT"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Post em rascunho de teste")));
@@ -82,6 +85,8 @@ class EditorialManagementIntegrationTest {
 
     @Test
     void shouldPublishAndUnpublishPost() throws Exception {
+        String accessToken = loginAndExtractToken(ADMIN_EMAIL, ADMIN_PASSWORD);
+
         String requestBody = """
                 {
                   "title": "Publicacao controlada por status",
@@ -96,7 +101,7 @@ class EditorialManagementIntegrationTest {
         String createResponse = mockMvc.perform(post("/api/v1/admin/posts")
                         .contextPath(API_CONTEXT)
                         .contentType(APPLICATION_JSON)
-                        .header("X-Editorial-Token", EDITORIAL_TOKEN)
+                        .header("Authorization", bearerToken(accessToken))
                         .content(requestBody))
                 .andExpect(status().isCreated())
                 .andReturn()
@@ -107,7 +112,7 @@ class EditorialManagementIntegrationTest {
 
         mockMvc.perform(patch("/api/v1/admin/posts/{id}/publish", id)
                         .contextPath(API_CONTEXT)
-                        .header("X-Editorial-Token", EDITORIAL_TOKEN))
+                        .header("Authorization", bearerToken(accessToken)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("PUBLISHED"))
                 .andExpect(jsonPath("$.publishedAt").exists());
@@ -119,7 +124,7 @@ class EditorialManagementIntegrationTest {
 
         mockMvc.perform(patch("/api/v1/admin/posts/{id}/draft", id)
                         .contextPath(API_CONTEXT)
-                        .header("X-Editorial-Token", EDITORIAL_TOKEN))
+                        .header("Authorization", bearerToken(accessToken)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("DRAFT"));
 
@@ -130,6 +135,8 @@ class EditorialManagementIntegrationTest {
 
     @Test
     void shouldCreateArticleAndExposeItOnlyWhenPublished() throws Exception {
+        String accessToken = loginAndExtractToken(ADMIN_EMAIL, ADMIN_PASSWORD);
+
         String requestBody = """
                 {
                   "title": "Artigo sobre adesao no dia a dia",
@@ -145,7 +152,7 @@ class EditorialManagementIntegrationTest {
         mockMvc.perform(post("/api/v1/admin/articles")
                         .contextPath(API_CONTEXT)
                         .contentType(APPLICATION_JSON)
-                        .header("X-Editorial-Token", EDITORIAL_TOKEN)
+                        .header("Authorization", bearerToken(accessToken))
                         .content(requestBody))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.status").value("PUBLISHED"))
@@ -160,6 +167,8 @@ class EditorialManagementIntegrationTest {
 
     @Test
     void shouldArchiveRecipeAndHideItFromPublicApi() throws Exception {
+        String accessToken = loginAndExtractToken(ADMIN_EMAIL, ADMIN_PASSWORD);
+
         String requestBody = """
                 {
                   "title": "Receita de teste para arquivamento",
@@ -178,7 +187,7 @@ class EditorialManagementIntegrationTest {
         String createResponse = mockMvc.perform(post("/api/v1/admin/recipes")
                         .contextPath(API_CONTEXT)
                         .contentType(APPLICATION_JSON)
-                        .header("X-Editorial-Token", EDITORIAL_TOKEN)
+                        .header("Authorization", bearerToken(accessToken))
                         .content(requestBody))
                 .andExpect(status().isCreated())
                 .andReturn()
@@ -193,7 +202,7 @@ class EditorialManagementIntegrationTest {
 
         mockMvc.perform(patch("/api/v1/admin/recipes/{id}/archive", id)
                         .contextPath(API_CONTEXT)
-                        .header("X-Editorial-Token", EDITORIAL_TOKEN))
+                        .header("Authorization", bearerToken(accessToken)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("ARCHIVED"));
 
@@ -204,6 +213,8 @@ class EditorialManagementIntegrationTest {
 
     @Test
     void shouldUploadEditorialImage() throws Exception {
+        String accessToken = loginAndExtractToken(ADMIN_EMAIL, ADMIN_PASSWORD);
+
         MockMultipartFile file = new MockMultipartFile(
                 "file",
                 "cover.png",
@@ -214,9 +225,33 @@ class EditorialManagementIntegrationTest {
         mockMvc.perform(multipart("/api/v1/admin/media/images")
                         .file(file)
                         .contextPath(API_CONTEXT)
-                        .header("X-Editorial-Token", EDITORIAL_TOKEN))
+                        .header("Authorization", bearerToken(accessToken)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.url").value(containsString("/api/media/images/")))
                 .andExpect(jsonPath("$.contentType").value("image/png"));
+    }
+
+    private String loginAndExtractToken(String email, String password) throws Exception {
+        String requestBody = """
+                {
+                  "email": "%s",
+                  "password": "%s"
+                }
+                """.formatted(email, password);
+
+        String responseBody = mockMvc.perform(post("/api/v1/auth/login")
+                        .contextPath(API_CONTEXT)
+                        .contentType(APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        return objectMapper.readTree(responseBody).get("accessToken").asText();
+    }
+
+    private String bearerToken(String accessToken) {
+        return "Bearer " + accessToken;
     }
 }
