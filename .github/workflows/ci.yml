@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - develop
-      - 'codex/**'
+      - 'nutri-manage/**'
   pull_request:
     branches:
       - main

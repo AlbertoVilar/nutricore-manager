@@ -1,0 +1,14 @@
+.git
+.github
+.idea
+.vscode
+frontend
+nutricore-landing
+target
+storage
+node_modules
+backend-run.log
+frontend-run.log
+codex-startup.err.log
+codex-startup.out.log
+*.log

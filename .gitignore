@@ -50,3 +50,8 @@ HELP.md
 /nutricore-landing/
 /DOCUMENTACAO_TECNICA.md
 /storage/
+.env
+.env.local
+.env.*.local
+/frontend/.env
+/frontend/.env.local
