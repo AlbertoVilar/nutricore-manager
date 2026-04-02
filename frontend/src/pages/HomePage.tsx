@@ -12,6 +12,7 @@ import { TestimonialCard } from '../components/TestimonialCard';
 import { TrainingRoutineSpotlight } from '../components/TrainingRoutineSpotlight';
 import { usePublicSiteData } from '../hooks/usePublicSiteData';
 import { getGeneralPosts, getRoutineSpotlightPost } from '../utils/contentCollections';
+import { resolveAssetUrl } from '../utils/media';
 
 export function HomePage() {
   const { articles, errors, isLoading, plans, posts, profile, recipes, refresh } = usePublicSiteData();
@@ -78,6 +79,9 @@ export function HomePage() {
             </div>
 
             <div className="glass-card callout-card">
+              <div className="callout-card-image">
+                <img alt={profile.fullName} src={resolveAssetUrl(profile.aboutImageUrl)} />
+              </div>
               <span className="section-eyebrow">Sobre a nutricionista</span>
               <h3>{profile.aboutTitle}</h3>
               <p>{profile.biographySummary}</p>
