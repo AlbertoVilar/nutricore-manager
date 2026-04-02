@@ -194,10 +194,12 @@ Nesta etapa, o projeto entrega:
   - build da aplicação Spring Boot
   - profile `docker`
   - Flyway habilitado
+  - healthcheck em `/api/v1/public/profile`
 - `frontend`
   - build Vite
   - servido por Nginx
   - proxy de `/api` para o backend
+  - healthcheck HTTP na raiz `/`
 
 ### Variáveis de ambiente
 
@@ -488,6 +490,7 @@ Checks atuais:
 
 - `Backend tests`
 - `Frontend build`
+- `Docker validation`
 
 Branches monitoradas:
 

@@ -61,6 +61,7 @@ Valide:
 - frontend carregando
 - backend respondendo em `/api/v1/public/profile`
 - login editorial funcionando com o admin criado
+- `docker compose ps` mostrando `backend`, `frontend` e `postgres` como `healthy`
 
 ## Passo 5. Desligar bootstrap
 

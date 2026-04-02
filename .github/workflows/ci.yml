@@ -66,3 +66,23 @@ jobs:
 
       - name: Build frontend
         run: npm run build
+
+  docker-validate:
+    name: Docker validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Validate Docker Compose for local and homolog environments
+        run: |
+          docker compose --env-file .env.example config > /tmp/compose-dev.yaml
+          docker compose --env-file .env.homolog.example config > /tmp/compose-homolog.yaml
+
+      - name: Build backend image
+        run: docker build -t nutricore-manager-backend:test .
+
+      - name: Build frontend image
+        run: docker build -t nutricore-manager-frontend:test ./frontend
