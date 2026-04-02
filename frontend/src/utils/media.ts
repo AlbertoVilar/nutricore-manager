@@ -38,6 +38,16 @@ export function getVideoEmbedUrl(url: string | null | undefined) {
       const videoId = parsedUrl.pathname.replace('/', '');
       return videoId ? `https://player.vimeo.com/video/${videoId}` : null;
     }
+
+    if (parsedUrl.hostname.includes('instagram.com')) {
+      const parts = parsedUrl.pathname.split('/').filter(Boolean);
+      const type = parts[0];
+      const shortcode = parts[1];
+
+      if ((type === 'reel' || type === 'p' || type === 'tv') && shortcode) {
+        return `https://www.instagram.com/${type}/${shortcode}/embed`;
+      }
+    }
   } catch {
     return null;
   }

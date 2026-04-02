@@ -41,9 +41,10 @@ class PublicContentIntegrationTest {
     void shouldReturnPublicPosts() throws Exception {
         mockMvc.perform(get("/api/v1/public/posts").contextPath("/api"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(4))
-                .andExpect(jsonPath("$[0].slug").value("rotina-da-nutri-dando-exemplo"))
-                .andExpect(jsonPath("$[0].galleryImageUrls.length()").value(3));
+                .andExpect(jsonPath("$.length()").value(8))
+                .andExpect(jsonPath("$[0].slug").value("azeite-em-excesso-tambem-atrapalha"))
+                .andExpect(jsonPath("$[0].videoUrl").value("/videos/reels/DWorx4JjUpr.mp4"))
+                .andExpect(jsonPath("$[1].slug").value("seu-corpo-precisa-mais-do-que-treino"));
     }
 
     @Test

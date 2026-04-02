@@ -65,7 +65,7 @@ export function PostDetailPage() {
             {coverImageUrl ? <img alt={post.title} className="detail-cover-image" src={coverImageUrl} /> : null}
             <RichContent body={post.body} />
             {post.caption ? <p className="detail-caption">{post.caption}</p> : null}
-            {post.videoUrl ? <VideoEmbed url={post.videoUrl} /> : null}
+            {post.videoUrl ? <VideoEmbed posterUrl={coverImageUrl} url={post.videoUrl} /> : null}
 
             {post.galleryImageUrls.length > 0 ? (
               <div className="detail-gallery">
