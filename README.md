@@ -14,6 +14,9 @@ Nesta etapa, o projeto entrega:
 - frontend React + TypeScript funcional;
 - autenticação editorial real com Spring Security + JWT;
 - CMS privado para posts, artigos e receitas;
+- administração privada do perfil público do site;
+- administração privada dos planos comerciais públicos;
+- gestão privada de usuários editoriais com roles e ativação/desativação;
 - upload simples de imagem;
 - conteúdo público filtrando apenas itens `PUBLISHED`;
 - ambiente local com Docker, PostgreSQL e persistência para desenvolvimento.
@@ -85,6 +88,10 @@ Nesta etapa, o projeto entrega:
 
 - `/editor/acesso`
 - `/editor`
+- `/editor/site`
+- `/editor/planos`
+- `/editor/planos/novo`
+- `/editor/planos/:id/editar`
 - `/editor/posts`
 - `/editor/posts/novo`
 - `/editor/posts/:id/editar`
@@ -94,6 +101,9 @@ Nesta etapa, o projeto entrega:
 - `/editor/recipes`
 - `/editor/recipes/novo`
 - `/editor/recipes/:id/editar`
+- `/editor/usuarios`
+- `/editor/usuarios/novo`
+- `/editor/usuarios/:id/editar`
 
 ### APIs
 
@@ -139,6 +149,22 @@ Nesta etapa, o projeto entrega:
 - `PATCH /api/v1/admin/recipes/{id}/draft`
 - `PATCH /api/v1/admin/recipes/{id}/archive`
 - `DELETE /api/v1/admin/recipes/{id}`
+- `GET /api/v1/admin/public-profile`
+- `PUT /api/v1/admin/public-profile`
+- `GET /api/v1/admin/public-plans`
+- `GET /api/v1/admin/public-plans/{id}`
+- `POST /api/v1/admin/public-plans`
+- `PUT /api/v1/admin/public-plans/{id}`
+- `PATCH /api/v1/admin/public-plans/{id}/activate`
+- `PATCH /api/v1/admin/public-plans/{id}/deactivate`
+- `DELETE /api/v1/admin/public-plans/{id}`
+- `GET /api/v1/admin/users`
+- `GET /api/v1/admin/users/{id}`
+- `POST /api/v1/admin/users`
+- `PUT /api/v1/admin/users/{id}`
+- `PATCH /api/v1/admin/users/{id}/activate`
+- `PATCH /api/v1/admin/users/{id}/deactivate`
+- `PATCH /api/v1/admin/users/{id}/password`
 - `POST /api/v1/admin/media/images`
 
 ## Perfis do backend
@@ -270,6 +296,7 @@ VITE_API_BASE_URL=http://localhost:8080/api
 - `/api/v1/auth/login` é público para login;
 - `/api/v1/auth/me` exige autenticação;
 - `/api/v1/admin/**` exige `ADMIN` ou `EDITOR`.
+- `/api/v1/admin/users/**` exige `ADMIN`.
 
 ### Sessão no frontend
 
@@ -292,6 +319,60 @@ Essas credenciais vêm do bootstrap configurado por propriedades e variáveis de
 - altere `APP_SECURITY_BOOTSTRAP_ROLE`;
 - reinicie o backend.
 
+## Administração privada da camada pública
+
+### Perfil público
+
+O admin consegue editar sem depender de código:
+
+- nome profissional e subtítulo;
+- hero do site;
+- descrição institucional;
+- CTAs principais;
+- contato e redes;
+- blocos estruturados da home;
+- depoimentos;
+- imagem da hero;
+- imagem da seção Sobre.
+
+Fluxo:
+
+1. entrar em `/editor/site`;
+2. editar textos e imagens;
+3. salvar;
+4. confirmar o reflexo imediato em `/`, `/sobre`, `/planos` e `/contato`.
+
+### Planos públicos
+
+O admin consegue:
+
+- listar planos;
+- criar plano;
+- editar plano;
+- ativar e desativar;
+- excluir;
+- definir ordem de exibição;
+- controlar CTA e destaque.
+
+Somente planos ativos aparecem no site público.
+
+### Usuários editoriais
+
+O admin consegue:
+
+- listar contas editoriais;
+- criar novo usuário;
+- editar nome, e-mail, role e status;
+- redefinir senha;
+- ativar e desativar acesso.
+
+Regras atuais:
+
+- `ADMIN` enxerga e gerencia usuários;
+- `EDITOR` acessa o CMS, mas não gerencia usuários;
+- usuário desativado não consegue login;
+- o admin não pode se desativar pela própria tela.
+
 ## Mídia no MVP
 
 ### Imagens
@@ -302,6 +383,14 @@ Essas credenciais vêm do bootstrap configurado por propriedades e variáveis de
   - `target/test-editorial-media` no profile `test`;
   - `storage/editorial-media` em `dev`;
   - `./storage/editorial-media` no Docker.
+
+Fluxo no admin:
+
+1. clicar em `Enviar imagem`;
+2. aguardar o upload;
+3. o campo recebe a URL pública retornada;
+4. salvar o formulário;
+5. validar a imagem no site público.
 
 ### Vídeos
 
@@ -348,8 +437,15 @@ Com frontend e backend em execução:
 5. abra `/contato`;
 6. abra `/acessos`;
 7. faça login em `/editor/acesso`;
-8. publique, despublique, arquive e exclua conteúdos no CMS;
-9. confirme que apenas conteúdo `PUBLISHED` aparece no público.
+8. edite o perfil público em `/editor/site`;
+9. altere uma imagem institucional e confirme no site;
+10. crie ou edite planos em `/editor/planos`;
+11. desative um plano e confirme que ele some do público;
+12. crie um usuário em `/editor/usuarios`;
+13. redefina a senha desse usuário;
+14. desative a conta e confirme o bloqueio de login;
+15. publique, despublique, arquive e exclua conteúdos no CMS;
+16. confirme que apenas conteúdo `PUBLISHED` aparece no público.
 
 ## CI
 
