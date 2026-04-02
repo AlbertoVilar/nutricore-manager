@@ -275,6 +275,17 @@ Runbook detalhado:
 
 - [HOMOLOGACAO.md](/C:/Dev/manager/docs/HOMOLOGACAO.md)
 
+## Deploy recomendado para teste
+
+Para um deploy rápido de homologação sem reestruturar a aplicação:
+
+- backend + PostgreSQL + storage no Railway
+- frontend no Vercel
+
+Guia preparado no repositório:
+
+- [DEPLOY_RAILWAY_VERCEL.md](/C:/Dev/manager/docs/DEPLOY_RAILWAY_VERCEL.md)
+
 ## Execução local sem Docker
 
 ### Backend com PostgreSQL local
