@@ -61,6 +61,19 @@ export function ContactPage() {
               </article>
 
               <article className="glass-card contact-card">
+                <span className="section-eyebrow">Consultório</span>
+                <h3>{profile.city}</h3>
+                <p>{profile.officeAddress}</p>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(profile.officeAddress)}`}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Ver localização
+                </a>
+              </article>
+
+              <article className="glass-card contact-card">
                 <span className="section-eyebrow">Instagram</span>
                 <h3>{profile.instagramHandle}</h3>
                 <a

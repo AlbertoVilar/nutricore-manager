@@ -52,6 +52,7 @@ export function Footer() {
             <li>{profile?.contactEmail ?? 'contato@nutricore.com.br'}</li>
             <li>{profile?.contactPhone ?? '+55 11 99999-9999'}</li>
             <li>{profile?.city ?? 'São Paulo, SP'}</li>
+            <li>{profile?.officeAddress ?? 'Endereço do consultório indisponível.'}</li>
             <li>
               <a
                 href={`https://instagram.com/${sanitizeInstagramHandle(profile?.instagramHandle ?? 'nutricore')}`}

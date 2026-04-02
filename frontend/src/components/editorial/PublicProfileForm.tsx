@@ -65,6 +65,7 @@ export function PublicProfileForm({
       linkedinUrl: form.linkedinUrl.trim(),
       youtubeUrl: form.youtubeUrl.trim(),
       city: form.city.trim(),
+      officeAddress: form.officeAddress.trim(),
       footerDescription: form.footerDescription.trim(),
       howItWorksTitle: form.howItWorksTitle.trim(),
       howItWorksDescription: form.howItWorksDescription.trim(),
@@ -122,6 +123,17 @@ export function PublicProfileForm({
                   required
                   type="text"
                   value={form.city}
+                />
+              </div>
+
+              <div className="form-field editorial-form-grid-span-2">
+                <label htmlFor="profile-office-address">EndereÃ§o do consultÃ³rio</label>
+                <input
+                  id="profile-office-address"
+                  onChange={(event) => updateField('officeAddress', event.target.value)}
+                  required
+                  type="text"
+                  value={form.officeAddress}
                 />
               </div>
 

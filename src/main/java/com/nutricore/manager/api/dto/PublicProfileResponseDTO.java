@@ -27,6 +27,7 @@ public record PublicProfileResponseDTO(
         String linkedinUrl,
         String youtubeUrl,
         String city,
+        String officeAddress,
         String heroImageUrl,
         String footerDescription,
         String howItWorksTitle,

@@ -50,6 +50,7 @@ public class PublicProfileMapper {
                 entity.getLinkedinUrl(),
                 entity.getYoutubeUrl(),
                 entity.getCity(),
+                entity.getOfficeAddress(),
                 entity.getHeroImageUrl(),
                 entity.getFooterDescription(),
                 entity.getHowItWorksTitle(),
@@ -95,6 +96,7 @@ public class PublicProfileMapper {
                 entity.getLinkedinUrl(),
                 entity.getYoutubeUrl(),
                 entity.getCity(),
+                entity.getOfficeAddress(),
                 entity.getFooterDescription(),
                 entity.getHowItWorksTitle(),
                 entity.getHowItWorksDescription(),
@@ -139,6 +141,7 @@ public class PublicProfileMapper {
         entity.setLinkedinUrl(trimToNull(request.linkedinUrl()));
         entity.setYoutubeUrl(trimToNull(request.youtubeUrl()));
         entity.setCity(request.city().trim());
+        entity.setOfficeAddress(request.officeAddress().trim());
         entity.setFooterDescription(request.footerDescription().trim());
         entity.setHowItWorksTitle(request.howItWorksTitle().trim());
         entity.setHowItWorksDescription(request.howItWorksDescription().trim());

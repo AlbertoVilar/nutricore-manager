@@ -96,6 +96,9 @@ public class PublicProfile {
     private String city;
 
     @Column(nullable = false, length = 255)
+    private String officeAddress;
+
+    @Column(nullable = false, length = 255)
     private String heroImageUrl;
 
     @Column(nullable = false, length = 120)

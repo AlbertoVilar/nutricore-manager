@@ -32,6 +32,7 @@ function toFormValue(profile: AdminPublicProfile): AdminPublicProfileInput {
     linkedinUrl: profile.linkedinUrl ?? '',
     youtubeUrl: profile.youtubeUrl ?? '',
     city: profile.city,
+    officeAddress: profile.officeAddress,
     footerDescription: profile.footerDescription,
     howItWorksTitle: profile.howItWorksTitle,
     howItWorksDescription: profile.howItWorksDescription,

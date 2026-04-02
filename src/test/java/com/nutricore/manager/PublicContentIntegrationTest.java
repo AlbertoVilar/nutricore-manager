@@ -24,7 +24,8 @@ class PublicContentIntegrationTest {
     void shouldReturnPublicProfile() throws Exception {
         mockMvc.perform(get("/api/v1/public/profile").contextPath("/api"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.fullName").value("Dra. Carolina Barreto"))
+                .andExpect(jsonPath("$.fullName").value("Ana Paula Vilar Alves"))
+                .andExpect(jsonPath("$.officeAddress").value("Rua Samaritana Maria Amália de Castilho, Cuité, PB, 58175-000, Brasil"))
                 .andExpect(jsonPath("$.heroTitle").exists());
     }
 

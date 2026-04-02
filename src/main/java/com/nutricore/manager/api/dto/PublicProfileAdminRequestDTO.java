@@ -33,6 +33,7 @@ public record PublicProfileAdminRequestDTO(
         @Size(max = 255) String linkedinUrl,
         @Size(max = 255) String youtubeUrl,
         @NotBlank @Size(max = 80) String city,
+        @NotBlank @Size(max = 255) String officeAddress,
         @NotBlank @Size(max = 255) String footerDescription,
         @NotBlank @Size(max = 180) String howItWorksTitle,
         @NotBlank @Size(max = 1200) String howItWorksDescription,

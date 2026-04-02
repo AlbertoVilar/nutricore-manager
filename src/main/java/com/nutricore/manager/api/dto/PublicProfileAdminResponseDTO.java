@@ -29,6 +29,7 @@ public record PublicProfileAdminResponseDTO(
         String linkedinUrl,
         String youtubeUrl,
         String city,
+        String officeAddress,
         String footerDescription,
         String howItWorksTitle,
         String howItWorksDescription,

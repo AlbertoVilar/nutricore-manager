@@ -76,6 +76,7 @@ class AdminPublicConfigurationIntegrationTest {
         ((com.fasterxml.jackson.databind.node.ObjectNode) requestNode).put("aboutImageUrl", uploadedImageUrl);
         ((com.fasterxml.jackson.databind.node.ObjectNode) requestNode).put("contactPhone", "+55 11 98888-7766");
         ((com.fasterxml.jackson.databind.node.ObjectNode) requestNode).put("whatsappNumber", "5511988887766");
+        ((com.fasterxml.jackson.databind.node.ObjectNode) requestNode).put("officeAddress", "Rua de teste, 10 - Centro - Cuite, PB");
         ((com.fasterxml.jackson.databind.node.ObjectNode) requestNode).remove("createdAt");
         ((com.fasterxml.jackson.databind.node.ObjectNode) requestNode).remove("updatedAt");
 
@@ -87,6 +88,7 @@ class AdminPublicConfigurationIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.heroImageUrl").value(uploadedImageUrl))
                 .andExpect(jsonPath("$.contactPhone").value("+55 11 98888-7766"))
+                .andExpect(jsonPath("$.officeAddress").value("Rua de teste, 10 - Centro - Cuite, PB"))
                 .andExpect(jsonPath("$.professionalSubtitle").value("Nutrição clínica, treino e estratégia de rotina"));
 
         mockMvc.perform(get("/api/v1/public/profile")
@@ -94,6 +96,7 @@ class AdminPublicConfigurationIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.heroImageUrl").value(uploadedImageUrl))
                 .andExpect(jsonPath("$.contactPhone").value("+55 11 98888-7766"))
+                .andExpect(jsonPath("$.officeAddress").value("Rua de teste, 10 - Centro - Cuite, PB"))
                 .andExpect(jsonPath("$.professionalSubtitle").value("Nutrição clínica, treino e estratégia de rotina"));
     }
 

@@ -23,6 +23,7 @@ export interface PublicProfile {
   linkedinUrl: string | null;
   youtubeUrl: string | null;
   city: string;
+  officeAddress: string;
   heroImageUrl: string;
   footerDescription: string;
   howItWorksTitle: string;

@@ -27,6 +27,7 @@ export interface AdminPublicProfile {
   linkedinUrl: string | null;
   youtubeUrl: string | null;
   city: string;
+  officeAddress: string;
   footerDescription: string;
   howItWorksTitle: string;
   howItWorksDescription: string;
@@ -70,6 +71,7 @@ export interface AdminPublicProfileInput {
   linkedinUrl: string;
   youtubeUrl: string;
   city: string;
+  officeAddress: string;
   footerDescription: string;
   howItWorksTitle: string;
   howItWorksDescription: string;
