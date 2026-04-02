@@ -1,8 +1,9 @@
 package com.nutricore.manager.api.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-public record PublicProfileResponseDTO(
+public record PublicProfileAdminResponseDTO(
         Long id,
         String fullName,
         String professionalTitle,
@@ -15,6 +16,7 @@ public record PublicProfileResponseDTO(
         String heroCardDescription,
         String aboutTitle,
         String aboutDescription,
+        String heroImageUrl,
         String aboutImageUrl,
         String primaryCtaLabel,
         String primaryCtaUrl,
@@ -27,7 +29,6 @@ public record PublicProfileResponseDTO(
         String linkedinUrl,
         String youtubeUrl,
         String city,
-        String heroImageUrl,
         String footerDescription,
         String howItWorksTitle,
         String howItWorksDescription,
@@ -41,6 +42,8 @@ public record PublicProfileResponseDTO(
         String finalCtaDescription,
         List<PublicSiteMetricItemDTO> siteMetrics,
         List<PublicServicePillarItemDTO> servicePillars,
-        List<PublicTestimonialItemDTO> testimonials
+        List<PublicTestimonialItemDTO> testimonials,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 ) {
 }

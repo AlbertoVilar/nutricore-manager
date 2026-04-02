@@ -10,4 +10,6 @@ import java.util.List;
 public interface PublicPlanRepository extends JpaRepository<PublicPlan, Long> {
 
     List<PublicPlan> findAllByOrderByDisplayOrderAsc();
+
+    List<PublicPlan> findAllByActiveTrueOrderByDisplayOrderAsc();
 }

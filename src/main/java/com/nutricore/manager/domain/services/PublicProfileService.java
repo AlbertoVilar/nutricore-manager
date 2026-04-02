@@ -17,8 +17,7 @@ public class PublicProfileService {
 
     @Transactional(readOnly = true)
     public PublicProfileResponseDTO getProfile() {
-        return publicProfileRepository.findAll().stream()
-                .findFirst()
+        return publicProfileRepository.findFirstByOrderByIdAsc()
                 .map(publicProfileMapper::toResponse)
                 .orElseThrow(() -> new ResourceNotFoundException("Perfil público não encontrado."));
     }

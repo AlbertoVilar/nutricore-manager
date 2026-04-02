@@ -18,7 +18,7 @@ public class PublicPlanService {
 
     @Transactional(readOnly = true)
     public List<PublicPlanResponseDTO> findAll() {
-        return publicPlanRepository.findAllByOrderByDisplayOrderAsc().stream()
+        return publicPlanRepository.findAllByActiveTrueOrderByDisplayOrderAsc().stream()
                 .map(publicPlanMapper::toResponse)
                 .toList();
     }
