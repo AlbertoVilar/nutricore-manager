@@ -18,20 +18,20 @@ export function PlansPage() {
       <PageHero
         actions={
           <div className="page-hero-actions">
-            <Link className="button button-primary" to="/contato">
-              Quero uma avaliação
-            </Link>
+            <a className="button button-primary" href={profile?.primaryCtaUrl ?? '/contato'} rel="noreferrer" target="_blank">
+              {profile?.primaryCtaLabel ?? 'Quero uma avaliação'}
+            </a>
           </div>
         }
-        description="Planos pensados para diferentes momentos da jornada, com clareza sobre apoio, acompanhamento e ritmo de evolução."
+        description={profile?.plansDescription ?? 'Planos pensados para diferentes momentos da jornada.'}
         eyebrow="Planos"
-        title="Opções de acompanhamento para diferentes fases da jornada."
+        title={profile?.plansTitle ?? 'Opções de acompanhamento'}
       />
 
       <section className="section plans-section">
         <div className="container">
           <SectionHeading
-            description="Cada plano organiza o nível de proximidade, revisão e suporte para ajudar a transformar orientação em aderência."
+            description={profile?.plansDescription ?? 'Cada plano organiza o nível de proximidade, revisão e suporte.'}
             eyebrow="Atendimento"
             title="Comparação objetiva entre níveis de acompanhamento."
           />
@@ -57,19 +57,11 @@ export function PlansPage() {
         <div className="container cta-banner">
           <div>
             <span className="section-eyebrow">Próximo passo</span>
-            <h2>{profile?.primaryCtaLabel ?? 'Agendar avaliação'}</h2>
-            <p>
-              Se você quiser entender qual formato faz mais sentido para o seu momento, a conversa inicial segue por
-              canais diretos com a nutricionista.
-            </p>
+            <h2>{profile?.finalCtaTitle ?? 'Agendar avaliação'}</h2>
+            <p>{profile?.finalCtaDescription ?? 'Converse com a nutricionista para entender o formato ideal.'}</p>
           </div>
           <div className="cta-actions">
-            <a
-              className="button button-primary"
-              href={profile?.primaryCtaUrl ?? '/contato'}
-              rel="noreferrer"
-              target="_blank"
-            >
+            <a className="button button-primary" href={profile?.primaryCtaUrl ?? '/contato'} rel="noreferrer" target="_blank">
               Abrir conversa
             </a>
             <Link className="button button-tertiary" to="/contato">

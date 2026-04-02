@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
+import { usePublicSiteData } from '../hooks/usePublicSiteData';
 
 const navigationItems = [
   { to: '/', label: 'Início' },
@@ -10,18 +11,20 @@ const navigationItems = [
 ];
 
 export function Header() {
+  const { profile } = usePublicSiteData();
+
   return (
     <header className="site-header">
       <div className="container header-content">
         <Link className="brand" to="/">
           <span className="brand-mark">NC</span>
           <div>
-            <strong>NutriCore</strong>
-            <span>Nutrição clínica e rotina real</span>
+            <strong>{profile?.fullName ?? 'NutriCore'}</strong>
+            <span>{profile?.professionalSubtitle ?? 'Nutrição clínica e rotina real'}</span>
           </div>
         </Link>
 
-        <nav className="main-nav" aria-label="Navegação principal">
+        <nav aria-label="Navegação principal" className="main-nav">
           {navigationItems.map((item) => (
             <NavLink
               key={item.to}
@@ -37,9 +40,9 @@ export function Header() {
           <Link className="button button-secondary" to="/acessos">
             Acessos
           </Link>
-          <Link className="button button-primary header-cta" to="/contato">
-            Agendar avaliação
-          </Link>
+          <a className="button button-primary header-cta" href={profile?.primaryCtaUrl ?? '/contato'} rel="noreferrer" target="_blank">
+            {profile?.primaryCtaLabel ?? 'Agendar avaliação'}
+          </a>
         </div>
       </div>
     </header>

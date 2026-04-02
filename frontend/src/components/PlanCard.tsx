@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import type { PublicPlan } from '../types/public-content';
 
 interface PlanCardProps {
@@ -18,9 +17,9 @@ export function PlanCard({ plan }: PlanCardProps) {
           <li key={feature}>{feature}</li>
         ))}
       </ul>
-      <Link className="button button-primary" to="/contato">
+      <a className="button button-primary" href={plan.ctaUrl} rel="noreferrer" target="_blank">
         {plan.ctaLabel}
-      </Link>
+      </a>
     </article>
   );
 }

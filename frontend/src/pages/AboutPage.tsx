@@ -3,7 +3,6 @@ import { LoadingState } from '../components/LoadingState';
 import { PageHero } from '../components/PageHero';
 import { SectionHeading } from '../components/SectionHeading';
 import { TestimonialCard } from '../components/TestimonialCard';
-import { servicePillars, testimonials } from '../data/site-content';
 import { usePublicSiteData } from '../hooks/usePublicSiteData';
 import { resolveAssetUrl } from '../utils/media';
 
@@ -32,7 +31,7 @@ export function AboutPage() {
   return (
     <>
       <PageHero
-        description={`${profile.professionalTitle} em ${profile.city}, com uma abordagem que combina estratégia, rotina real e acompanhamento próximo.`}
+        description={profile.biographySummary}
         eyebrow="Sobre"
         title={profile.fullName}
       />
@@ -41,7 +40,7 @@ export function AboutPage() {
         <div className="container two-column-grid">
           <div className="glass-card about-card">
             <SectionHeading
-              description="Uma leitura profissional que considera contexto, adesão e consistência antes de qualquer ajuste."
+              description={profile.professionalSubtitle}
               eyebrow="Posicionamento"
               title={profile.aboutTitle}
             />
@@ -49,7 +48,7 @@ export function AboutPage() {
           </div>
 
           <div className="hero-image-frame about-image-frame">
-            <img alt={profile.fullName} src={resolveAssetUrl(profile.heroImageUrl)} />
+            <img alt={profile.fullName} src={resolveAssetUrl(profile.aboutImageUrl)} />
           </div>
         </div>
       </section>
@@ -58,13 +57,13 @@ export function AboutPage() {
         <div className="container">
           <SectionHeading
             centered
-            description="O trabalho combina leitura técnica, planejamento aplicável e acompanhamento que respeita a vida como ela é."
+            description={profile.approachDescription}
             eyebrow="Como funciona"
-            title="Uma abordagem pensada para vida real, adesão e resultado mensurável."
+            title={profile.approachTitle}
           />
 
           <div className="card-grid">
-            {servicePillars.map((pillar) => (
+            {profile.servicePillars.map((pillar) => (
               <article key={pillar.title} className="glass-card pillar-card">
                 <h3>{pillar.title}</h3>
                 <p>{pillar.description}</p>
@@ -84,8 +83,8 @@ export function AboutPage() {
           />
 
           <div className="testimonial-grid">
-            {testimonials.map((testimonial) => (
-              <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+            {profile.testimonials.map((testimonial) => (
+              <TestimonialCard key={`${testimonial.name}-${testimonial.label}`} testimonial={testimonial} />
             ))}
           </div>
         </div>

@@ -6,7 +6,9 @@ import { LoadingState } from '../../components/LoadingState';
 import { useEditorialSession } from '../../hooks/useEditorialSession';
 import { getAdminArticles } from '../../services/editorialArticleService';
 import { getAdminPosts } from '../../services/editorialPostService';
+import { getAdminPublicPlans } from '../../services/adminPublicPlanService';
 import { getAdminRecipes } from '../../services/editorialRecipeService';
+import { getAdminUsers } from '../../services/adminUserService';
 import type { EditorialStatus } from '../../types/editorial';
 
 interface EditorialSummary {
@@ -30,29 +32,36 @@ export function EditorialDashboardPage() {
       setErrorMessage(null);
 
       try {
-        const [posts, articles, recipes] = await Promise.all([
+        const [posts, articles, recipes, plans, users] = await Promise.all([
           getAdminPosts(),
           getAdminArticles(),
           getAdminRecipes(),
+          getAdminPublicPlans(),
+          user?.role === 'ADMIN' ? getAdminUsers() : Promise.resolve([]),
         ]);
 
         setItems([
+          createSummary('Site público', '/editor/site', []),
+          createSummary('Planos', '/editor/planos', plans.filter((item) => item.active).map(() => 'PUBLISHED')),
           createSummary('Posts', '/editor/posts', posts.map((item) => item.status)),
           createSummary('Artigos', '/editor/articles', articles.map((item) => item.status)),
           createSummary('Receitas', '/editor/recipes', recipes.map((item) => item.status)),
+          ...(user?.role === 'ADMIN'
+            ? [createSummary('Usuários', '/editor/usuarios', users.filter((item) => item.active).map(() => 'PUBLISHED'))]
+            : []),
         ]);
       } catch (error) {
-        setErrorMessage(error instanceof Error ? error.message : 'Não foi possível carregar o dashboard editorial.');
+        setErrorMessage(error instanceof Error ? error.message : 'Não foi possível carregar o dashboard administrativo.');
       } finally {
         setIsLoading(false);
       }
     }
 
     void loadDashboard();
-  }, []);
+  }, [user?.role]);
 
   if (isLoading) {
-    return <LoadingState message="Carregando indicadores editoriais..." />;
+    return <LoadingState message="Carregando indicadores administrativos..." />;
   }
 
   if (errorMessage) {
@@ -64,13 +73,19 @@ export function EditorialDashboardPage() {
       <section className="editorial-header-card glass-card">
         <div>
           <span className="section-eyebrow">Resumo</span>
-          <h2>O que está publicado, o que segue em rascunho e o que saiu do ar.</h2>
+          <h2>Site, planos, conteúdo editorial e acessos privados em um só painel.</h2>
           <p>
-            O CMS organiza tudo em torno de rascunho, publicação e arquivamento. O público só enxerga o que está em{' '}
-            <strong>PUBLISHED</strong>.
+            O público vê apenas o que está configurado como ativo ou publicado. A área privada concentra operação
+            comercial, institucional e editorial com autenticação real.
           </p>
           {user ? <p className="form-hint">Sessão ativa: {user.fullName} ({user.role})</p> : null}
           <div className="cta-actions">
+            <Link className="button button-secondary" to="/editor/site">
+              Configurar site
+            </Link>
+            <Link className="button button-secondary" to="/editor/planos">
+              Gerenciar planos
+            </Link>
             <Link className="button button-primary" to="/editor/posts/novo">
               Novo post
             </Link>
@@ -80,6 +95,11 @@ export function EditorialDashboardPage() {
             <Link className="button button-secondary" to="/editor/recipes/novo">
               Nova receita
             </Link>
+            {user?.role === 'ADMIN' ? (
+              <Link className="button button-tertiary" to="/editor/usuarios">
+                Gerenciar usuários
+              </Link>
+            ) : null}
             <Link className="button button-tertiary" to="/">
               Ver site público
             </Link>
@@ -91,7 +111,11 @@ export function EditorialDashboardPage() {
         {items.map((item) => (
           <div key={item.label} className="editorial-dashboard-stack">
             <EditorialDashboardCard
-              description={`${item.published} publicados, ${item.draft} rascunhos e ${item.archived} arquivados.`}
+              description={
+                item.label === 'Site público'
+                  ? 'Hero, seções institucionais, contatos, imagens e conteúdo comercial.'
+                  : `${item.published} ativos/publicados, ${item.draft} em rascunho e ${item.archived} arquivados/inativos.`
+              }
               title={item.label}
               value={String(item.total)}
             />

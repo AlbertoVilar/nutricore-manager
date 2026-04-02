@@ -10,7 +10,6 @@ import { RecipeCard } from '../components/RecipeCard';
 import { SectionHeading } from '../components/SectionHeading';
 import { TestimonialCard } from '../components/TestimonialCard';
 import { TrainingRoutineSpotlight } from '../components/TrainingRoutineSpotlight';
-import { servicePillars, siteMetrics, testimonials } from '../data/site-content';
 import { usePublicSiteData } from '../hooks/usePublicSiteData';
 import { getGeneralPosts, getRoutineSpotlightPost } from '../utils/contentCollections';
 
@@ -40,61 +39,62 @@ export function HomePage() {
         </section>
       ) : null}
 
-      <section className="section">
-        <div className="container">
-          <SectionHeading
-            centered
-            description="Cada etapa do atendimento nasce para funcionar na vida real: consulta com estratégia, conduta viável e acompanhamento que conversa com a rotina."
-            eyebrow="Como funciona"
-            title="Uma jornada clara para orientar, acompanhar e sustentar resultado."
-          />
-
-          <div className="metric-grid">
-            {siteMetrics.map((metric) => (
-              <MetricCard key={metric.title} metric={metric} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-soft">
-        <div className="container two-column-grid">
-          <div>
+      {profile ? (
+        <section className="section">
+          <div className="container">
             <SectionHeading
-              description="A consulta vai além do plano alimentar. O foco é combinar contexto, treino, aderência e acompanhamento em uma mesma linguagem."
-              eyebrow="Abordagem"
-              title="Atendimento pensado para caber na agenda, no treino e nas refeições do dia a dia."
+              centered
+              description={profile.howItWorksDescription}
+              eyebrow="Como funciona"
+              title={profile.howItWorksTitle}
             />
-            <div className="pillar-stack">
-              {servicePillars.map((pillar) => (
-                <article key={pillar.title} className="glass-card pillar-card">
-                  <h3>{pillar.title}</h3>
-                  <p>{pillar.description}</p>
-                </article>
+
+            <div className="metric-grid">
+              {profile.siteMetrics.map((metric) => (
+                <MetricCard key={`${metric.title}-${metric.value}`} metric={metric} />
               ))}
             </div>
           </div>
+        </section>
+      ) : null}
 
-          <div className="glass-card callout-card">
-            <span className="section-eyebrow">Sobre a nutricionista</span>
-            <h3>{profile?.aboutTitle ?? 'Conduta clara, próxima e sustentável.'}</h3>
-            <p>
-              {profile?.aboutDescription ??
-                'Atendimento com leitura de rotina, objetivo e contexto antes de qualquer ajuste nutricional.'}
-            </p>
-            <Link className="button button-secondary" to="/sobre">
-              Conhecer a profissional
-            </Link>
+      {profile ? (
+        <section className="section section-soft">
+          <div className="container two-column-grid">
+            <div>
+              <SectionHeading
+                description={profile.approachDescription}
+                eyebrow="Abordagem"
+                title={profile.approachTitle}
+              />
+              <div className="pillar-stack">
+                {profile.servicePillars.map((pillar) => (
+                  <article key={pillar.title} className="glass-card pillar-card">
+                    <h3>{pillar.title}</h3>
+                    <p>{pillar.description}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-card callout-card">
+              <span className="section-eyebrow">Sobre a nutricionista</span>
+              <h3>{profile.aboutTitle}</h3>
+              <p>{profile.biographySummary}</p>
+              <Link className="button button-secondary" to="/sobre">
+                Conhecer a profissional
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className="section plans-section">
         <div className="container">
           <SectionHeading
-            description="Os planos organizam o primeiro passo comercial do site com ofertas claras e encaminhamento objetivo para conversa."
+            description={profile?.plansDescription ?? 'Os planos de atendimento não foram carregados.'}
             eyebrow="Planos"
-            title="Formas de acompanhamento para diferentes momentos da jornada."
+            title={profile?.plansTitle ?? 'Planos de acompanhamento'}
           />
 
           {errors.plans ? (
@@ -184,44 +184,45 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="section section-soft">
-        <div className="container">
-          <SectionHeading
-            centered
-            description="A jornada nutricional ganha aderência quando existe acolhimento, clareza e ajuste fino ao longo do caminho."
-            eyebrow="Relatos"
-            title="Percepções de quem buscou mais estrutura para comer, treinar e sustentar resultado."
-          />
+      {profile ? (
+        <section className="section section-soft">
+          <div className="container">
+            <SectionHeading
+              centered
+              description="A jornada nutricional ganha aderência quando existe acolhimento, clareza e ajuste fino ao longo do caminho."
+              eyebrow="Relatos"
+              title="Percepções de quem buscou mais estrutura para comer, treinar e sustentar resultado."
+            />
 
-          <div className="testimonial-grid">
-            {testimonials.map((testimonial) => (
-              <TestimonialCard key={testimonial.name} testimonial={testimonial} />
-            ))}
+            <div className="testimonial-grid">
+              {profile.testimonials.map((testimonial) => (
+                <TestimonialCard key={`${testimonial.name}-${testimonial.label}`} testimonial={testimonial} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
-      <section className="section cta-section">
-        <div className="container cta-banner">
-          <div>
-            <span className="section-eyebrow">Contato</span>
-            <h2>Pronta para organizar alimentação, treino e rotina com mais clareza?</h2>
-            <p>
-              O próximo passo é conversar sobre objetivo, momento atual e o tipo de acompanhamento que faz sentido
-              para sua rotina.
-            </p>
-          </div>
+      {profile ? (
+        <section className="section cta-section">
+          <div className="container cta-banner">
+            <div>
+              <span className="section-eyebrow">Contato</span>
+              <h2>{profile.finalCtaTitle}</h2>
+              <p>{profile.finalCtaDescription}</p>
+            </div>
 
-          <div className="cta-actions">
-            <Link className="button button-primary" to="/contato">
-              Falar com a nutricionista
-            </Link>
-            <Link className="button button-secondary" to="/planos">
-              Conhecer os planos
-            </Link>
+            <div className="cta-actions">
+              <a className="button button-primary" href={profile.primaryCtaUrl} rel="noreferrer" target="_blank">
+                {profile.primaryCtaLabel}
+              </a>
+              <Link className="button button-secondary" to="/planos">
+                Conhecer os planos
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </>
   );
 }

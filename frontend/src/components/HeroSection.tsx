@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import type { PublicProfile } from '../types/public-content';
 import { resolveAssetUrl } from '../utils/media';
 
@@ -18,9 +17,9 @@ export function HeroSection({ profile }: HeroSectionProps) {
             <a className="button button-primary" href={profile.primaryCtaUrl} rel="noreferrer" target="_blank">
               {profile.primaryCtaLabel}
             </a>
-            <Link className="button button-secondary" to="/planos">
+            <a className="button button-secondary" href={profile.secondaryCtaUrl}>
               {profile.secondaryCtaLabel}
-            </Link>
+            </a>
           </div>
           <div className="hero-footnote">
             <span>{profile.professionalTitle}</span>
@@ -33,8 +32,8 @@ export function HeroSection({ profile }: HeroSectionProps) {
             <img alt={profile.fullName} src={resolveAssetUrl(profile.heroImageUrl)} />
           </div>
           <div className="hero-floating-card glass-card">
-            <strong>Nutrição com estratégia e vida real</strong>
-            <p>Consulta, conteúdo e acompanhamento organizados para transformar orientação em rotina possível.</p>
+            <strong>{profile.heroCardTitle}</strong>
+            <p>{profile.heroCardDescription}</p>
           </div>
         </div>
       </div>

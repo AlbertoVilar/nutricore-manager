@@ -2,16 +2,19 @@ import { useEffect } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useEditorialSession } from '../hooks/useEditorialSession';
 
-const editorialNavigation = [
-  { to: '/editor', label: 'Dashboard' },
-  { to: '/editor/posts', label: 'Posts' },
-  { to: '/editor/articles', label: 'Artigos' },
-  { to: '/editor/recipes', label: 'Receitas' },
-];
-
 export function EditorialLayout() {
   const location = useLocation();
   const { signOut, user } = useEditorialSession();
+
+  const editorialNavigation = [
+    { to: '/editor', label: 'Dashboard' },
+    { to: '/editor/site', label: 'Site público' },
+    { to: '/editor/planos', label: 'Planos' },
+    { to: '/editor/posts', label: 'Posts' },
+    { to: '/editor/articles', label: 'Artigos' },
+    { to: '/editor/recipes', label: 'Receitas' },
+    ...(user?.role === 'ADMIN' ? [{ to: '/editor/usuarios', label: 'Usuários' }] : []),
+  ];
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -51,7 +54,7 @@ export function EditorialLayout() {
           </nav>
 
           <div className="editorial-sidebar-footer">
-            <p>Gerencie tudo o que vai ao ar no site público e revise o conteúdo antes de publicar.</p>
+            <p>Gerencie o site público, os planos comerciais e o conteúdo editorial sem depender de código.</p>
             <div className="editorial-sidebar-actions">
               <Link className="button button-secondary" to="/">
                 Ver site público
@@ -68,8 +71,8 @@ export function EditorialLayout() {
         <header className="editorial-topbar">
           <div>
             <span className="section-eyebrow">Área privada</span>
-            <h1>Central editorial</h1>
-            <p>Posts, artigos e receitas organizados em rascunho, publicação e arquivamento.</p>
+            <h1>Central administrativa</h1>
+            <p>Configuração pública, planos, conteúdo editorial e acesso do time em uma jornada consistente.</p>
           </div>
         </header>
 

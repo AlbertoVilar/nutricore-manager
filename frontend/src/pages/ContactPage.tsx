@@ -31,9 +31,9 @@ export function ContactPage() {
   return (
     <>
       <PageHero
-        description="Use os canais abaixo para tirar dúvidas, entender o atendimento e iniciar a conversa sobre sua rotina."
+        description={profile.contactDescription}
         eyebrow="Contato"
-        title="Fale com a nutricionista e leve sua rotina para um plano viável."
+        title={profile.contactTitle}
       />
 
       <section className="section">
@@ -47,7 +47,7 @@ export function ContactPage() {
 
             <div className="contact-card-grid">
               <article className="glass-card contact-card">
-                <span className="section-eyebrow">Email</span>
+                <span className="section-eyebrow">E-mail</span>
                 <h3>{profile.contactEmail}</h3>
                 <a href={`mailto:${profile.contactEmail}`}>Enviar e-mail</a>
               </article>
@@ -74,7 +74,7 @@ export function ContactPage() {
             </div>
           </div>
 
-          <ContactCtaForm contactPhone={profile.contactPhone} fallbackUrl={profile.primaryCtaUrl} />
+          <ContactCtaForm contactPhone={profile.whatsappNumber} fallbackUrl={profile.primaryCtaUrl} />
         </div>
       </section>
     </>

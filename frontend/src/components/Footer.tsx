@@ -12,13 +12,13 @@ export function Footer() {
           <div className="brand footer-brand-mark">
             <span className="brand-mark">NC</span>
             <div>
-              <strong>NutriCore</strong>
-              <span>Conteúdo, atendimento e conversão</span>
+              <strong>{profile?.fullName ?? 'NutriCore'}</strong>
+              <span>{profile?.professionalTitle ?? 'Nutrição clínica'}</span>
             </div>
           </div>
           <p>
-            Acompanhamento nutricional com linguagem clara, conteúdo útil e uma jornada pública organizada para quem
-            quer mudar a rotina com estratégia.
+            {profile?.footerDescription ??
+              'Acompanhamento nutricional com linguagem clara, conteúdo útil e uma jornada pública organizada para quem quer mudar a rotina com estratégia.'}
           </p>
         </div>
 
@@ -29,10 +29,7 @@ export function Footer() {
               <Link to="/sobre">Sobre</Link>
             </li>
             <li>
-              <Link to="/conteudos">Biblioteca</Link>
-            </li>
-            <li>
-              <Link to="/conteudos#rotina-da-nutri">Rotina da Nutri</Link>
+              <Link to="/conteudos">Conteúdo</Link>
             </li>
             <li>
               <Link to="/receitas">Receitas</Link>
@@ -64,6 +61,20 @@ export function Footer() {
                 {profile?.instagramHandle ?? '@nutricore'}
               </a>
             </li>
+            {profile?.linkedinUrl ? (
+              <li>
+                <a href={profile.linkedinUrl} rel="noreferrer" target="_blank">
+                  LinkedIn
+                </a>
+              </li>
+            ) : null}
+            {profile?.youtubeUrl ? (
+              <li>
+                <a href={profile.youtubeUrl} rel="noreferrer" target="_blank">
+                  YouTube
+                </a>
+              </li>
+            ) : null}
           </ul>
         </div>
       </div>

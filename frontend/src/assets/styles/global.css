@@ -1573,6 +1573,112 @@ select {
   object-fit: cover;
 }
 
+.structured-items-field {
+  display: grid;
+  gap: 20px;
+}
+
+.structured-items-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.structured-items-header h4 {
+  margin: 0 0 6px;
+  font-size: 1.02rem;
+}
+
+.structured-items-header p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.structured-items-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.structured-item-card {
+  padding: 20px;
+  display: grid;
+  gap: 18px;
+}
+
+.structured-item-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.structured-item-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editorial-management-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.editorial-management-card {
+  padding: 28px;
+  display: grid;
+  gap: 18px;
+}
+
+.editorial-management-card.is-muted {
+  opacity: 0.78;
+}
+
+.editorial-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.editorial-management-header h3 {
+  margin: 6px 0 8px;
+}
+
+.editorial-management-header p,
+.editorial-management-summary,
+.editorial-management-meta {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.editorial-management-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.editorial-management-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  font-size: 0.92rem;
+}
+
+.editorial-management-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.editorial-management-actions .button {
+  flex: 1 1 180px;
+}
+
+.editorial-password-card {
+  padding: 28px;
+}
+
 @keyframes pulse {
   0%,
   80%,
@@ -1609,7 +1715,8 @@ select {
   .testimonial-grid,
   .contact-card-grid,
   .editorial-dashboard-grid,
-  .routine-spotlight-gallery {
+  .routine-spotlight-gallery,
+  .editorial-management-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1653,7 +1760,9 @@ select {
   .editorial-dashboard-grid,
   .detail-gallery,
   .editorial-form-grid,
-  .routine-spotlight-gallery {
+  .routine-spotlight-gallery,
+  .editorial-management-grid,
+  .structured-item-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1748,7 +1857,10 @@ select {
 
   .editorial-sidebar-actions,
   .detail-sidebar-actions,
-  .section-link-row {
+  .section-link-row,
+  .structured-items-header,
+  .editorial-management-header,
+  .editorial-management-actions {
     flex-direction: column;
     align-items: stretch;
   }

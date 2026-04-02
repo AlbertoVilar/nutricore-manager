@@ -17,9 +17,15 @@ import { EditorialArticleEditorPage } from '../pages/editorial/EditorialArticleE
 import { EditorialArticlesPage } from '../pages/editorial/EditorialArticlesPage';
 import { EditorialDashboardPage } from '../pages/editorial/EditorialDashboardPage';
 import { EditorialPostEditorPage } from '../pages/editorial/EditorialPostEditorPage';
+import { EditorialPublicPlanEditorPage } from '../pages/editorial/EditorialPublicPlanEditorPage';
+import { EditorialPublicPlansPage } from '../pages/editorial/EditorialPublicPlansPage';
+import { EditorialPublicProfilePage } from '../pages/editorial/EditorialPublicProfilePage';
 import { EditorialPostsPage } from '../pages/editorial/EditorialPostsPage';
 import { EditorialRecipeEditorPage } from '../pages/editorial/EditorialRecipeEditorPage';
 import { EditorialRecipesPage } from '../pages/editorial/EditorialRecipesPage';
+import { EditorialUserEditorPage } from '../pages/editorial/EditorialUserEditorPage';
+import { EditorialUsersPage } from '../pages/editorial/EditorialUsersPage';
+import { AdminRoleGuard } from './AdminRoleGuard';
 import { EditorialGuard } from './EditorialGuard';
 
 export function AppRoutes() {
@@ -44,6 +50,10 @@ export function AppRoutes() {
       <Route element={<EditorialGuard />}>
         <Route element={<EditorialLayout />}>
           <Route path="/editor" element={<EditorialDashboardPage />} />
+          <Route path="/editor/site" element={<EditorialPublicProfilePage />} />
+          <Route path="/editor/planos" element={<EditorialPublicPlansPage />} />
+          <Route path="/editor/planos/novo" element={<EditorialPublicPlanEditorPage />} />
+          <Route path="/editor/planos/:id/editar" element={<EditorialPublicPlanEditorPage />} />
           <Route path="/editor/posts" element={<EditorialPostsPage />} />
           <Route path="/editor/posts/novo" element={<EditorialPostEditorPage />} />
           <Route path="/editor/posts/:id/editar" element={<EditorialPostEditorPage />} />
@@ -53,6 +63,11 @@ export function AppRoutes() {
           <Route path="/editor/recipes" element={<EditorialRecipesPage />} />
           <Route path="/editor/recipes/novo" element={<EditorialRecipeEditorPage />} />
           <Route path="/editor/recipes/:id/editar" element={<EditorialRecipeEditorPage />} />
+          <Route element={<AdminRoleGuard />}>
+            <Route path="/editor/usuarios" element={<EditorialUsersPage />} />
+            <Route path="/editor/usuarios/novo" element={<EditorialUserEditorPage />} />
+            <Route path="/editor/usuarios/:id/editar" element={<EditorialUserEditorPage />} />
+          </Route>
         </Route>
       </Route>
 
