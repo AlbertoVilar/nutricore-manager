@@ -31,12 +31,13 @@ export function AboutPage() {
   return (
     <>
       <PageHero
+        className="about-page-hero"
         description={profile.biographySummary}
         eyebrow="Sobre"
         title={profile.fullName}
       />
 
-      <section className="section">
+      <section className="section about-intro-section">
         <div className="container two-column-grid">
           <div className="glass-card about-card">
             <SectionHeading

@@ -233,6 +233,10 @@ select {
   padding: 64px 0 32px;
 }
 
+.about-page-hero {
+  padding-bottom: 6px;
+}
+
 .hero-copy {
   display: grid;
   align-content: start;
@@ -263,6 +267,10 @@ select {
   grid-template-columns: 1.2fr 0.8fr;
   align-items: start;
   gap: 40px;
+}
+
+.about-intro-section {
+  padding-top: 36px;
 }
 
 .contact-grid {
