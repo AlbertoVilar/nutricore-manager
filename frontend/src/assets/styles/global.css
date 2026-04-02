@@ -989,6 +989,35 @@ select {
   color: rgba(255, 255, 255, 0.7);
 }
 
+.footer-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.82);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-contact-link:hover {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.footer-contact-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+  flex: 0 0 auto;
+}
+
+.footer-contact-icon svg {
+  display: block;
+}
+
 .footer-bottom {
   margin-top: 32px;
   padding-top: 28px;
