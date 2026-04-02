@@ -8,7 +8,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 public class CorsConfig {
@@ -27,7 +29,10 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        Arrays.stream(allowedOrigins).forEach(configuration::addAllowedOriginPattern);
+        Set<String> originPatterns = new LinkedHashSet<>();
+        originPatterns.addAll(Arrays.asList(allowedOrigins));
+        originPatterns.add("https://*.vercel.app");
+        originPatterns.forEach(configuration::addAllowedOriginPattern);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setExposedHeaders(List.of("Authorization"));
