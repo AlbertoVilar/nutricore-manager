@@ -178,6 +178,10 @@ Nesta etapa, o projeto entrega:
 - `docker`
   - PostgreSQL via Docker Compose
   - mídia persistida em `./storage`
+- `homolog`
+  - PostgreSQL para ambiente de teste/aprovação
+  - sem bootstrap automático por padrão
+  - configuração orientada por variáveis de ambiente
 
 ## Ambiente local com Docker
 
@@ -206,6 +210,7 @@ Copy-Item .env.example .env
 
 Principais variáveis:
 
+- `SPRING_PROFILES_ACTIVE`
 - `POSTGRES_DB`
 - `POSTGRES_USER`
 - `POSTGRES_PASSWORD`
@@ -213,6 +218,10 @@ Principais variáveis:
 - `BACKEND_PORT`
 - `FRONTEND_PORT`
 - `JWT_SECRET`
+- `JWT_ISSUER`
+- `JWT_ACCESS_TOKEN_TTL`
+- `APP_CORS_ALLOWED_ORIGINS`
+- `MEDIA_STORAGE_PATH`
 - `APP_SECURITY_BOOTSTRAP_ENABLED`
 - `APP_SECURITY_BOOTSTRAP_FULL_NAME`
 - `APP_SECURITY_BOOTSTRAP_EMAIL`
@@ -245,6 +254,24 @@ docker compose down -v
 - frontend: `http://localhost:4173`
 - backend: `http://localhost:8080/api`
 - Swagger: `http://localhost:8080/api/swagger-ui/index.html`
+
+## Homologação
+
+Para preparar um ambiente de teste/aprovação:
+
+1. copie [`.env.homolog.example`](/C:/Dev/manager/.env.homolog.example) para `.env.homolog`
+2. preencha senha do PostgreSQL, `JWT_SECRET` e origem pública em `APP_CORS_ALLOWED_ORIGINS`
+3. habilite o bootstrap apenas no primeiro boot se precisar criar o admin inicial
+4. suba com:
+
+```powershell
+Set-Location C:\Dev\manager
+docker compose --env-file .env.homolog up -d --build
+```
+
+Runbook detalhado:
+
+- [HOMOLOGACAO.md](/C:/Dev/manager/docs/HOMOLOGACAO.md)
 
 ## Execução local sem Docker
 
@@ -307,12 +334,18 @@ VITE_API_BASE_URL=http://localhost:8080/api
 
 ### Credenciais de desenvolvimento
 
-- nome: `Alberto Vilar`
-- e-mail: `albertovilar1@gmail.com`
-- senha inicial: `132747`
-- role: `ADMIN`
+- profile `test` cria um admin fixo apenas para testes automatizados
+- `dev`, `docker` e `homolog` não criam admin por padrão
+- para criar o primeiro admin fora de `test`, habilite temporariamente:
+  - `APP_SECURITY_BOOTSTRAP_ENABLED=true`
+  - `APP_SECURITY_BOOTSTRAP_FULL_NAME`
+  - `APP_SECURITY_BOOTSTRAP_EMAIL`
+  - `APP_SECURITY_BOOTSTRAP_PASSWORD`
+  - `APP_SECURITY_BOOTSTRAP_ROLE=ADMIN`
 
-Essas credenciais vêm do bootstrap configurado por propriedades e variáveis de ambiente. Para trocar:
+Depois do primeiro login validado, volte `APP_SECURITY_BOOTSTRAP_ENABLED=false`.
+
+As credenciais de bootstrap vêm das variáveis de ambiente. Para trocar:
 
 - altere `APP_SECURITY_BOOTSTRAP_EMAIL`;
 - altere `APP_SECURITY_BOOTSTRAP_PASSWORD`;

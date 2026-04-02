@@ -51,7 +51,12 @@ HELP.md
 /DOCUMENTACAO_TECNICA.md
 /storage/
 .env
+.env.*
+!.env.example
+!.env.*.example
 .env.local
 .env.*.local
 /frontend/.env
 /frontend/.env.local
+/frontend/.env.*
+!/frontend/.env.example
