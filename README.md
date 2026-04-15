@@ -16,6 +16,12 @@
 
 ---
 
+## 📊 Estado Atual
+
+> **Em evolução ativa** com backend funcional, frontend funcional, autenticação editorial real, CMS operacional e base clínica pronta para expansão.
+
+---
+
 ## 📖 Visão Geral
 
 O **NutriCore Manager** é um monorepo full-stack que une três frentes complementares:
@@ -79,7 +85,7 @@ O repositório está organizado como monorepo com backend e frontend separados:
 └── frontend/Dockerfile     # Frontend
 ```
 
-### Backend
+### 🧠 Backend
 
 - `api/controllers`: endpoints públicos, editoriais e clínicos;
 - `application/security`: autenticação editorial e administração de contas;
@@ -89,7 +95,7 @@ O repositório está organizado como monorepo com backend e frontend separados:
 - `infrastructure/db/repositories`: persistência JPA;
 - `db/migration`: versionamento do banco com Flyway.
 
-### Frontend
+### 🎨 Frontend
 
 - `frontend/src/pages`: páginas públicas e editoriais;
 - `frontend/src/components`: blocos de interface reutilizáveis;
@@ -113,7 +119,7 @@ O repositório está organizado como monorepo com backend e frontend separados:
 
 ## 🛠️ Stack Técnica
 
-### Backend
+### 🧠 Backend
 
 - Java 21
 - Spring Boot 3.3.4
@@ -127,14 +133,14 @@ O repositório está organizado como monorepo com backend e frontend separados:
 - MapStruct
 - Springdoc / OpenAPI
 
-### Frontend
+### 🎨 Frontend
 
 - React 19
 - TypeScript
 - Vite
 - React Router
 
-### Infraestrutura
+### ☁️ Infraestrutura
 
 - Docker
 - Docker Compose
@@ -145,7 +151,7 @@ O repositório está organizado como monorepo com backend e frontend separados:
 
 ## 🚀 Como Rodar
 
-### Pré-requisitos
+### 📋 Pré-requisitos
 
 - Java 21
 - Node.js 20+
@@ -188,6 +194,8 @@ docker compose up -d --build
 - `/api/v1/admin/**` exige `ADMIN` ou `EDITOR`;
 - `/api/v1/admin/users/**` exige `ADMIN`.
 
+### 🖥️ Sessão no frontend
+
 No frontend:
 
 - a sessão editorial usa JWT;
@@ -198,6 +206,8 @@ No frontend:
 ---
 
 ## 🗃️ Banco de Dados e Perfis
+
+### 🧪 Perfis principais do backend
 
 Perfis principais do backend:
 
@@ -217,6 +227,8 @@ O projeto já possui pipeline para:
 - testes do backend;
 - build do frontend;
 - validação Docker.
+
+### 🔎 Comandos úteis
 
 Comandos úteis:
 
