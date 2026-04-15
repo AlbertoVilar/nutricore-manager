@@ -1,526 +1,282 @@
-# NutriCore Manager
+<div align="center">
 
-Plataforma em evolução para nutricionista, unindo:
+# 🥗 NutriCore Manager
 
-- site público para autoridade profissional, conteúdo, receitas, planos e conversão;
-- área editorial privada para publicar e administrar o que vai ao ar;
-- base preparada para a futura camada clínica.
+### Plataforma full-stack para presença digital, gestão editorial e base clínica em nutrição
 
-## Estado atual
+[![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)](https://www.java.com)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.x-brightgreen?style=for-the-badge&logo=spring)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?style=for-the-badge&logo=postgresql)](https://www.postgresql.org)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com)
 
-Nesta etapa, o projeto entrega:
+[🌐 Site e Frontend](./frontend) • [📘 Homologação](./docs/HOMOLOGACAO.md) • [🚀 Deploy](./docs/DEPLOY_RAILWAY_VERCEL.md) • [📊 Swagger](http://localhost:8080/api/swagger-ui/index.html)
 
-- backend Spring Boot funcional;
-- frontend React + TypeScript funcional;
-- autenticação editorial real com Spring Security + JWT;
-- CMS privado para posts, artigos e receitas;
-- administração privada do perfil público do site;
-- administração privada dos planos comerciais públicos;
-- gestão privada de usuários editoriais com roles e ativação/desativação;
-- upload simples de imagem;
-- conteúdo público filtrando apenas itens `PUBLISHED`;
-- ambiente local com Docker, PostgreSQL e persistência para desenvolvimento.
+</div>
 
-## Stack
+---
 
-### Backend
+## 📊 Estado Atual
+
+> **Em evolução ativa** com backend funcional, frontend funcional, autenticação editorial real, CMS operacional e base clínica pronta para expansão.
+
+---
+
+## 📖 Visão Geral
+
+O **NutriCore Manager** é um monorepo full-stack que une três frentes complementares:
+
+- **site público** para autoridade profissional, conteúdo, planos e conversão;
+- **CMS editorial privado** para administrar perfil público, posts, artigos, receitas e usuários;
+- **base clínica** com entidades e APIs de pacientes, nutricionista, anamnese clínica, antropometria e objetivos nutricionais.
+
+Não é só um site institucional. O projeto já combina backend Spring Boot, frontend React, autenticação JWT, PostgreSQL, Flyway e Docker em um fluxo coerente para operação real.
+
+---
+
+## ✨ Principais Capacidades
+
+### 🌍 Camada pública
+
+- página inicial, sobre, conteúdos, receitas, planos e contato;
+- renderização pública apenas de conteúdos `PUBLISHED`;
+- perfil público administrável sem depender de deploy;
+- vitrine comercial e posicionamento profissional.
+
+### 📝 CMS editorial privado
+
+- login editorial com JWT;
+- gestão de posts, artigos e receitas;
+- gestão do perfil público do site;
+- gestão de planos públicos;
+- upload de imagens;
+- gestão de usuários editoriais com `ADMIN` e `EDITOR`.
+
+### 🩺 Base clínica já presente no backend
+
+- pacientes;
+- anamnese clínica;
+- avaliação antropométrica;
+- objetivos nutricionais;
+- entidade de nutricionista;
+- base preparada para aprofundar a área clínica nas próximas etapas.
+
+### 🔐 Segurança e operação
+
+- autenticação stateless com Spring Security + JWT;
+- controle por roles;
+- bootstrap controlado do admin inicial;
+- ambiente local com Docker Compose;
+- CI com testes de backend, build do frontend e validação Docker.
+
+---
+
+## 🏗️ Arquitetura
+
+O repositório está organizado como monorepo com backend e frontend separados:
+
+```text
+.
+├── src/                    # Backend Spring Boot
+├── frontend/               # Frontend React + TypeScript
+├── docs/                   # Runbooks e deploy
+├── docker-compose.yml      # Ambiente local completo
+├── Dockerfile              # Backend
+└── frontend/Dockerfile     # Frontend
+```
+
+### 🧠 Backend
+
+- `api/controllers`: endpoints públicos, editoriais e clínicos;
+- `application/security`: autenticação editorial e administração de contas;
+- `domain/entities`: núcleo de domínio;
+- `domain/services`: regras de negócio por agregado;
+- `infrastructure/security`: JWT, filtro, bootstrap e configuração;
+- `infrastructure/db/repositories`: persistência JPA;
+- `db/migration`: versionamento do banco com Flyway.
+
+### 🎨 Frontend
+
+- `frontend/src/pages`: páginas públicas e editoriais;
+- `frontend/src/components`: blocos de interface reutilizáveis;
+- `frontend/src/services`: comunicação com backend;
+- `frontend/src/routes`: guards e rotas;
+- `frontend/src/hooks`: sessão editorial e dados públicos.
+
+---
+
+## 🧩 Módulos Principais
+
+| Módulo | O que entrega |
+|--------|---------------|
+| **public site** | presença digital, páginas públicas, conteúdo e planos |
+| **editorial cms** | administração de perfil, posts, artigos, receitas e mídia |
+| **auth** | login editorial, sessão JWT e gestão de usuários |
+| **clinical core** | pacientes, anamnese, antropometria, objetivos e nutricionista |
+| **media** | upload e exposição controlada de imagens |
+
+---
+
+## 🛠️ Stack Técnica
+
+### 🧠 Backend
 
 - Java 21
 - Spring Boot 3.3.4
 - Spring Security
-- JWT stateless
-- PostgreSQL para desenvolvimento e uso containerizado
-- H2 em memória para testes
-- Flyway para migrations
-- Lombok + MapStruct
+- JWT
+- Spring Data JPA
+- PostgreSQL
+- H2 para testes
+- Flyway
+- Lombok
+- MapStruct
 - Springdoc / OpenAPI
 
-### Frontend
+### 🎨 Frontend
 
 - React 19
 - TypeScript
 - Vite
 - React Router
 
-## Estrutura do repositório
+### ☁️ Infraestrutura
 
-```text
-.
-├── frontend/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── hooks/
-│   │   ├── layouts/
-│   │   ├── pages/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   ├── types/
-│   │   └── utils/
-│   ├── Dockerfile
-│   └── nginx.conf
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   └── resources/
-│   └── test/
-├── Dockerfile
-├── docker-compose.yml
-└── .env.example
+- Docker
+- Docker Compose
+- Railway / Vercel previstos para homologação e deploy
+- GitHub Actions
+
+---
+
+## 🚀 Como Rodar
+
+### 📋 Pré-requisitos
+
+- Java 21
+- Node.js 20+
+- Docker e Docker Compose
+
+### 1️⃣ Clonar o repositório
+
+```bash
+git clone https://github.com/AlbertoVilar/nutricore-manager.git
+cd nutricore-manager
 ```
 
-## Arquitetura funcional
-
-### Rotas públicas
-
-- `/`
-- `/sobre`
-- `/conteudos`
-- `/conteudos/posts/:slug`
-- `/conteudos/artigos/:slug`
-- `/receitas`
-- `/receitas/:slug`
-- `/planos`
-- `/contato`
-- `/acessos`
-
-### Rotas privadas editoriais
-
-- `/editor/acesso`
-- `/editor`
-- `/editor/site`
-- `/editor/planos`
-- `/editor/planos/novo`
-- `/editor/planos/:id/editar`
-- `/editor/posts`
-- `/editor/posts/novo`
-- `/editor/posts/:id/editar`
-- `/editor/articles`
-- `/editor/articles/novo`
-- `/editor/articles/:id/editar`
-- `/editor/recipes`
-- `/editor/recipes/novo`
-- `/editor/recipes/:id/editar`
-- `/editor/usuarios`
-- `/editor/usuarios/novo`
-- `/editor/usuarios/:id/editar`
-
-### APIs
-
-#### Públicas
-
-- `GET /api/v1/public/profile`
-- `GET /api/v1/public/plans`
-- `GET /api/v1/public/posts`
-- `GET /api/v1/public/posts/{slug}`
-- `GET /api/v1/public/articles`
-- `GET /api/v1/public/articles/{slug}`
-- `GET /api/v1/public/recipes`
-- `GET /api/v1/public/recipes/{slug}`
-
-#### Autenticação
-
-- `POST /api/v1/auth/login`
-- `GET /api/v1/auth/me`
-
-#### Editoriais
-
-- `GET /api/v1/admin/posts`
-- `GET /api/v1/admin/posts/{id}`
-- `POST /api/v1/admin/posts`
-- `PUT /api/v1/admin/posts/{id}`
-- `PATCH /api/v1/admin/posts/{id}/publish`
-- `PATCH /api/v1/admin/posts/{id}/draft`
-- `PATCH /api/v1/admin/posts/{id}/archive`
-- `DELETE /api/v1/admin/posts/{id}`
-- `GET /api/v1/admin/articles`
-- `GET /api/v1/admin/articles/{id}`
-- `POST /api/v1/admin/articles`
-- `PUT /api/v1/admin/articles/{id}`
-- `PATCH /api/v1/admin/articles/{id}/publish`
-- `PATCH /api/v1/admin/articles/{id}/draft`
-- `PATCH /api/v1/admin/articles/{id}/archive`
-- `DELETE /api/v1/admin/articles/{id}`
-- `GET /api/v1/admin/recipes`
-- `GET /api/v1/admin/recipes/{id}`
-- `POST /api/v1/admin/recipes`
-- `PUT /api/v1/admin/recipes/{id}`
-- `PATCH /api/v1/admin/recipes/{id}/publish`
-- `PATCH /api/v1/admin/recipes/{id}/draft`
-- `PATCH /api/v1/admin/recipes/{id}/archive`
-- `DELETE /api/v1/admin/recipes/{id}`
-- `GET /api/v1/admin/public-profile`
-- `PUT /api/v1/admin/public-profile`
-- `GET /api/v1/admin/public-plans`
-- `GET /api/v1/admin/public-plans/{id}`
-- `POST /api/v1/admin/public-plans`
-- `PUT /api/v1/admin/public-plans/{id}`
-- `PATCH /api/v1/admin/public-plans/{id}/activate`
-- `PATCH /api/v1/admin/public-plans/{id}/deactivate`
-- `DELETE /api/v1/admin/public-plans/{id}`
-- `GET /api/v1/admin/users`
-- `GET /api/v1/admin/users/{id}`
-- `POST /api/v1/admin/users`
-- `PUT /api/v1/admin/users/{id}`
-- `PATCH /api/v1/admin/users/{id}/activate`
-- `PATCH /api/v1/admin/users/{id}/deactivate`
-- `PATCH /api/v1/admin/users/{id}/password`
-- `POST /api/v1/admin/media/images`
-
-## Perfis do backend
-
-- `test`
-  - H2 em memória
-  - usado na suíte de testes
-- `dev`
-  - PostgreSQL local
-  - usado fora de containers
-- `docker`
-  - PostgreSQL via Docker Compose
-  - mídia persistida em `./storage`
-- `homolog`
-  - PostgreSQL para ambiente de teste/aprovação
-  - sem bootstrap automático por padrão
-  - configuração orientada por variáveis de ambiente
-
-## Ambiente local com Docker
-
-### Serviços do Compose
-
-- `postgres`
-  - banco principal de desenvolvimento
-  - volume nomeado `postgres-data`
-- `backend`
-  - build da aplicação Spring Boot
-  - profile `docker`
-  - Flyway habilitado
-  - healthcheck em `/api/v1/public/profile`
-- `frontend`
-  - build Vite
-  - servido por Nginx
-  - proxy de `/api` para o backend
-  - healthcheck HTTP na raiz `/`
-
-### Variáveis de ambiente
+### 2️⃣ Configurar ambiente
 
 Copie o arquivo de exemplo:
 
 ```powershell
-Set-Location C:\Dev\manager
 Copy-Item .env.example .env
 ```
 
-Principais variáveis:
-
-- `SPRING_PROFILES_ACTIVE`
-- `POSTGRES_DB`
-- `POSTGRES_USER`
-- `POSTGRES_PASSWORD`
-- `POSTGRES_PORT`
-- `BACKEND_PORT`
-- `FRONTEND_PORT`
-- `JWT_SECRET`
-- `JWT_ISSUER`
-- `JWT_ACCESS_TOKEN_TTL`
-- `APP_CORS_ALLOWED_ORIGINS`
-- `MEDIA_STORAGE_PATH`
-- `APP_SECURITY_BOOTSTRAP_ENABLED`
-- `APP_SECURITY_BOOTSTRAP_FULL_NAME`
-- `APP_SECURITY_BOOTSTRAP_EMAIL`
-- `APP_SECURITY_BOOTSTRAP_PASSWORD`
-- `APP_SECURITY_BOOTSTRAP_ROLE`
-
-### Subir tudo com Docker
+### 3️⃣ Subir tudo com Docker
 
 ```powershell
-Set-Location C:\Dev\manager
 docker compose up -d --build
 ```
 
-### Parar o ambiente
+### 4️⃣ Endereços locais padrão
 
-```powershell
-Set-Location C:\Dev\manager
-docker compose down
-```
+- 🌐 Frontend: `http://localhost:4173`
+- 🔙 Backend: `http://localhost:8080/api`
+- 📊 Swagger: `http://localhost:8080/api/swagger-ui/index.html`
 
-### Parar e limpar volumes do banco
+---
 
-```powershell
-Set-Location C:\Dev\manager
-docker compose down -v
-```
-
-### Endereços padrão com Docker
-
-- frontend: `http://localhost:4173`
-- backend: `http://localhost:8080/api`
-- Swagger: `http://localhost:8080/api/swagger-ui/index.html`
-
-## Homologação
-
-Para preparar um ambiente de teste/aprovação:
-
-1. copie [`.env.homolog.example`](/C:/Dev/manager/.env.homolog.example) para `.env.homolog`
-2. preencha senha do PostgreSQL, `JWT_SECRET` e origem pública em `APP_CORS_ALLOWED_ORIGINS`
-3. habilite o bootstrap apenas no primeiro boot se precisar criar o admin inicial
-4. suba com:
-
-```powershell
-Set-Location C:\Dev\manager
-docker compose --env-file .env.homolog up -d --build
-```
-
-Runbook detalhado:
-
-- [HOMOLOGACAO.md](/C:/Dev/manager/docs/HOMOLOGACAO.md)
-
-## Deploy recomendado para teste
-
-Para um deploy rápido de homologação sem reestruturar a aplicação:
-
-- backend + PostgreSQL + storage no Railway
-- frontend no Vercel
-
-Guia preparado no repositório:
-
-- [DEPLOY_RAILWAY_VERCEL.md](/C:/Dev/manager/docs/DEPLOY_RAILWAY_VERCEL.md)
-
-## Execução local sem Docker
-
-### Backend com PostgreSQL local
-
-```powershell
-Set-Location C:\Dev\manager
-$env:DB_URL='jdbc:postgresql://localhost:5432/nutricore_manager'
-$env:DB_USERNAME='postgres'
-$env:DB_PASSWORD='postgres'
-.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=dev"
-```
-
-### Backend com H2 para testes rápidos
-
-```powershell
-Set-Location C:\Dev\manager
-.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=test"
-```
-
-### Frontend
-
-```powershell
-Set-Location C:\Dev\manager\frontend
-Copy-Item .env.example .env
-npm install
-npm run dev
-```
-
-Arquivo `frontend/.env.example`:
-
-```text
-VITE_API_BASE_URL=http://localhost:8080/api
-```
-
-## Banco de dados e persistência
-
-- o fluxo principal de desenvolvimento usa PostgreSQL;
-- o H2 continua apenas para testes;
-- o Flyway roda automaticamente em `dev` e `docker`;
-- no Docker, o banco persiste no volume `postgres-data`;
-- a mídia enviada pelo CMS persiste em `./storage`, ignorado no Git.
-
-## Autenticação editorial
-
-### Regras de acesso
+## 🔐 Segurança
 
 - `/api/v1/public/**` é público;
-- `/api/v1/auth/login` é público para login;
+- `/api/v1/auth/login` faz o login editorial;
 - `/api/v1/auth/me` exige autenticação;
-- `/api/v1/admin/**` exige `ADMIN` ou `EDITOR`.
+- `/api/v1/admin/**` exige `ADMIN` ou `EDITOR`;
 - `/api/v1/admin/users/**` exige `ADMIN`.
 
-### Sessão no frontend
+### 🖥️ Sessão no frontend
 
-- login via e-mail e senha;
-- token JWT em `sessionStorage`;
-- rotas `/editor/**` protegidas por guard;
-- token inválido ou expirado encerra a sessão e retorna para `/editor/acesso`.
+No frontend:
 
-### Credenciais de desenvolvimento
+- a sessão editorial usa JWT;
+- as rotas `/editor/**` são protegidas;
+- token inválido ou expirado encerra a sessão;
+- o bootstrap do primeiro admin é controlado por variáveis de ambiente.
 
-- profile `test` cria um admin fixo apenas para testes automatizados
-- `dev`, `docker` e `homolog` não criam admin por padrão
-- para criar o primeiro admin fora de `test`, habilite temporariamente:
-  - `APP_SECURITY_BOOTSTRAP_ENABLED=true`
-  - `APP_SECURITY_BOOTSTRAP_FULL_NAME`
-  - `APP_SECURITY_BOOTSTRAP_EMAIL`
-  - `APP_SECURITY_BOOTSTRAP_PASSWORD`
-  - `APP_SECURITY_BOOTSTRAP_ROLE=ADMIN`
+---
 
-Depois do primeiro login validado, volte `APP_SECURITY_BOOTSTRAP_ENABLED=false`.
+## 🗃️ Banco de Dados e Perfis
 
-As credenciais de bootstrap vêm das variáveis de ambiente. Para trocar:
+### 🧪 Perfis principais do backend
 
-- altere `APP_SECURITY_BOOTSTRAP_EMAIL`;
-- altere `APP_SECURITY_BOOTSTRAP_PASSWORD`;
-- altere `APP_SECURITY_BOOTSTRAP_ROLE`;
-- reinicie o backend.
+Perfis principais do backend:
 
-## Administração privada da camada pública
+- `test`: H2 em memória para a suíte de testes;
+- `dev`: PostgreSQL local fora de containers;
+- `docker`: PostgreSQL via Docker Compose;
+- `homolog`: ambiente de teste/aprovação com variáveis de ambiente.
 
-### Perfil público
+O banco é versionado com Flyway e a mídia editorial persiste em `./storage`.
 
-O admin consegue editar sem depender de código:
+---
 
-- nome profissional e subtítulo;
-- hero do site;
-- descrição institucional;
-- CTAs principais;
-- contato e redes;
-- blocos estruturados da home;
-- depoimentos;
-- imagem da hero;
-- imagem da seção Sobre.
+## 🧪 Qualidade
 
-Fluxo:
+O projeto já possui pipeline para:
 
-1. entrar em `/editor/site`;
-2. editar textos e imagens;
-3. salvar;
-4. confirmar o reflexo imediato em `/`, `/sobre`, `/planos` e `/contato`.
+- testes do backend;
+- build do frontend;
+- validação Docker.
 
-### Planos públicos
+### 🔎 Comandos úteis
 
-O admin consegue:
-
-- listar planos;
-- criar plano;
-- editar plano;
-- ativar e desativar;
-- excluir;
-- definir ordem de exibição;
-- controlar CTA e destaque.
-
-Somente planos ativos aparecem no site público.
-
-### Usuários editoriais
-
-O admin consegue:
-
-- listar contas editoriais;
-- criar novo usuário;
-- editar nome, e-mail, role e status;
-- redefinir senha;
-- ativar e desativar acesso.
-
-Regras atuais:
-
-- `ADMIN` enxerga e gerencia usuários;
-- `EDITOR` acessa o CMS, mas não gerencia usuários;
-- usuário desativado não consegue login;
-- o admin não pode se desativar pela própria tela.
-
-## Mídia no MVP
-
-### Imagens
-
-- upload por `POST /api/v1/admin/media/images`;
-- retorno em URL pública no formato `/api/media/images/...`;
-- persistência em:
-  - `target/test-editorial-media` no profile `test`;
-  - `storage/editorial-media` em `dev`;
-  - `./storage/editorial-media` no Docker.
-
-Fluxo no admin:
-
-1. clicar em `Enviar imagem`;
-2. aguardar o upload;
-3. o campo recebe a URL pública retornada;
-4. salvar o formulário;
-5. validar a imagem no site público.
-
-### Vídeos
-
-- não há upload de vídeo nesta etapa;
-- o CMS aceita `videoUrl`;
-- o site público faz embed de YouTube e Vimeo quando possível.
-
-## Revisão textual em PT-BR
-
-Nesta etapa foi feita uma varredura de pré-homologação para:
-
-- corrigir acentuação e cedilha;
-- remover microcopy técnica exposta ao usuário;
-- revisar textos públicos, editoriais e mensagens de erro;
-- normalizar os seeds públicos/editoriais por migration nova, sem reescrever histórico antigo do Flyway.
-
-## Validação recomendada
-
-### Técnica
+Comandos úteis:
 
 ```powershell
-Set-Location C:\Dev\manager
 .\mvnw.cmd test
 ```
 
 ```powershell
-Set-Location C:\Dev\manager\frontend
+Set-Location .\frontend
+npm install
 npm run build
 ```
 
-```powershell
-Set-Location C:\Dev\manager
-docker compose up -d --build
-```
+---
 
-### Funcional
+## 📚 Documentação
 
-Com frontend e backend em execução:
+Pontos de entrada úteis:
 
-1. abra `/`;
-2. abra `/conteudos`;
-3. abra `/receitas`;
-4. abra `/planos`;
-5. abra `/contato`;
-6. abra `/acessos`;
-7. faça login em `/editor/acesso`;
-8. edite o perfil público em `/editor/site`;
-9. altere uma imagem institucional e confirme no site;
-10. crie ou edite planos em `/editor/planos`;
-11. desative um plano e confirme que ele some do público;
-12. crie um usuário em `/editor/usuarios`;
-13. redefina a senha desse usuário;
-14. desative a conta e confirme o bloqueio de login;
-15. publique, despublique, arquive e exclua conteúdos no CMS;
-16. confirme que apenas conteúdo `PUBLISHED` aparece no público.
+- [HOMOLOGACAO.md](./docs/HOMOLOGACAO.md)
+- [DEPLOY_RAILWAY_VERCEL.md](./docs/DEPLOY_RAILWAY_VERCEL.md)
+- [frontend/.env.example](./frontend/.env.example)
+- [docker-compose.yml](./docker-compose.yml)
 
-## CI
+---
 
-O repositório possui GitHub Actions em `.github/workflows/ci.yml`.
+## 🎯 Posicionamento do Projeto
 
-Checks atuais:
+Hoje o NutriCore já funciona bem como portfólio porque demonstra:
 
-- `Backend tests`
-- `Frontend build`
-- `Docker validation`
+- backend Java/Spring com segurança, banco e migrations;
+- frontend React integrado ao backend real;
+- domínio editorial entregue de ponta a ponta;
+- presença de base clínica pronta para evolução;
+- ambiente executável local com Docker.
 
-Branches monitoradas:
+---
 
-- `main`
-- `develop`
-- `nutri-manage/**`
+## 📄 Licença
 
-## O que continua fora desta etapa
+Licença pública ainda não definida.
 
-- área clínica privada;
-- pacientes, anamneses e avaliações;
-- `MealPlan`;
-- fechamento da listagem de `NutritionGoal` por paciente;
-- refresh token;
-- suíte formal de testes do frontend.
+---
 
-## Próximos passos recomendados
+## 👤 Contato
 
-1. finalizar o ambiente de homologação;
-2. configurar CI/CD com deploy automatizado;
-3. adicionar observabilidade mínima;
-4. abrir a próxima frente funcional somente depois da homologação do CMS e do site público.
+**José Alberto Vilar Pereira**
+
+- 📧 Email: [albertovilar1@gmail.com](mailto:albertovilar1@gmail.com)
+- 💼 LinkedIn: [alberto-vilar-316725ab](https://www.linkedin.com/in/alberto-vilar-316725ab)
+- 🐙 GitHub: [@AlbertoVilar](https://github.com/AlbertoVilar)
